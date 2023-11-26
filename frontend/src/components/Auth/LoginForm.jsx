@@ -8,10 +8,14 @@ import * as Yup from 'yup'
 import {LOGIN} from '../../gql/user.js'
 import { useMutation } from "@apollo/client";
 import { toast } from 'react-toastify'
+import { decodeToken, setToken } from '../../utils/token.js'
+import useAuth from '../../hooks/useAuth.js'
+
 
 
 export default function Login () {
   const [ login, { loading } ] = useMutation(LOGIN)
+  const { setUser } = useAuth()
 
   const formik = useFormik({
     initialValues: {
@@ -31,12 +35,14 @@ export default function Login () {
       try {
         
 
-        const result = await login({
+        const { data } = await login({
           variables: {
             user: formData
           }
         })
-        console.log(result);
+        const { token } = data.login
+        setToken(token)
+        setUser(decodeToken(token))
 
 
       } catch (error) {
