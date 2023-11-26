@@ -1,13 +1,8 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client'
-
-const httpLink = createHttpLink({
-  url: 'http://localhost:4000/'
-})
+import { ApolloClient, InMemoryCache } from '@apollo/client'
 
 const client = new ApolloClient({
-  connectToDevTools: true,
+  uri: 'http://localhost:4000/',
   cache: new InMemoryCache(),
-  link: httpLink
 })
 
 export default client

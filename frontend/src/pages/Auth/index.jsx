@@ -1,6 +1,6 @@
 import {useState} from 'react'
-import RegisterForm from '../../components/Auth/RegisterAuth'
-import LoginForm from '../../components/Auth/LoginAuth'
+import RegisterForm from '../../components/Auth/RegisterForm'
+import LoginForm from '../../components/Auth/LoginForm'
 
 export default function Auth () {
   const [ showLogin, setShowLogin ] = useState(true)
@@ -10,18 +10,15 @@ export default function Auth () {
       <div className='w-96 h-screen flex justify-center items-center py-10 flex-col'>
         <div className='w-full p-10'>
 
-          <div className='mb-10'>
-            <h1 className='font-bold text-5xl italic text-center'>INSTADREAM</h1>
-            <h2 className='px-5 font-semibold text-center'>
-              Registrate para ver fotos y videos de tus amigos.
-            </h2>
+          <div className=''>
+            <h1 className='font-extrabold text-5xl italic text-center'>INSTADREAM</h1>
           </div>
 
           <div className='w-full mb-5'>
             {
               showLogin
                 ? <LoginForm/>
-                : <RegisterForm/>
+                : <RegisterForm setShowLogin={setShowLogin}/>
             }
           </div>
 

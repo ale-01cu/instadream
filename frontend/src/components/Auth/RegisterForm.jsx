@@ -3,8 +3,14 @@ import {MailIcon} from './MailIcon.jsx';
 import {LockIcon} from './LockIcon.jsx';
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useMutation } from "@apollo/client";
+import { REGISTER } from '../../gql/user.js'
+import { toast } from 'react-toastify'
+import PhraseForm from './PhraseForm.jsx'
 
-export default function RegisterForm () {
+export default function RegisterForm ( props ) {
+  const { setShowLogin } = props
+  const [ register, { loading } ] = useMutation(REGISTER)
 
   const formik = useFormik({
     initialValues: {
@@ -32,74 +38,104 @@ export default function RegisterForm () {
         .min(6)
         .oneOf([Yup.ref("password")], "Los passwords no coinciden"),
     }),
-    onSubmit: (formValues) => {
-      console.log("formulario enviado");
-      console.log(formValues);
+    onSubmit: async (formData) => {
+
+      try {
+        
+
+        const newUser = formData
+        delete newUser.repeatPassword
+        await register({
+          variables: {
+            user: newUser
+          }
+        })
+        toast.success("Se ha registrado correctamente.")
+        setShowLogin(true)
+        
+
+      } catch (error) {
+
+
+        toast.error(error.message)
+        console.log(error);
+
+        
+      }
+
     }
   })
 
   return (
-    <form id="form-register" action="" className="space-y-3" onSubmit={formik.handleSubmit}>
-      <Input
-        label="Nombre"
-        placeholder="Escriba su nombre y apellidos"
-        variant="bordered"
-        name="name"
-        onChange={formik.handleChange}
-        value={formik.values.name}
-        isInvalid={formik.errors.name && true}
-      />
-      <Input
-        label="Nombre de usuario"
-        placeholder="Escriba su nombre de usuario"
-        variant="bordered"
-        name="username"
-        onChange={formik.handleChange}
-        value={formik.values.username}
-        isInvalid={formik.errors.username && true}
-      />
-      <Input
-        endContent={
-          <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-        }
-        label="Email"
-        placeholder="Enter your email"
-        variant="bordered"
-        name="email"
-        onChange={formik.handleChange}
-        value={formik.values.email}
-        isInvalid={formik.errors.email && true}
-      />
-      <Input
-        endContent={
-          <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-        }
-        label="Password"
-        placeholder="Escriba su password"
-        type="password"
-        variant="bordered"
-        name="password"
-        onChange={formik.handleChange}
-        value={formik.values.passwrod}
-        isInvalid={formik.errors.password && true}
-      />
-      <Input
-        endContent={
-          <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-        }
-        label="Repeat Password"
-        placeholder="Escriba su password una vez mas"
-        type="password"
-        variant="bordered"
-        name="repeatPassword"
-        onChange={formik.handleChange}
-        value={formik.values.repeatPassword}
-        isInvalid={formik.errors.repeatPassword && true}
-      />
-      <Button color="primary" className='mt-4 w-full' type='submit'>
-        Registrarme
-      </Button>  
-    </form>
+    <div>
+      <PhraseForm text={'Registrate para ver fotos y videos de tus amigos.'}/>
+      <form id="form-register" className="space-y-3" onSubmit={formik.handleSubmit}>
+        <Input
+          label="Nombre"
+          placeholder="Escriba su nombre y apellidos"
+          variant="bordered"
+          name="name"
+          onChange={formik.handleChange}
+          value={formik.values.name}
+          isInvalid={formik.errors.name && true}
+        />
+        <Input
+          label="Nombre de usuario"
+          placeholder="Escriba su nombre de usuario"
+          variant="bordered"
+          name="username"
+          onChange={formik.handleChange}
+          value={formik.values.username}
+          isInvalid={formik.errors.username && true}
+        />
+        <Input
+          endContent={
+            <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+          }
+          label="Email"
+          placeholder="Enter your email"
+          variant="bordered"
+          name="email"
+          onChange={formik.handleChange}
+          value={formik.values.email}
+          isInvalid={formik.errors.email && true}
+        />
+        <Input
+          endContent={
+            <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+          }
+          label="Password"
+          placeholder="Escriba su password"
+          type="password"
+          variant="bordered"
+          name="password"
+          onChange={formik.handleChange}
+          value={formik.values.passwrod}
+          isInvalid={formik.errors.password && true}
+        />
+        <Input
+          endContent={
+            <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+          }
+          label="Repeat Password"
+          placeholder="Escriba su password una vez mas"
+          type="password"
+          variant="bordered"
+          name="repeatPassword"
+          onChange={formik.handleChange}
+          value={formik.values.repeatPassword}
+          isInvalid={formik.errors.repeatPassword && true}
+        />
+        <Button 
+          color="primary" 
+          className='mt-4 w-full' 
+          type='submit' 
+          isLoading={loading ? true : false}>
+            Registrarme
+        </Button>  
+      </form>
+    </div>
+    
   )
 }
 
