@@ -1,12 +1,16 @@
 import {useState} from 'react'
 import RegisterForm from '../../components/Auth/RegisterForm'
 import LoginForm from '../../components/Auth/LoginForm'
+import DarkModeButton from '../../components/DarkMode'
+
 
 export default function Auth () {
   const [ showLogin, setShowLogin ] = useState(true)
 
   return (
     <div className='flex justify-center items-center'>
+      <DarkModeButton/>
+
       <div className='w-96 h-screen flex justify-center items-center py-10 flex-col'>
         <div className='w-full p-10'>
 

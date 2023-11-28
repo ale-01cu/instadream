@@ -10,6 +10,7 @@ import { useMutation } from "@apollo/client";
 import { toast } from 'react-toastify'
 import { decodeToken, setToken } from '../../utils/token.js'
 import useAuth from '../../hooks/useAuth.js'
+import { ApolloError } from "@apollo/client";
 
 
 
@@ -64,6 +65,13 @@ export default function Login () {
           endContent={
             <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
           }
+          classNames={{
+            input: [
+              "bg-transparent",
+              "text-black/90 dark:text-white/90",
+              "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+            ]
+          }}
           label="Email"
           name="email"
           placeholder="Enter your email"

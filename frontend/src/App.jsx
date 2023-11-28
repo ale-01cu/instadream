@@ -7,10 +7,12 @@ import {ToastContainer} from 'react-toastify'
 import { getToken } from './utils/token'
 import AuthContext from './contexts/AuthContext'
 import Home from './pages/Home'
+import useDarkMode from './hooks/useDarkMode'
 
 
 function App() {
   const [ auth, setAuth ] = useState(null)
+  const [ isDarkMode, setIsDarkMode ] = useDarkMode()
 
   useEffect(() => {
 
@@ -37,9 +39,11 @@ function App() {
     () => ({
       auth,
       logout,
-      setUser
+      setUser,
+      isDarkMode,
+      setIsDarkMode
     })
-    ,[ auth ]
+    ,[ auth, isDarkMode, setIsDarkMode ]
 
   )
 
@@ -63,7 +67,7 @@ function App() {
             pauseOnFocusLoss
             draggable
             pauseOnHover
-            theme="light"
+            theme={isDarkMode ? "dark" : "light"}
           />
       </AuthContext.Provider>
     </ApolloProvider>
