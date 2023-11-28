@@ -6,9 +6,8 @@ import {NextUIProvider} from "@nextui-org/react";
 import {ToastContainer} from 'react-toastify'
 import { getToken } from './utils/token'
 import AuthContext from './contexts/AuthContext'
-import Home from './pages/Home'
 import useDarkMode from './hooks/useDarkMode'
-
+import Navigation from './routes/Navegation';
 
 function App() {
   const [ auth, setAuth ] = useState(null)
@@ -54,7 +53,7 @@ function App() {
             {
               !auth
                 ? <Auth/>
-                : <Home/>
+                : <Navigation/>
             }
           </NextUIProvider>
           <ToastContainer
