@@ -4,47 +4,43 @@ import client from './config/apollo'
 import Auth from './pages/Auth'
 import {NextUIProvider} from "@nextui-org/react";
 import {ToastContainer} from 'react-toastify'
-import { getToken } from './utils/token'
+import { getToken, decodeToken } from './utils/token'
 import AuthContext from './contexts/AuthContext'
 import useDarkMode from './hooks/useDarkMode'
 import Navigation from './routes/Navegation';
+import { deleteToken } from './utils/token'
 
 function App() {
   const [ auth, setAuth ] = useState(null)
   const [ isDarkMode, setIsDarkMode ] = useDarkMode()
 
   useEffect(() => {
-
     const token = getToken()
-    if(token) {
-      setAuth(token)
-    }else {
-      setAuth(null)
-    }
-
+    if(token) setAuth(decodeToken(token))
+    else setAuth(null)
   }, [ setAuth ])
 
 
   const logout = () => {
-    console.log('Cerrar Sesion');
+    const isDelete = deleteToken()
+    if(isDelete) setAuth(null)
   }
 
+  
   const setUser = user => {
     setAuth(user)
   }
 
-  const authData = useMemo(
-
-    () => ({
+  const authData = useMemo(() => ({
       auth,
       logout,
       setUser,
       isDarkMode,
       setIsDarkMode
-    })
-    ,[ auth, isDarkMode, setIsDarkMode ]
+    }),[ auth, isDarkMode, setIsDarkMode ])
 
-  )
+    
+  if(auth === null) return null
 
   return (
     <ApolloProvider client={client}>

@@ -10,16 +10,18 @@ import { useMutation } from "@apollo/client";
 import { toast } from 'react-toastify'
 import { decodeToken, setToken } from '../../utils/token.js'
 import useAuth from '../../hooks/useAuth.js'
+import { useState } from "react";
 
 
 export default function Login () {
+  const [ isRemember, setIsRemember ] = useState(false)
   const [ login, { loading } ] = useMutation(LOGIN)
   const { setUser } = useAuth()
 
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: ""
+      password: "",
     },
     validationSchema: Yup.object({
       email: Yup
@@ -32,15 +34,13 @@ export default function Login () {
     }),
     onSubmit: async (formData) => {
       try {
-        
-
         const { data } = await login({
           variables: {
             user: formData
           }
         })
         const { token } = data.login
-        setToken(token)
+        if(isRemember) setToken(token)
         setUser(decodeToken(token))
 
 
@@ -48,7 +48,6 @@ export default function Login () {
         
         toast.error(error.message)
         console.log(error);
-
 
       }
 
@@ -96,6 +95,9 @@ export default function Login () {
             classNames={{
               label: "text-small",
             }}
+            name="remember"
+            value={isRemember}
+            onChange={() => setIsRemember(!isRemember)}
           >
             Remember me
           </Checkbox>

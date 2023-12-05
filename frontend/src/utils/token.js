@@ -20,3 +20,13 @@ export function decodeToken(token) {
   return jwtDecode(token)
 
 }
+
+
+export function deleteToken() {
+
+  window.localStorage.removeItem(TOKEN)
+  const token = getToken()
+  if(token) return false
+  return true
+
+}

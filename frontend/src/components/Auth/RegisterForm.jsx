@@ -57,17 +57,13 @@ export default function RegisterForm ( props ) {
         })
         toast.success("Se ha registrado correctamente.")
         setShowLogin(true)
-        
 
       } catch (error) {
 
-
         toast.error(error.message)
         console.log(error);
-
         
       }
-
       
     }
   })

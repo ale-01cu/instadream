@@ -29,12 +29,21 @@ const typeDefs = `#graphql
   }
 
   type Query {
-    getUser: User
+    getUser(username: String): User
+  }
+
+  scalar Upload
+  
+  type UpdateAvatar {
+    status: Boolean
+    urlAvatar: String
+    
   }
 
   type Mutation {
     register(user: UserInput): User
     login(user: LoginInput): Token
+    updateAvatar(file: Upload): UpdateAvatar
   }
 
 `

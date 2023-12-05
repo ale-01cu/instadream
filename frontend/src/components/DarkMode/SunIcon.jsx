@@ -1,5 +1,5 @@
 
-export default function SunIconLight () {
+export default function SunIcon () {
 
   return (
     <svg 
