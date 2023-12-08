@@ -1,4 +1,3 @@
-export default function updateAvatar (file) {
-  console.log(file)
-  return null
+export default function updateAvatar (req, res) {
+  res.json({ res: 'hola que tal' })
 }

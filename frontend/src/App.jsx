@@ -37,10 +37,10 @@ function App() {
       setUser,
       isDarkMode,
       setIsDarkMode
-    }),[ auth, isDarkMode, setIsDarkMode ])
+  }),[ auth, isDarkMode, setIsDarkMode ])
 
     
-  if(auth === null) return null
+  if(getToken() && auth === null) return null
 
   return (
     <ApolloProvider client={client}>

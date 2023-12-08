@@ -45,9 +45,7 @@ export default function RegisterForm ( props ) {
         .oneOf([Yup.ref("password")], "Los passwords no coinciden."),
     }),
     onSubmit: async (formData) => {
-
       try {
-        
         const newUser = formData
         delete newUser.repeatPassword
         await register({
@@ -59,12 +57,9 @@ export default function RegisterForm ( props ) {
         setShowLogin(true)
 
       } catch (error) {
-
         toast.error(error.message)
         console.log(error);
-        
       }
-      
     }
   })
 

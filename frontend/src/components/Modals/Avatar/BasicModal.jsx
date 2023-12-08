@@ -1,13 +1,11 @@
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import CameraIcon from './CameraIcon'
 import { useRef, useState } from "react"
-import { UPDATE_AVATAR } from '../../../gql/user'
-import { useMutation } from "@apollo/client";
+import { BASE_URL } from '../../../utils/constants'
 
 export default function AvatarModal() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const inputFileRef = useRef(null);
-  const [ updateAvatar ] = useMutation(UPDATE_AVATAR)
   const [ avatarfile, setAvatarFile ] = useState(null)
 
   const handleButtonClick = () => {
@@ -19,14 +17,16 @@ export default function AvatarModal() {
     setAvatarFile(e.target.files[0])
   }
 
-  const handleSubmit = async () => {
-    const result = await updateAvatar({
-      variables: {
-        file: avatarfile
-      } 
-    }) 
-    console.log(result);
-
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const formData = new FormData();
+    formData.append('file', avatarfile);
+    const response = await fetch(`${BASE_URL}/user/upload-avatar`, {
+      method: 'post',
+      body: formData,
+    })
+    const data = await response.json()
+    console.log(data);
   }
 
 
@@ -43,7 +43,7 @@ export default function AvatarModal() {
       >
         <ModalContent>
           {(onClose) => (
-            <>
+            <form action="post" onSubmit={handleSubmit}>
               <ModalHeader className="flex flex-col gap-1">Subir Avatar</ModalHeader>
                 <ModalBody>
                   <div action="" className="flex flex-col gap-y-5 px-24">
@@ -62,11 +62,11 @@ export default function AvatarModal() {
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Cerrar
                 </Button>
-                <Button color="primary" onPress={onClose} onClick={handleSubmit}>
+                <Button color="primary" onPress={onClose} type="submit">
                   Aceptar
                 </Button>
               </ModalFooter>
-            </>
+            </form>
           )}
         </ModalContent>
       </Modal>

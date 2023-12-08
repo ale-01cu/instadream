@@ -1,7 +1,8 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
+import { GRAPHQL_URL } from '../utils/constants'
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/',
+  uri: GRAPHQL_URL,
   cache: new InMemoryCache(),
 })
 

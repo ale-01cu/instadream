@@ -1,35 +1,46 @@
 import connectToDatabase from './config/db.js'
 import { ApolloServer } from '@apollo/server'
-import { startStandaloneServer } from '@apollo/server/standalone'
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 import typeDefsUser from './src/user/gql/schemaUsers.js'
 import resolversUser from './src/user/gql/resolversUser.js'
 import getUser from './src/user/helpers/getUser.js'
+import express from 'express'
+import http from 'http'
+import { expressMiddleware } from '@apollo/server/express4'
+import cors from 'cors'
+import userRouter from './src/user/routes/index.js'
 
-const port = process.env.PORT
-connectToDatabase()
+const app = express()
+const httpServer = http.createServer(app)
+const port = process.env.PORT || 4000
 
 const apolloServer = new ApolloServer({
   typeDefs: [typeDefsUser],
   resolvers: [resolversUser],
-  cache: 'bounded'
+  cache: 'bounded',
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
 })
 
-const server = async () => {
-  const { url } = await startStandaloneServer(apolloServer, {
-    listen: { port },
-    context: async ({ req }) => {
-      // get the user token from the headers
-      const token = req.headers.authorization || ''
+const runServer = async () => {
+  await apolloServer.start()
 
-      // try to retrieve a user with the token
-      const user = getUser(token)
+  app.use(cors())
+  // app.use(graphqlUploadExpress({ maxFileSize: 10000, maxFiles: 1 }))
+  app.use('/user', userRouter)
+  app.use(
+    '/graphql',
+    cors({ origin: ['https://localhost'] }),
+    express.json({ limit: '50mb' }),
+    // expressMiddleware accepts the same arguments:
+    // an Apollo Server instance and optional configuration options
+    expressMiddleware(apolloServer, {
+      context: async ({ req }) => ({ user: getUser(req.headers.token) })
+    })
+  )
 
-      // add the user to the context
-      return { user }
-    }
-  })
-
-  console.log(`🚀 Server ready at: ${url}`)
+  await new Promise((resolve) => httpServer.listen({ port }, resolve))
+  console.log(`🚀 Server ready at http://localhost:${port}/`)
 }
 
-server()
+connectToDatabase()
+runServer()
