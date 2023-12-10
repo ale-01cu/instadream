@@ -3,7 +3,7 @@ import { ApolloServer } from '@apollo/server'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 import typeDefsUser from './src/user/gql/schemaUsers.js'
 import resolversUser from './src/user/gql/resolversUser.js'
-import getUser from './src/user/helpers/getUser.js'
+import getUser from './src/user/utils/getUser.js'
 import express from 'express'
 import http from 'http'
 import { expressMiddleware } from '@apollo/server/express4'
@@ -34,7 +34,10 @@ const runServer = async () => {
     // expressMiddleware accepts the same arguments:
     // an Apollo Server instance and optional configuration options
     expressMiddleware(apolloServer, {
-      context: async ({ req }) => ({ user: getUser(req.headers.token) })
+      context: async ({ req }) => ({
+        user: getUser(req.headers.authorization),
+        token: req.headers.authorization
+      })
     })
   )
 

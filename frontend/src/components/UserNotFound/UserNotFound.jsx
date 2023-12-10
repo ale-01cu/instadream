@@ -11,7 +11,6 @@ export default function UserNotFound() {
       </p>
       <Link to={'/'}>
         <Button
-          href="/"
           color="primary"
           variant="solid"
         >

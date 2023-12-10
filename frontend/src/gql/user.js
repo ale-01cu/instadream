@@ -48,3 +48,13 @@ export const UPDATE_AVATAR = gql`
   }
 
 `
+
+export const VERIFY_TOKEN = gql`
+  mutation verifyToken($token: TokenInput) {
+    verifyToken(token: $token) {
+        isValid
+    }
+  }
+
+
+`

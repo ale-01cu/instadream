@@ -1,18 +1,16 @@
 import register from '../controllers/registerUsers.js'
 import login from '../controllers/loginUser.js'
 import getUser from '../controllers/getUser.js'
-import updateAvatar from '../controllers/updateAvatar.js'
-import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs'
+import verifyToken from '../controllers/verifyToken.js'
 
 const resolvers = {
-  Upload: GraphQLUpload,
   Query: {
     getUser: (_, args, contextValue) => getUser(_, args, contextValue)
   },
   Mutation: {
     register: (_, { user }) => register(user),
     login: (_, { user }) => login(user),
-    updateAvatar: (_, { file }) => updateAvatar(file)
+    verifyToken: (_, { token }) => verifyToken(token)
   }
 }
 

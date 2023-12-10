@@ -2,6 +2,7 @@ import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDis
 import CameraIcon from './CameraIcon'
 import { useRef, useState } from "react"
 import { BASE_URL } from '../../../utils/constants'
+import { getToken } from '../../../utils/token'
 
 export default function AvatarModal() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -20,9 +21,12 @@ export default function AvatarModal() {
   const handleSubmit = async (event) => {
     event.preventDefault()
     const formData = new FormData();
-    formData.append('file', avatarfile);
+    formData.append('avatar', avatarfile);
     const response = await fetch(`${BASE_URL}/user/upload-avatar`, {
       method: 'post',
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      },
       body: formData,
     })
     const data = await response.json()
@@ -49,6 +53,7 @@ export default function AvatarModal() {
                   <div action="" className="flex flex-col gap-y-5 px-24">
                     <input 
                       type="file" 
+                      name="avatar"
                       hidden 
                       ref={inputFileRef} 
                       accept="image/jpeg, image/png"

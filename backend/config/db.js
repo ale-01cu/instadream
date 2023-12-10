@@ -1,13 +1,10 @@
 import mongoose from 'mongoose'
-import dotenv from 'dotenv'
 import 'colors'
-dotenv.config({ path: '.\\.env' })
-
-const databaseUrl = process.env.database_url
+import { DATABASE_URL } from './baseConfig.js'
 
 export default async function connectToDatabase () {
   try {
-    await mongoose.connect(databaseUrl)
+    await mongoose.connect(DATABASE_URL)
     console.log('Conexion establecida con la base de datos.'.green)
   } catch (e) {
     console.log(e)

@@ -42,15 +42,10 @@ export default function Login () {
         const { token } = data.login
         if(isRemember) setToken(token)
         setUser(decodeToken(token))
-
-
       } catch (error) {
-        
         toast.error(error.message)
         console.log(error);
-
       }
-
     }
   })
 

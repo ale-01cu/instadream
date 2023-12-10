@@ -18,12 +18,14 @@ function App() {
     const token = getToken()
     if(token) setAuth(decodeToken(token))
     else setAuth(null)
+    
   }, [ setAuth ])
 
 
   const logout = () => {
     const isDelete = deleteToken()
     if(isDelete) setAuth(null)
+
   }
 
   
@@ -32,11 +34,11 @@ function App() {
   }
 
   const authData = useMemo(() => ({
-      auth,
-      logout,
-      setUser,
-      isDarkMode,
-      setIsDarkMode
+    auth,
+    logout,
+    setUser,
+    isDarkMode,
+    setIsDarkMode
   }),[ auth, isDarkMode, setIsDarkMode ])
 
     

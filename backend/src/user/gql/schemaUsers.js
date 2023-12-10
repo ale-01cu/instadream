@@ -23,6 +23,10 @@ const typeDefs = `#graphql
     password: String!
   }
 
+  input TokenInput {
+    token: String
+  }
+
   type Token {
     token: String
     
@@ -32,18 +36,15 @@ const typeDefs = `#graphql
     getUser(username: String): User
   }
 
-  scalar Upload
-  
-  type UpdateAvatar {
-    status: Boolean
-    urlAvatar: String
-    
+  type tokenVerify {
+    isValid: Boolean
   }
+
 
   type Mutation {
     register(user: UserInput): User
     login(user: LoginInput): Token
-    updateAvatar(file: Upload): UpdateAvatar
+    verifyToken(token: TokenInput): tokenVerify
   }
 
 `
