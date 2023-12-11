@@ -9,10 +9,12 @@ import AuthContext from './contexts/AuthContext'
 import useDarkMode from './hooks/useDarkMode'
 import Navigation from './routes/Navegation';
 import { deleteToken } from './utils/token'
+import { useNavigate } from 'react-router-dom';
 
 function App() {
   const [ auth, setAuth ] = useState(null)
   const [ isDarkMode, setIsDarkMode ] = useDarkMode()
+  const navegate = useNavigate()
 
   useEffect(() => {
     const token = getToken()
@@ -47,7 +49,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
         <AuthContext.Provider value={authData}>
-          <NextUIProvider>
+          <NextUIProvider navigate={navegate}>
             {
               !auth
                 ? <Auth/>

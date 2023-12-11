@@ -1,10 +1,11 @@
 import { useQuery } from "@apollo/client"
-import { GET_USER } from "../../gql/user"
-import Loader from '../Loader'
-import AvatarImage from '../../assets/img/064 avatar.png'
+import { GET_USER } from "../../../gql/user"
+import Loader from '../../Loader'
+import AvatarImage from '../../../assets/img/064 avatar.png'
 import UserNotFound from "../UserNotFound"
 import AvatarModal from "../Modals/Avatar/BasicModal"
-import useAuth from '../../hooks/useAuth'
+import useAuth from '../../../hooks/useAuth'
+import { BASE_URL } from "../../../utils/constants"
 
 export default function Profile({ username }) {
   const { data, loading, error } = useQuery(GET_USER, {
@@ -25,17 +26,21 @@ export default function Profile({ username }) {
   )
 
   return (
-    <div className="flex w-full max-w-5xl">
-      <div className="w-2/6 flex justify-center">
+    <div className="flex w-full max-w-5xl flex-col sm:flex-row">
+      <div className="w-full sm:w-2/6 flex justify-center">
         <div className="mt-10 relative">
           <img 
-            className="rounded-full w-48 h-48"
-            src={!data.getUser.avatar ? AvatarImage : data.getUser.avatar} 
+            className="rounded-full w-48 h-48 object-cover"
+            src={
+              !data.getUser.avatar 
+                ? AvatarImage 
+                : BASE_URL + '/' + data.getUser.avatar
+            } 
             alt="User Image" 
           />
           {
             username == auth.username
-              && <AvatarModal/>
+              && <AvatarModal auth={auth}/>
           }
         </div>
       </div>

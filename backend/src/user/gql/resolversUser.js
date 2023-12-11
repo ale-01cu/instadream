@@ -5,7 +5,7 @@ import verifyToken from '../controllers/verifyToken.js'
 
 const resolvers = {
   Query: {
-    getUser: (_, args, contextValue) => getUser(_, args, contextValue)
+    getUser: (_, args) => getUser(_, args)
   },
   Mutation: {
     register: (_, { user }) => register(user),

@@ -9,10 +9,11 @@ import http from 'http'
 import { expressMiddleware } from '@apollo/server/express4'
 import cors from 'cors'
 import userRouter from './src/user/routes/index.js'
+import { PORT } from './config/baseConfig.js'
+import morgan from 'morgan'
 
 const app = express()
 const httpServer = http.createServer(app)
-const port = process.env.PORT || 4000
 
 const apolloServer = new ApolloServer({
   typeDefs: [typeDefsUser],
@@ -24,11 +25,12 @@ const apolloServer = new ApolloServer({
 const runServer = async () => {
   await apolloServer.start()
 
+  app.use(express.static('upload'))
   app.use(cors())
+  app.use(morgan('dev'))
   // app.use(graphqlUploadExpress({ maxFileSize: 10000, maxFiles: 1 }))
   app.use('/user', userRouter)
-  app.use(
-    '/graphql',
+  app.use('/graphql',
     cors({ origin: ['https://localhost'] }),
     express.json({ limit: '50mb' }),
     // expressMiddleware accepts the same arguments:
@@ -41,8 +43,8 @@ const runServer = async () => {
     })
   )
 
-  await new Promise((resolve) => httpServer.listen({ port }, resolve))
-  console.log(`🚀 Server ready at http://localhost:${port}/`)
+  await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve))
+  console.log(`🚀 Server ready at http://localhost:${PORT}/`)
 }
 
 connectToDatabase()

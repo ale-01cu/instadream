@@ -6,19 +6,40 @@ import {
   Avatar
 } from '@nextui-org/react'
 import AvatarIcon from './AvatarIcon'
-import { Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
-
+import { useQuery } from '@apollo/client'
+import { GET_USER } from '../../gql/user'
+import { BASE_URL } from '../../utils/constants'
 
 export default function UserMenu() {
   const { auth, logout } = useAuth()
-  const { username, photo = '' } = auth
+  const { data, loading, error } = useQuery(GET_USER, {
+    variables: { username: auth.username }
+  })
+
+  if(loading || error) {
+    return (
+      <Avatar
+        isBordered
+        as="button"
+        className="transition-transform"
+        name={name}
+        size="sm"
+        fallback={
+          <AvatarIcon 
+            className="animate-pulse w-6 h-6 text-default-500" 
+            fill="currentColor" 
+            size={20}/>
+        }
+      />
+    )
+  }
 
   return (
     <Dropdown placement="bottom-end">
       <DropdownTrigger>
         {
-          photo
+          data.getUser.avatar
             ? <Avatar
                 isBordered
                 as="button"
@@ -26,7 +47,7 @@ export default function UserMenu() {
                 color="primary"
                 name={name}
                 size="sm"
-                src={photo}
+                src={BASE_URL + '/' + data.getUser.avatar}
               />
 
             : <Avatar
@@ -36,16 +57,21 @@ export default function UserMenu() {
                 name={name}
                 size="sm"
                 fallback={
-                  <AvatarIcon className="animate-pulse w-6 h-6 text-default-500" fill="currentColor" size={20} />
+                  <AvatarIcon 
+                    className="animate-pulse w-6 h-6 text-default-500" 
+                    fill="currentColor" 
+                    size={20} />
                 }
               />
         }
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
-        <DropdownItem key="settings">
-          <Link to={`/${username}`}>
-            Mi Perfil
-          </Link>
+        <DropdownItem key="profile" className="h-14 gap-2">
+          <p className="font-semibold">Conectado como:</p>
+          <p className="font-semibold">{auth.username}</p>
+        </DropdownItem>
+        <DropdownItem key="settings" href={`/${auth.username}`}>
+          Mi Perfil
         </DropdownItem>
 
         <DropdownItem key="configurations">Configuraciones</DropdownItem>

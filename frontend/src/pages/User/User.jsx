@@ -1,4 +1,4 @@
-import Profile from '../../components/Profile'
+import Profile from '../../components/User/Profile'
 import { useParams } from 'react-router-dom'
 
 export default function User () {

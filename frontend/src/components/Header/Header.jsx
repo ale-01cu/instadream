@@ -42,8 +42,8 @@ export default function Header() {
 
       <NavbarContent as="div" className="items-center" justify="end">
         
-        <SearchForm/>
         <DarkModeButton classname={'duration-200'}/>
+        <SearchForm/>
         <UserMenu/>
         
       </NavbarContent>

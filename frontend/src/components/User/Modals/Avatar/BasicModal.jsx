@@ -1,27 +1,38 @@
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
+import {
+  Modal, 
+  ModalContent, 
+  ModalHeader, 
+  ModalBody, 
+  ModalFooter, 
+  Button, 
+  useDisclosure
+} from "@nextui-org/react";
 import CameraIcon from './CameraIcon'
 import { useRef, useState } from "react"
-import { BASE_URL } from '../../../utils/constants'
-import { getToken } from '../../../utils/token'
+import { BASE_URL } from '../../../../utils/constants'
+import { getToken } from '../../../../utils/token'
+import { GET_USER } from "../../../../gql/user";
+import { useApolloClient } from '@apollo/client'
 
-export default function AvatarModal() {
+export default function AvatarModal({ auth }) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const inputFileRef = useRef(null);
-  const [ avatarfile, setAvatarFile ] = useState(null)
+  const [ isLoading, setIsLoading ] = useState(false)
+  const client = useApolloClient()
 
   const handleButtonClick = () => {
     // activa el click del input file
     inputFileRef.current.click();
   };
 
-  const handleChangeFile = e => {
-    setAvatarFile(e.target.files[0])
-  }
-
-  const handleSubmit = async (event) => {
+  const handleChangeFile = async (e, onclose) => {
+    const avatarfile = e.target.files[0]
     event.preventDefault()
+    setIsLoading(true)
+
     const formData = new FormData();
     formData.append('avatar', avatarfile);
+
     const response = await fetch(`${BASE_URL}/user/upload-avatar`, {
       method: 'post',
       headers: {
@@ -29,14 +40,31 @@ export default function AvatarModal() {
       },
       body: formData,
     })
-    const data = await response.json()
-    console.log(data);
+    const { avatar } = await response.json()
+
+    setIsLoading(false)
+    onclose()
+
+    // Actualiza la cache del avatar de graphql para que se visualize el nuevo avatar al cambio
+    const { getUser } = client.readQuery({
+      query: GET_USER,
+      variables: {
+        username: auth.username
+      }
+    });
+    client.writeQuery({
+      query: GET_USER,
+      data: { getUser: { ...getUser, avatar } },
+      variables: { username: auth.username },
+    });
+
   }
+
 
 
   return (
     <>
-      <button onClick={onOpen} className="bg-primary p-3 rounded-full absolute right-0 top-36 hover:bg-primary-300 transition-colors">
+      <button onClick={onOpen} className="bg-primary p-3 rounded-full absolute right-2 top-[138px] hover:bg-primary-300 transition-colors">
         <CameraIcon/>
       </button>
       <Modal 
@@ -47,7 +75,7 @@ export default function AvatarModal() {
       >
         <ModalContent>
           {(onClose) => (
-            <form action="post" onSubmit={handleSubmit}>
+            <>
               <ModalHeader className="flex flex-col gap-1">Subir Avatar</ModalHeader>
                 <ModalBody>
                   <div action="" className="flex flex-col gap-y-5 px-24">
@@ -57,9 +85,16 @@ export default function AvatarModal() {
                       hidden 
                       ref={inputFileRef} 
                       accept="image/jpeg, image/png"
-                      onChange={handleChangeFile}
+                      onChange={(e) => handleChangeFile(e, onClose)}
                     />
-                    <Button onClick={handleButtonClick} color="secondary" size="sm">Cargar una Foto</Button>
+                    <Button 
+                      onClick={handleButtonClick} 
+                      color="secondary" 
+                      size="sm"
+                      isLoading={isLoading}
+                    >
+                      Cargar una Foto
+                    </Button>
                     <Button color="danger" size="sm">Eliminar foto actual</Button>
                   </div>
                 </ModalBody>
@@ -67,11 +102,8 @@ export default function AvatarModal() {
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Cerrar
                 </Button>
-                <Button color="primary" onPress={onClose} type="submit">
-                  Aceptar
-                </Button>
               </ModalFooter>
-            </form>
+            </>
           )}
         </ModalContent>
       </Modal>
