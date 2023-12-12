@@ -45,6 +45,7 @@ const typeDefs = `#graphql
     register(user: UserInput): User
     login(user: LoginInput): Token
     verifyToken(token: TokenInput): tokenVerify
+    deleteAvatar: Boolean
   }
 
 `

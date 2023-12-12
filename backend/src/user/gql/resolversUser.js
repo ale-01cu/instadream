@@ -2,6 +2,7 @@ import register from '../controllers/registerUsers.js'
 import login from '../controllers/loginUser.js'
 import getUser from '../controllers/getUser.js'
 import verifyToken from '../controllers/verifyToken.js'
+import deleteAvatar from '../controllers/deleteAvatar.js'
 
 const resolvers = {
   Query: {
@@ -10,7 +11,8 @@ const resolvers = {
   Mutation: {
     register: (_, { user }) => register(user),
     login: (_, { user }) => login(user),
-    verifyToken: (_, { token }) => verifyToken(token)
+    verifyToken: (_, { token }) => verifyToken(token),
+    deleteAvatar: (_, args, context) => deleteAvatar(context)
   }
 }
 

@@ -2,19 +2,22 @@ import { useEffect, useState } from "react";
 import { getDarkMode, setDarkMode } from '../utils/darkMode'
 
 export default function useDarkMode() {
-  const [ isDarkMode, setIsDarkMode ] = useState(false)
+  const [ isDarkMode, setIsDarkMode ] = useState(
+    getDarkMode() === '1' 
+      ? true 
+      : false
+  )
   
-  useEffect(() => {
+  // useEffect(() => {
     
-    const isDarkModeLocalStorage = getDarkMode()
-    if(isDarkModeLocalStorage && isDarkModeLocalStorage === '1') {
+  //   const darkModeLocalStorage = getDarkMode()
+  //   if(darkModeLocalStorage && darkModeLocalStorage === '1') {
       
-      setIsDarkMode(true)
+  //     setIsDarkMode(true)
       
-    }
+  //   }
     
-  }, [])
-
+  // }, [])
 
   useEffect(() => {
     

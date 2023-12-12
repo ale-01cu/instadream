@@ -55,6 +55,10 @@ export const VERIFY_TOKEN = gql`
         isValid
     }
   }
+`
 
-
+export const DELETE_AVATAR = gql`
+  mutation deleteAvatar {
+    deleteAvatar
+  }
 `

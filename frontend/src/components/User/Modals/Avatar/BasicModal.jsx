@@ -13,11 +13,14 @@ import { BASE_URL } from '../../../../utils/constants'
 import { getToken } from '../../../../utils/token'
 import { GET_USER } from "../../../../gql/user";
 import { useApolloClient } from '@apollo/client'
+import { DELETE_AVATAR } from "../../../../gql/user";
+import { useMutation } from "@apollo/client";
+import { toast } from 'react-toastify'
 
 export default function AvatarModal({ auth }) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const inputFileRef = useRef(null);
-  const [ isLoading, setIsLoading ] = useState(false)
+  const [ isLoadingInput, setIsLoadingInput ] = useState(false)
   const client = useApolloClient()
 
   const handleButtonClick = () => {
@@ -25,10 +28,10 @@ export default function AvatarModal({ auth }) {
     inputFileRef.current.click();
   };
 
-  const handleChangeFile = async (e, onclose) => {
+  const handleChangeFile = async (e, onClose) => {
     const avatarfile = e.target.files[0]
     event.preventDefault()
-    setIsLoading(true)
+    setIsLoadingInput(true)
 
     const formData = new FormData();
     formData.append('avatar', avatarfile);
@@ -42,8 +45,8 @@ export default function AvatarModal({ auth }) {
     })
     const { avatar } = await response.json()
 
-    setIsLoading(false)
-    onclose()
+    setIsLoadingInput(false)
+    onClose()
 
     // Actualiza la cache del avatar de graphql para que se visualize el nuevo avatar al cambio
     const { getUser } = client.readQuery({
@@ -60,7 +63,33 @@ export default function AvatarModal({ auth }) {
 
   }
 
+  const [deleteAvatar, { loading }] = useMutation(DELETE_AVATAR)
 
+  const handleDeleteAvatar = async (onClose) => {
+    try {
+      const { data } = await deleteAvatar()
+      if(!data.deleteAvatar) toast.warning('No se pudo eliminar el avatar.')
+      else {
+        onClose()
+
+        const { getUser } = client.readQuery({
+          query: GET_USER,
+          variables: {
+            username: auth.username
+          }
+        });
+        client.writeQuery({
+          query: GET_USER,
+          data: { getUser: { ...getUser, avatar: '' } },
+          variables: { username: auth.username },
+        });
+      }
+
+    } catch (error) {
+      console.error(error);
+      toast.warning('No se pudo eliminar el avatar.')
+    }
+  }
 
   return (
     <>
@@ -91,11 +120,18 @@ export default function AvatarModal({ auth }) {
                       onClick={handleButtonClick} 
                       color="secondary" 
                       size="sm"
-                      isLoading={isLoading}
+                      isLoading={isLoadingInput}
                     >
                       Cargar una Foto
                     </Button>
-                    <Button color="danger" size="sm">Eliminar foto actual</Button>
+                    <Button 
+                      color="danger" 
+                      size="sm" 
+                      onClick={() => handleDeleteAvatar(onClose)} 
+                      isLoading={loading}
+                    >
+                      Eliminar foto actual
+                    </Button>
                   </div>
                 </ModalBody>
               <ModalFooter>

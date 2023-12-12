@@ -6,7 +6,7 @@ export default function Loader(){
     <div className="flex gap-4">
       <Spinner 
         size="lg" 
-        color="warning"
+        color="primary"
       />
     </div> 
 

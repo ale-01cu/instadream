@@ -15,7 +15,6 @@ function App() {
   const [ auth, setAuth ] = useState(null)
   const [ isDarkMode, setIsDarkMode ] = useDarkMode()
   const navegate = useNavigate()
-
   useEffect(() => {
     const token = getToken()
     if(token) setAuth(decodeToken(token))
