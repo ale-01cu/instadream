@@ -93,7 +93,7 @@ export default function AvatarModal({ auth }) {
 
   return (
     <>
-      <button onClick={onOpen} className="bg-primary p-3 rounded-full absolute right-2 top-[138px] hover:bg-primary-300 transition-colors">
+      <button onClick={onOpen} className="bg-primary p-3 rounded-full absolute right-8 top-[138px] hover:bg-primary-300 transition-colors">
         <CameraIcon/>
       </button>
       <Modal 
@@ -107,7 +107,7 @@ export default function AvatarModal({ auth }) {
             <>
               <ModalHeader className="flex flex-col gap-1">Subir Avatar</ModalHeader>
                 <ModalBody>
-                  <div action="" className="flex flex-col gap-y-5 px-24">
+                  <div action="" className="flex flex-col gap-y-7 px-10 sm:px-24">
                     <input 
                       type="file" 
                       name="avatar"

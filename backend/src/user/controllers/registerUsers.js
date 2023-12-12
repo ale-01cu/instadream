@@ -9,19 +9,19 @@ export default async function register (user) {
   newUser.username = user.username.toLowerCase()
   const { email, username, password } = newUser
 
-  // Revisar si el email esta en uso
-  const foundEmail = await User.findOne({ email })
-  if (foundEmail) throw new Error('El Email ya esta en uso.')
-
-  // Revisar si el username esta en uso
-  const foundUsername = await User.findOne({ username })
-  if (foundUsername) throw new Error('El Username ya esta en uso.')
-
-  // Encriptar Password
-  const salt = await bcrypt.genSaltSync(10)
-  newUser.password = await bcrypt.hash(password, salt)
-
   try {
+    // Revisar si el email esta en uso
+    const foundEmail = await User.findOne({ email })
+    if (foundEmail) throw new Error('El Email ya esta en uso.')
+
+    // Revisar si el username esta en uso
+    const foundUsername = await User.findOne({ username })
+    if (foundUsername) throw new Error('El Username ya esta en uso.')
+
+    // Encriptar Password
+    const salt = await bcrypt.genSaltSync(10)
+    newUser.password = await bcrypt.hash(password, salt)
+
     const user = new User(newUser)
     user.save()
     return user

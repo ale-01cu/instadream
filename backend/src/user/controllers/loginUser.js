@@ -6,16 +6,21 @@ import { SECRET_KEY } from '../../../config/baseConfig.js'
 export default async function login (user) {
   const { email, password } = user
 
-  const userFound = await User.findOne({ email: email.toLowerCase() })
-  if (!userFound) throw new Error('Email o password incorrectos.')
+  try {
+    const userFound = await User.findOne({ email: email.toLowerCase() })
+    if (!userFound) throw new Error('Email o password incorrectos.')
 
-  const passwordSucess = await bcrypt.compare(password, userFound.password)
-  if (!passwordSucess) throw new Error('Email o password incorrectos.')
+    const passwordSucess = await bcrypt.compare(password, userFound.password)
+    if (!passwordSucess) throw new Error('Email o password incorrectos.')
 
-  const expiresInToken = process.env.TOKEN_EXPIRATION
-  const token = createToken(userFound, SECRET_KEY, expiresInToken)
+    const expiresInToken = process.env.TOKEN_EXPIRATION
+    const token = createToken(userFound, SECRET_KEY, expiresInToken)
 
-  return {
-    token
+    return {
+      token
+    }
+  } catch (error) {
+    console.error(error)
+    console.error('Ha ocurrio un error al loguear un usuario.'.red)
   }
 }
