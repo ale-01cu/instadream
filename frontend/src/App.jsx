@@ -8,7 +8,6 @@ import { getToken, decodeToken } from './utils/token'
 import AuthContext from './contexts/AuthContext'
 import useDarkMode from './hooks/useDarkMode'
 import Navigation from './routes/Navegation';
-import { deleteToken } from './utils/token'
 import { useNavigate } from 'react-router-dom';
 
 function App() {
@@ -23,13 +22,6 @@ function App() {
     
   }, [ setAuth ])
 
-
-  const logout = () => {
-    const isDelete = deleteToken()
-    if(isDelete) setAuth(null)
-
-  }
-
   
   const setUser = user => {
     setAuth(user)
@@ -37,7 +29,6 @@ function App() {
 
   const authData = useMemo(() => ({
     auth,
-    logout,
     setUser,
     isDarkMode,
     setIsDarkMode

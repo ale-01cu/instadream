@@ -32,9 +32,9 @@ export default function Profile({ username }) {
     <div className="flex w-full max-w-5xl flex-col sm:flex-row">
       <div className="w-full sm:w-2/6 flex justify-center flex-col items-center">
         <div className="p-2">
-          <div className="mt-10 relative">
+          <div className="mt-10 relative max-w-max">
             <img 
-              className="rounded-full w-48 h-48 object-cover"
+              className="rounded-full w-48 h-48 object-cover min-w-[12rem]-"
               src={
                 !data.getUser.avatar 
                   ? AvatarImage 
@@ -50,12 +50,15 @@ export default function Profile({ username }) {
           
           <div className="py-7">
             <h1 className="font-bold text-2xl">{data.getUser.name}</h1>
-            <p className="text-font-gray">{auth.username}</p>
+            <p className="text-font-gray">{data.getUser.username}</p>
             <p className="text-font-gray mt-5">Se unio en {date.toLocaleString('es-ES', { year: 'numeric', month: 'long'})}</p>
           </div>
 
           <div>
-            <EditProfile/>
+            {
+              username == auth.username
+                && <EditProfile/>
+            }
           </div>  
         </div>
       </div>

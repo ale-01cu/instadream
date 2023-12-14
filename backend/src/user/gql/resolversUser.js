@@ -3,6 +3,7 @@ import login from '../controllers/loginUser.js'
 import getUser from '../controllers/getUser.js'
 import verifyToken from '../controllers/verifyToken.js'
 import deleteAvatar from '../controllers/deleteAvatar.js'
+import updateUser from '../controllers/updateUser.js'
 
 const resolvers = {
   Query: {
@@ -12,7 +13,8 @@ const resolvers = {
     register: (_, { user }) => register(user),
     login: (_, { user }) => login(user),
     verifyToken: (_, { token }) => verifyToken(token),
-    deleteAvatar: (_, args, context) => deleteAvatar(context)
+    deleteAvatar: (_, args, context) => deleteAvatar(context),
+    updateUser: (_, args, context) => updateUser(args, context)
   }
 }
 

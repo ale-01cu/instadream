@@ -9,19 +9,26 @@ export default function EditProfileForm() {
       name: '',
       username: '',
       webSite: '',
-      description: ''
+      description: '',
+      location: ''
     },
 
     validationSchema: Yup.object({
       name: Yup
         .string('El nombre debe de ser un texto.')
-        .required('El nombre es obligatorio.'), 
+        .max(60, 'El nombre debe de tener como maximo 50 caracteres.')
+        .required('El nombre es obligatorio.'),
       username: Yup
         .string('El nombre de usuario debe de ser un texto')
         .matches(/^[a-zA-Z0-9-]*$/, "El nombre del usuario no puede tener espacio.")
+        .max(20, 'El nombre de usuario debe de tener como maximo 20 caracteres.')
         .required('El nombre de usuario es obligatorio.'),
       webSite: Yup
         .string('El nombre de usuario debe de ser un texto')
+        .max(100, 'El sitio web debe de tener como maximo 100 caracteres.'),
+      location: Yup
+        .string('La localizacion debe de ser un texto.')
+        .max(30, 'La localizacion debe de tener como maximo 30 caracteres.')
     }),
 
     onSubmit: async () => {
@@ -41,7 +48,7 @@ export default function EditProfileForm() {
         labelPlacement='inside'
         onChange={formik.handleChange}
         value={formik.values.name}
-        onClear={() => console.log("input cleared")}
+        onClear={() => formik.setFieldValue('name', '')}
         variant='bordered'
         isInvalid={formik.errors.name ? true : false}
       />
@@ -53,7 +60,7 @@ export default function EditProfileForm() {
         labelPlacement='inside'
         onChange={formik.handleChange}
         value={formik.values.username}
-        onClear={() => console.log("input cleared")}
+        onClear={() => formik.setFieldValue('username', '')}
         variant='bordered'
         isInvalid={formik.errors.username ? true : false}
       />
@@ -65,7 +72,7 @@ export default function EditProfileForm() {
         labelPlacement='inside'
         onChange={formik.handleChange}
         value={formik.values.webSite}
-        onClear={() => console.log("input cleared")}
+        onClear={() => formik.setFieldValue('webSite', '')}
         variant='bordered'
       />
       <Textarea
@@ -79,6 +86,17 @@ export default function EditProfileForm() {
           base: "",
           input: "resize-y min-h-[40px] bg-[transparent]",
         }}
+      />
+      <Input
+        isClearable
+        type="location"
+        name='location'
+        label="Localización"
+        labelPlacement='inside'
+        onChange={formik.handleChange}
+        value={formik.values.location}
+        onClear={() => formik.setFieldValue('location', '')}
+        variant='bordered'
       />
     </form>
   )

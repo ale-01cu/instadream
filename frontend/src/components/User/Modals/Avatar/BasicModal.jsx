@@ -93,7 +93,7 @@ export default function AvatarModal({ auth }) {
 
   return (
     <>
-      <button onClick={onOpen} className="bg-primary p-3 rounded-full absolute right-8 top-[138px] hover:bg-primary-300 transition-colors">
+      <button onClick={onOpen} className="bg-primary p-3 rounded-full absolute right-2 top-[138px] hover:bg-primary-300 transition-colors">
         <CameraIcon/>
       </button>
       <Modal 

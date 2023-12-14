@@ -37,13 +37,16 @@ export default function RegisterForm ( props ) {
         .string('El password debe de ser un texto')
         .required("El password es obligatorio.")
         .min(6, 'El password debe de tener como minimo 6 caracteres.')
+        .max(25)
         .oneOf([Yup.ref("repeatPassword")], "Los passwords no coinciden."),
       repeatPassword: Yup
         .string('El confirmar password debe de ser un texto')
         .required("El password es obligatorio.")
         .min(6, 'El confirmar password debe de tener como minimo 6 caracteres.')
+        .max(25)
         .oneOf([Yup.ref("password")], "Los passwords no coinciden."),
     }),
+    
     onSubmit: async (formData) => {
       try {
         const newUser = formData

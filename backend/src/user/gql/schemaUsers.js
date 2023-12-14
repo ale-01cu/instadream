@@ -27,6 +27,14 @@ const typeDefs = `#graphql
     token: String
   }
 
+  input UserUpdateInput {
+    name: String
+    username: String
+    webSite: String
+    description: String
+    location: String
+  }
+
   type Token {
     token: String
     
@@ -46,6 +54,7 @@ const typeDefs = `#graphql
     login(user: LoginInput): Token
     verifyToken(token: TokenInput): tokenVerify
     deleteAvatar: Boolean
+    updateUser(input: UserUpdateInput): Boolean
   }
 
 `

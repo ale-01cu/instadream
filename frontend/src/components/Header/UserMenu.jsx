@@ -3,19 +3,37 @@ import {
   DropdownTrigger, 
   Dropdown, 
   DropdownMenu, 
-  Avatar
+  Avatar,
+  User
 } from '@nextui-org/react'
 import AvatarIcon from './AvatarIcon'
 import useAuth from '../../hooks/useAuth'
 import { useQuery } from '@apollo/client'
 import { GET_USER } from '../../gql/user'
 import { BASE_URL } from '../../utils/constants'
+import { deleteToken } from '../../utils/token'
+import { toast } from 'react-toastify'
+import { useNavigate } from "react-router-dom";
+import { useApolloClient } from '@apollo/client'
 
 export default function UserMenu() {
-  const { auth, logout } = useAuth()
+  const { auth, setUser } = useAuth()
+  const navegate = useNavigate()
+  const client = useApolloClient()
   const { data, loading, error } = useQuery(GET_USER, {
     variables: { username: auth.username }
   })
+
+  const handleLogout = async () => {
+    const isDelete = deleteToken()
+    if(isDelete) {
+      setUser(null)
+      navegate('/')
+      await client.resetStore()
+    }
+    else toast.warning('No se pudo cerrar la sesion.')
+
+  }
 
   if(loading || error) {
     return (
@@ -66,19 +84,62 @@ export default function UserMenu() {
         }
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
+
         <DropdownItem key="profile" className="h-14 gap-2">
-          <p className="font-semibold">Conectado como:</p>
-          <p className="font-semibold">{auth.username}</p>
+          {
+            !data.getUser.avatar
+              ? <User   
+                  name={data.getUser.email}
+                  description={data.getUser.username}
+                  avatarProps={{
+                    fallback: <AvatarIcon 
+                              className="animate-pulse w-6 h-6 text-default-500" 
+                              fill="currentColor" 
+                              size={20} />
+                  }}
+                />
+              : <User   
+                  name={data.getUser.email}
+                  description={data.getUser.username}
+                  avatarProps={{
+                    src: BASE_URL + '/' + data.getUser.avatar
+                  }}
+                />
+          }
+          
         </DropdownItem>
-        <DropdownItem key="settings" href={`/${auth.username}`}>
+
+        <DropdownItem 
+          key="settings" 
+          href={`/${auth.username}`} 
+          className='p-2'
+        >
           Mi Perfil
         </DropdownItem>
 
-        <DropdownItem key="configurations">Configuraciones</DropdownItem>
-        <DropdownItem key="help_and_feedback">Ayuda</DropdownItem>
-        <DropdownItem key="logout" color="danger" onClick={() => logout()}>
+        <DropdownItem 
+          key="configurations" 
+          className='p-2'
+        >
+          Configuraciones
+        </DropdownItem>
+
+        <DropdownItem 
+          key="help_and_feedback" 
+          className='p-2'
+        >
+          Ayuda
+        </DropdownItem>
+
+        <DropdownItem 
+          key="logout" 
+          color="danger" 
+          onClick={() => handleLogout()} 
+          className='p-2'
+        >
           Cerrar Sesion
         </DropdownItem>
+
       </DropdownMenu>
     </Dropdown>
   )
