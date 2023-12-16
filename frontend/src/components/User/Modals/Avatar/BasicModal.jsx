@@ -43,8 +43,18 @@ export default function AvatarModal({ auth }) {
       },
       body: formData,
     })
-    const { avatar } = await response.json()
+    const data = await response.json()
 
+    if(response.status === 500) {
+      const errorMsg = data.error
+      console.error(errorMsg);
+      toast.error(errorMsg)
+      setIsLoadingInput(false)
+      onClose()
+      return null
+    }
+
+    const { avatar } = data
     setIsLoadingInput(false)
     onClose()
 

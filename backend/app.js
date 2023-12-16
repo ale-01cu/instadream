@@ -12,6 +12,8 @@ import userRouter from './src/user/routes/index.js'
 import { PORT } from './config/baseConfig.js'
 import morgan from 'morgan'
 
+connectToDatabase()
+
 const app = express()
 const httpServer = http.createServer(app)
 
@@ -22,30 +24,25 @@ const apolloServer = new ApolloServer({
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
 })
 
-const runServer = async () => {
-  await apolloServer.start()
+await apolloServer.start()
 
-  app.use(express.static('upload'))
-  app.use(cors())
-  app.use(morgan('dev'))
-  // app.use(graphqlUploadExpress({ maxFileSize: 10000, maxFiles: 1 }))
-  app.use('/user', userRouter)
-  app.use('/graphql',
-    cors({ origin: ['https://localhost'] }),
-    express.json({ limit: '50mb' }),
-    // expressMiddleware accepts the same arguments:
-    // an Apollo Server instance and optional configuration options
-    expressMiddleware(apolloServer, {
-      context: async ({ req }) => ({
-        user: getUser(req.headers.authorization),
-        token: req.headers.authorization
-      })
+app.use(express.static('upload'))
+app.use(cors())
+app.use(morgan('dev'))
+// app.use(graphqlUploadExpress({ maxFileSize: 10000, maxFiles: 1 }))
+app.use('/user', userRouter)
+app.use('/graphql',
+  cors({ origin: ['https://localhost'] }),
+  express.json({ limit: '50mb' }),
+  // expressMiddleware accepts the same arguments:
+  // an Apollo Server instance and optional configuration options
+  expressMiddleware(apolloServer, {
+    context: async ({ req }) => ({
+      user: getUser(req.headers.authorization),
+      token: req.headers.authorization
     })
-  )
+  })
+)
 
-  await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve))
-  console.log(`🚀 Server ready at http://localhost:${PORT}/`)
-}
-
-connectToDatabase()
-runServer()
+await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve))
+console.log(`🚀 Server ready at http://localhost:${PORT}/`)

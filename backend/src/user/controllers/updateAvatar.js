@@ -10,7 +10,11 @@ export default async function updateAvatar (req, res) {
     await User.findByIdAndUpdate(id, { avatar: path })
     return res.json({ avatar: path })
   } catch (error) {
-    console.log(error)
-    console.log('Ha ocurrido un error al actualizar el path del avatar del usuario'.red)
+    console.error(error)
+    console.error('Ha ocurrido un error al actualizar el path del avatar del usuario'.red)
   }
+
+  return res
+    .status(500)
+    .json({ error: 'Lo sentimos, no se pudo actualizar el avatar del usuario.' })
 }
