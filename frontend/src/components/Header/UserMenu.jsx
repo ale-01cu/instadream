@@ -55,7 +55,7 @@ export default function UserMenu() {
 
   return (
     <Dropdown placement="bottom-end">
-      <DropdownTrigger>
+      <DropdownTrigger className='min-w-[32px]'>
         {
           data.getUser.avatar
             ? <Avatar

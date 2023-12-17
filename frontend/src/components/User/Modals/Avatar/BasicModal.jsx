@@ -61,9 +61,7 @@ export default function AvatarModal({ auth }) {
     // Actualiza la cache del avatar de graphql para que se visualize el nuevo avatar al cambio
     const { getUser } = client.readQuery({
       query: GET_USER,
-      variables: {
-        username: auth.username
-      }
+      variables: { username: auth.username }
     });
     client.writeQuery({
       query: GET_USER,
@@ -103,7 +101,7 @@ export default function AvatarModal({ auth }) {
 
   return (
     <>
-      <button onClick={onOpen} className="bg-primary p-3 rounded-full absolute right-2 top-[138px] hover:bg-primary-300 transition-colors">
+      <button onClick={onOpen} className="z-10 bg-primary p-3 rounded-full absolute right-2 top-[138px] hover:bg-primary-300 transition-colors">
         <CameraIcon/>
       </button>
       <Modal 

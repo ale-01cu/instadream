@@ -7,6 +7,7 @@ import AvatarModal from "../Modals/Avatar/BasicModal"
 import useAuth from '../../../hooks/useAuth'
 import { BASE_URL } from "../../../utils/constants"
 import EditProfile from "../Modals/EditProfile/EditProfile"
+import { Image } from "@nextui-org/react"
 
 export default function Profile({ username }) {
   const { data, loading, error } = useQuery(GET_USER, {
@@ -33,14 +34,14 @@ export default function Profile({ username }) {
       <div className="w-full sm:w-2/6 flex justify-center flex-col items-center">
         <div className="p-2">
           <div className="mt-10 relative max-w-max">
-            <img 
+            <Image 
               className="rounded-full w-48 h-48 object-cover min-w-[12rem]-"
               src={
                 !data.getUser.avatar 
                   ? AvatarImage 
                   : BASE_URL + '/' + data.getUser.avatar
               } 
-              alt="User Image" 
+              alt="NextUI hero Image with delay"
             />
             {
               username == auth.username
@@ -50,14 +51,14 @@ export default function Profile({ username }) {
           
           <div className="py-7">
             <h1 className="font-bold text-2xl">{data.getUser.name}</h1>
-            <p className="text-font-gray">{data.getUser.username}</p>
+            <p className="text-font-gray">@{data.getUser.username}</p>
             <p className="text-font-gray mt-5">Se unio en {date.toLocaleString('es-ES', { year: 'numeric', month: 'long'})}</p>
           </div>
 
           <div>
             {
               username == auth.username
-                && <EditProfile/>
+                && <EditProfile userData={data.getUser}/>
             }
           </div>  
         </div>

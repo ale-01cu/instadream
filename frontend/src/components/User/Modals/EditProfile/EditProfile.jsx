@@ -9,7 +9,7 @@ import {
   useDisclosure
 } from "@nextui-org/react";
 
-export default function EditProfile() {
+export default function EditProfile({ userData }) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
   return (
@@ -21,7 +21,7 @@ export default function EditProfile() {
         isOpen={isOpen} 
         onOpenChange={onOpenChange}
         scrollBehavior='inside'
-        placement="top-center"
+        placement="center"
       >
         <ModalContent>
           {(onClose) => (
@@ -30,16 +30,8 @@ export default function EditProfile() {
                 Editar Perfil
               </ModalHeader>
               <ModalBody className="p-10">
-                <EditProfileForm/>
+                <EditProfileForm userData={userData} onClose={onClose}/>
               </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Aceptar
-                </Button>
-              </ModalFooter>
             </>
           )}
         </ModalContent>

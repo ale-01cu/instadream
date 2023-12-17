@@ -33,6 +33,8 @@ export const GET_USER = gql`
         avatar
         webSite
         description
+        location
+        birthDate
         createAt
     }
   }
@@ -60,5 +62,22 @@ export const VERIFY_TOKEN = gql`
 export const DELETE_AVATAR = gql`
   mutation deleteAvatar {
     deleteAvatar
+  }
+`
+
+export const UPDATE_USER = gql`
+  mutation updateUser($input: UserUpdateInput) {
+    updateUser(input: $input) {
+      id
+      name
+      username
+      email
+      avatar
+      webSite
+      description
+      location
+      birthDate
+      createAt
+    }
   }
 `

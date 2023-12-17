@@ -1,16 +1,32 @@
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
-import { Input, Textarea } from '@nextui-org/react'
+import { Input, Textarea, Button } from '@nextui-org/react'
+import { UPDATE_USER, GET_USER } from '../../../../gql/user'
+import { useMutation } from '@apollo/client'
+import { useApolloClient } from '@apollo/client'
 
-export default function EditProfileForm() {
-  
+export default function EditProfileForm({ userData, onClose }) {
+  const { 
+    name, 
+    username, 
+    webSite, 
+    description, 
+    location ,
+    birthDate
+  } = userData
+  const [ updateUser, { loading } ] = useMutation(UPDATE_USER)
+  const client = useApolloClient()
+
   const formik = useFormik({
     initialValues: {
-      name: '',
-      username: '',
-      webSite: '',
-      description: '',
-      location: ''
+      name: !name ? '' : name,
+      username: !username ? '' : username,
+      webSite: !webSite ? '' : webSite,
+      description: !description ? '' : description,
+      location: !location ? '' : location,
+      birthDate: !birthDate 
+        ? '' 
+        : new Date(Number(birthDate)).toISOString().substring(0, 10)
     },
 
     validationSchema: Yup.object({
@@ -28,21 +44,49 @@ export default function EditProfileForm() {
         .max(100, 'El sitio web debe de tener como maximo 100 caracteres.'),
       location: Yup
         .string('La localizacion debe de ser un texto.')
-        .max(30, 'La localizacion debe de tener como maximo 30 caracteres.')
+        .max(30, 'La localizacion debe de tener como maximo 30 caracteres.'),
+      birthDate: Yup
+        .date('Este campo debe de ser una fecha con el formato dd/mm/yyyy.')
+        .min(new Date(1900, 0, 1).toISOString().substring(0, 10), 'Fecha Invalida.')
+        .max(new Date(Date.now()).toISOString().substring(0, 10), 'Fecha Invalida.')
     }),
 
-    onSubmit: async () => {
-      console.log("se hizo submit");
+    onSubmit: async (formData) => {
+      await updateUser({
+        variables: {
+          input: formData
+        }
+      })
+
+      onClose()
+
+      console.log(formData);
+
+      formData.birthDate = new Date(formData.birthDate).getTime()
+
+      const { getUser } = client.readQuery({
+        query: GET_USER,
+        variables: {
+          username
+        }
+      });
+
+      client.writeQuery({
+        query: GET_USER,
+        data: { getUser: {...getUser, ...formData} },
+        variables: { username },
+      });
+
     }
   })
 
 
 
   return (
-    <form action="" className='flex gap-y-5 flex-col'>
+    <form id='update-avatar-form' onSubmit={formik.handleSubmit} className='flex gap-y-5 flex-col'>
       <Input
         isClearable
-        type="name"
+        type="text"
         name='name'
         label="Nombre"
         labelPlacement='inside'
@@ -54,7 +98,7 @@ export default function EditProfileForm() {
       />
       <Input
         isClearable
-        type="username"
+        type="text"
         name='username'
         label="Nombre de Usuario"
         labelPlacement='inside'
@@ -66,7 +110,7 @@ export default function EditProfileForm() {
       />
       <Input
         isClearable
-        type="webSite"
+        type="url"
         name='webSite'
         label="Sitio Web"
         labelPlacement='inside'
@@ -74,6 +118,7 @@ export default function EditProfileForm() {
         value={formik.values.webSite}
         onClear={() => formik.setFieldValue('webSite', '')}
         variant='bordered'
+        isInvalid={formik.errors.webSite ? true : false}
       />
       <Textarea
         label="Descripcion"
@@ -82,6 +127,8 @@ export default function EditProfileForm() {
         placeholder="Escriba su descripcion..."
         disableAnimation
         disableAutosize
+        value={formik.values.description}
+        onChange={formik.handleChange}
         classNames={{
           base: "",
           input: "resize-y min-h-[40px] bg-[transparent]",
@@ -89,7 +136,7 @@ export default function EditProfileForm() {
       />
       <Input
         isClearable
-        type="location"
+        type="text"
         name='location'
         label="Localización"
         labelPlacement='inside'
@@ -97,7 +144,28 @@ export default function EditProfileForm() {
         value={formik.values.location}
         onClear={() => formik.setFieldValue('location', '')}
         variant='bordered'
+        isInvalid={formik.errors.location ? true : false}
       />
+      <Input
+        isClearable
+        type="date"
+        name='birthDate'
+        label="Fecha de Nacimiento"
+        labelPlacement='inside'
+        onChange={formik.handleChange}
+        value={formik.values.birthDate}
+        onClear={() => formik.setFieldValue('birthDate', '')}
+        variant='bordered'
+        isInvalid={formik.errors.birthDate ? true : false}
+      />
+      <Button 
+        color="primary" 
+        type="submit" 
+        isLoading={loading}
+        className='mt-5'
+      >
+        Aceptar
+      </Button>
     </form>
   )
 }
