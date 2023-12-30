@@ -45,29 +45,35 @@ export default function AvatarModal({ auth }) {
     })
     const data = await response.json()
 
-    if(response.status === 500) {
+    if(response.status === 500 || response.status > 500) {
+      
       const errorMsg = data.error
       console.error(errorMsg);
       toast.error(errorMsg)
-      setIsLoadingInput(false)
-      onClose()
-      return null
+    
+
+    }else if(response.status >= 400 || response.status < 500) {
+      console.error(data.error);
+      
+    
+    }else {
+
+      const { avatar } = data
+      // Actualiza la cache del avatar de graphql para que se visualize el nuevo avatar al cambio
+      const { getUser } = client.readQuery({
+        query: GET_USER,
+        variables: { username: auth.username }
+      });
+      client.writeQuery({
+        query: GET_USER,
+        data: { getUser: { ...getUser, avatar } },
+        variables: { username: auth.username },
+      });
+
     }
 
-    const { avatar } = data
     setIsLoadingInput(false)
     onClose()
-
-    // Actualiza la cache del avatar de graphql para que se visualize el nuevo avatar al cambio
-    const { getUser } = client.readQuery({
-      query: GET_USER,
-      variables: { username: auth.username }
-    });
-    client.writeQuery({
-      query: GET_USER,
-      data: { getUser: { ...getUser, avatar } },
-      variables: { username: auth.username },
-    });
 
   }
 

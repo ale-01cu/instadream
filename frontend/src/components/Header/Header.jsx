@@ -7,7 +7,7 @@ import {
 } from "@nextui-org/react";
 import InstadreamLogo from './InstadreamLogo'
 import DarkModeButton from '../DarkMode'
-import SearchForm from './SearchForm'
+import SearchForm from './Search/SearchForm'
 import UserMenu from './UserMenu'
 
 export default function Header() {
@@ -40,7 +40,7 @@ export default function Header() {
         </NavbarContent>
       </NavbarContent>
 
-      <NavbarContent as="div" className="items-center" justify="end">
+      <NavbarContent as="div" className="" justify="end">
         
         <DarkModeButton classname={'duration-200'}/>
         <SearchForm/>

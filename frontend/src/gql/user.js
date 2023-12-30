@@ -81,3 +81,19 @@ export const UPDATE_USER = gql`
     }
   }
 `
+
+export const SEARCH_USERS = gql`
+  query searchUsers($inputSearch: InputSearch) {
+    searchUsers(input: $inputSearch) {
+      count
+      previous
+      next
+      data {
+        id
+        name
+        username
+        avatar
+      }
+    }
+  }
+`

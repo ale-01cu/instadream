@@ -8,6 +8,6 @@ export default async function updateUser ({ input }, context) {
   } catch (error) {
     console.error(error)
     console.error(`Error al actualizar los datos del usuario: ${username} en la base de datos.`.red)
-    throw new UserUpdateError('Lo sentimos, no se pudo actualizar los datos.')
+    throw new UserUpdateError('Lo sentimos, no se pudo actualizar el Perfil.')
   }
 }

@@ -9,7 +9,7 @@ import {LOGIN} from '../../gql/user.js'
 import { useMutation } from "@apollo/client";
 import { toast } from 'react-toastify'
 import { decodeToken, setToken } from '../../utils/token.js'
-import useAuth from '../../hooks/useAuth.js'
+import useAuth from '../../hooks/useAuth.jsx'
 import { useState } from "react";
 
 

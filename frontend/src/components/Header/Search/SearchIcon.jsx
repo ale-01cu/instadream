@@ -1,12 +1,12 @@
-export default function SearchIcon() {
+export default function SearchIcon(props) {
 
   return (
     <svg 
-      className="w-6 h-6 text-gray-800 dark:text-white" 
       aria-hidden="true" 
       xmlns="http://www.w3.org/2000/svg" 
       fill="none" 
       viewBox="0 0 20 20"
+      {...props}
     >
       <path 
         stroke="currentColor" 

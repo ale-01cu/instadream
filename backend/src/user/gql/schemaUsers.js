@@ -13,6 +13,13 @@ const typeDefs = `#graphql
     createAt: String
   }
 
+  type SearchUsers {
+    count: Int
+    previous: Int
+    next: Int
+    data: [User]
+  }
+
   input UserInput {
     name: String!
     username: String!
@@ -38,6 +45,12 @@ const typeDefs = `#graphql
     birthDate: String
   }
 
+  input InputSearch {
+    search: String
+    offset: Int
+    limit: Int
+  }
+
   type Token {
     token: String
     
@@ -45,6 +58,8 @@ const typeDefs = `#graphql
 
   type Query {
     getUser(username: String): User
+    searchUsers(input: InputSearch): SearchUsers
+
   }
 
   type tokenVerify {

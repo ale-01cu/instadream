@@ -4,6 +4,7 @@ import { Input, Textarea, Button } from '@nextui-org/react'
 import { UPDATE_USER, GET_USER } from '../../../../gql/user'
 import { useMutation } from '@apollo/client'
 import { useApolloClient } from '@apollo/client'
+import { toast } from 'react-toastify'
 
 export default function EditProfileForm({ userData, onClose }) {
   const { 
@@ -52,30 +53,34 @@ export default function EditProfileForm({ userData, onClose }) {
     }),
 
     onSubmit: async (formData) => {
-      await updateUser({
-        variables: {
-          input: formData
-        }
-      })
-
-      onClose()
-
-      console.log(formData);
-
-      formData.birthDate = new Date(formData.birthDate).getTime()
-
-      const { getUser } = client.readQuery({
-        query: GET_USER,
-        variables: {
-          username
-        }
-      });
-
-      client.writeQuery({
-        query: GET_USER,
-        data: { getUser: {...getUser, ...formData} },
-        variables: { username },
-      });
+      try {
+        await updateUser({
+          variables: {
+            input: formData
+          }
+        })
+  
+        onClose()
+  
+        formData.birthDate = new Date(formData.birthDate).getTime()
+  
+        const { getUser } = client.readQuery({
+          query: GET_USER,
+          variables: {
+            username
+          }
+        });
+  
+        client.writeQuery({
+          query: GET_USER,
+          data: { getUser: {...getUser, ...formData} },
+          variables: { username },
+        });
+        
+      } catch (error) {
+        console.error(error);
+        toast.error(error.message)
+      }
 
     }
   })
@@ -164,7 +169,7 @@ export default function EditProfileForm({ userData, onClose }) {
         isLoading={loading}
         className='mt-5'
       >
-        Aceptar
+        Actuaizar
       </Button>
     </form>
   )

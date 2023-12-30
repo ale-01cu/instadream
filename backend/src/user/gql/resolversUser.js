@@ -4,10 +4,12 @@ import getUser from '../controllers/getUser.js'
 import verifyToken from '../controllers/verifyToken.js'
 import deleteAvatar from '../controllers/deleteAvatar.js'
 import updateUser from '../controllers/updateUser.js'
+import searchUsers from '../controllers/searchUsers.js'
 
 const resolvers = {
   Query: {
-    getUser: (_, args) => getUser(_, args)
+    getUser: (_, args) => getUser(_, args),
+    searchUsers: (_, args, context) => searchUsers(args)
   },
   Mutation: {
     register: (_, { user }) => register(user),
