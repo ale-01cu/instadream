@@ -1,6 +1,6 @@
 import { useLazyQuery } from "@apollo/client";
 import { SEARCH_USERS } from "../gql/user";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function useSearchUsers({search = '', fetchDelay = 1500}) {
   const [searchUsers, _] = useLazyQuery(SEARCH_USERS);
@@ -9,6 +9,14 @@ export default function useSearchUsers({search = '', fetchDelay = 1500}) {
   const [isLoading, setIsLoading] = useState(false)
   const [offset, setOffset] = useState(0);
   const limit = 6;
+  let isOnLoadMore = useRef(false)
+
+  const addItems = (newItems) => {
+    setItems(prevArray => [
+      ...prevArray,
+      ...newItems.filter(nuevo => !prevArray.some(prev => prev.id === nuevo.id))
+    ]);
+  };
 
   useEffect(() => {
     setIsLoading(true)
@@ -27,14 +35,10 @@ export default function useSearchUsers({search = '', fetchDelay = 1500}) {
           throw new Error(error);
         }
 
-        const agregarElementos = (nuevosElementos) => {
-          setItems(prevArray => [
-            ...prevArray,
-            ...nuevosElementos.filter(nuevo => !prevArray.some(prev => prev.id === nuevo.id))
-          ]);
-        };
 
-        agregarElementos(data.searchUsers.data)
+
+        if(isOnLoadMore.current) addItems(data.searchUsers.data)
+        else setItems(data.searchUsers.data)
         setHasMore(data.searchUsers.next !== null)
 
       } catch (error) {
@@ -42,6 +46,8 @@ export default function useSearchUsers({search = '', fetchDelay = 1500}) {
         
       } finally {
           setIsLoading(false)
+          isOnLoadMore.current = false
+
       } 
 
     }, fetchDelay)
@@ -50,8 +56,10 @@ export default function useSearchUsers({search = '', fetchDelay = 1500}) {
 
 
   const onLoadMore = async () => {
+    isOnLoadMore.current = true
     setOffset(offset+limit)
   }
+
   
   return [items, hasMore, isLoading, onLoadMore]
 }

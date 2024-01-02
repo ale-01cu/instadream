@@ -6,12 +6,12 @@ import {
   Avatar,
   User
 } from '@nextui-org/react'
-import AvatarIcon from './AvatarIcon'
-import useAuth from '../../hooks/useAuth'
+import AvatarIcon from '../AvatarIcon'
+import useAuth from '../../../hooks/useAuth'
 import { useQuery } from '@apollo/client'
-import { GET_USER } from '../../gql/user'
-import { BASE_URL } from '../../utils/constants'
-import { deleteToken } from '../../utils/token'
+import { GET_USER } from '../../../gql/user'
+import { BASE_URL } from '../../../utils/constants'
+import { deleteToken } from '../../../utils/token'
 import { toast } from 'react-toastify'
 import { useNavigate } from "react-router-dom";
 import { useApolloClient } from '@apollo/client'

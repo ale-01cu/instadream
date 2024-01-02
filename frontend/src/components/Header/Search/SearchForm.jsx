@@ -32,7 +32,7 @@ export default function SearchForm() {
 
   return (
     <Autocomplete
-      selectorIcon={null}
+      // selectorIcon={null}
       // selectorButtonProps={
       //   {
       //     className: "hidden"
@@ -45,9 +45,7 @@ export default function SearchForm() {
       allowsCustomValue
       scrollRef={scrollerRef}
       onOpenChange={setIsOpen}
-      onClose={() => {
-        autcompleteRef.current.blur()
-      }}
+      onClose={() => autcompleteRef.current.blur()}
       classNames={{
         base: "max-w-full sm:max-w-[15rem] rounded-3xl min-w-[210px]",
         mainWrapper: "h-full",
@@ -90,31 +88,26 @@ export default function SearchForm() {
       variant="bordered"
       radius="lg"
     >
-      {
-        isLoading
-          ? ( ) => (
-              <AutocompleteItem key={'1'} textValue={'loading...'}></AutocompleteItem>
-            )
-          : (item) => (
-          <AutocompleteItem key={item.id} textValue={item.name} href={'/' + item.username}>
-            <div className="flex justify-between items-center">
-              <div className="flex gap-2 items-center">
-                <Avatar alt={item.name} className="flex-shrink-0" size="sm" src={item.avatar && `${BASE_URL}/${item.avatar}`} />
-                <div className="flex flex-col max-w-[100px]">
-                  <span className="text-small truncate ">{item.name}</span>
-                  <span className="text-tiny text-default-400">{item.username}</span>
-                </div>
+      {(item) => (
+        <AutocompleteItem key={item.id} textValue={item.name} href={'/' + item.username}>
+          <div className="flex justify-between items-center">
+            <div className="flex gap-2 items-center">
+              <Avatar alt={item.name} className="flex-shrink-0" size="sm" src={item.avatar && `${BASE_URL}/${item.avatar}`} />
+              <div className="flex flex-col max-w-[100px]">
+                <span className="text-small truncate ">{item.name}</span>
+                <span className="text-tiny text-default-400">{item.username}</span>
               </div>
-              <Button
-                className="border-small mr-0.5 font-medium shadow-small"
-                radius="full"
-                size="sm"
-                variant="bordered"
-              >
-                Add
-              </Button>
             </div>
-          </AutocompleteItem>
+            <Button
+              className="border-small mr-0.5 font-medium shadow-small"
+              radius="full"
+              size="sm"
+              variant="bordered"
+            >
+              Add
+            </Button>
+          </div>
+        </AutocompleteItem>
         )
       }
     </Autocomplete>
