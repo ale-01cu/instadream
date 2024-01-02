@@ -21,3 +21,20 @@ export default async function followers (args, context) {
     throw new FollowersError('Ocurrio un error al buscar los usuarios seguidores.')
   }
 }
+
+export const getFollowersNumber = async (args, context) => {
+  const { username } = args
+
+  try {
+    const user = await User.findOne({ username })
+    if (!user) throw new UserNotFoundError('No existe el usuario: ' + username)
+
+    return await Follow.countDocuments({
+      following: user._id
+    })
+  } catch (error) {
+    console.error(error)
+    console.error('Ocurrio un error al buscar los seguidores de un usuario.'.red)
+    throw new FollowersError('Ocurrio un error al buscar los usuarios seguidores.')
+  }
+}

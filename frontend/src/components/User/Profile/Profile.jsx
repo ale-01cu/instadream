@@ -8,6 +8,8 @@ import useAuth from '../../../hooks/useAuth'
 import { BASE_URL } from "../../../utils/constants"
 import EditProfile from "../Modals/EditProfile/EditProfile"
 import { Image } from "@nextui-org/react"
+import BtnsFollowersAndFollowing from './BtnsFollowersAndFollowing'
+import BtnFollow from './BtnFollow'
 
 export default function Profile({ username }) {
   const { data, loading, error } = useQuery(GET_USER, {
@@ -32,7 +34,7 @@ export default function Profile({ username }) {
   return (
     <div className="flex w-full max-w-5xl flex-col sm:flex-row">
       <div className="w-full sm:w-2/6 flex justify-center flex-col items-center">
-        <div className="p-2">
+        <div className="p-2 flex flex-col items-center">
           <div className="mt-10 relative max-w-max">
             <Image 
               className="rounded-full w-48 h-48 object-cover min-w-[12rem]-"
@@ -49,13 +51,15 @@ export default function Profile({ username }) {
             }
           </div>
           
-          <div className="py-7">
+          <div className="pt-7">
             <h1 className="font-bold text-2xl">{data.getUser.name}</h1>
             <p className="text-font-gray">@{data.getUser.username}</p>
             <p className="text-font-gray mt-5">Se unio en {date.toLocaleString('es-ES', { year: 'numeric', month: 'long'})}</p>
           </div>
 
-          <div>
+          <BtnsFollowersAndFollowing username={username}/>
+
+          <div className="self-start">
             {
               username == auth.username
                 && <EditProfile userData={data.getUser}/>
@@ -68,8 +72,8 @@ export default function Profile({ username }) {
         <div id="header-profile">
 
         </div>
-        <div id="followers">
-
+        <div id="follow">
+          <BtnFollow/>
         </div>
         <div id="other">
           {
