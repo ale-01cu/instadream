@@ -2,7 +2,9 @@ import connectToDatabase from './config/db.js'
 import { ApolloServer } from '@apollo/server'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 import typeDefsUser from './src/user/gql/schemaUsers.js'
+import typeDefsFollow from './src/follow/gql/schemasFollow.js'
 import resolversUser from './src/user/gql/resolversUser.js'
+import resolverFollow from './src/follow/gql/resolversFollow.js'
 import getUser from './src/user/utils/getUser.js'
 import express from 'express'
 import http from 'http'
@@ -18,8 +20,8 @@ const app = express()
 const httpServer = http.createServer(app)
 
 const apolloServer = new ApolloServer({
-  typeDefs: [typeDefsUser],
-  resolvers: [resolversUser],
+  typeDefs: [typeDefsUser, typeDefsFollow],
+  resolvers: [resolversUser, resolverFollow],
   cache: 'bounded',
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
 })
