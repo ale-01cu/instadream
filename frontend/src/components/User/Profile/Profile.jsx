@@ -57,7 +57,9 @@ export default function Profile({ username }) {
             <p className="text-font-gray mt-5">Se unio en {date.toLocaleString('es-ES', { year: 'numeric', month: 'long'})}</p>
           </div>
 
-          <BtnsFollowersAndFollowing username={username}/>
+          <div className="self-start">
+            <BtnsFollowersAndFollowing username={username}/>
+          </div>
 
           <div className="self-start">
             {
@@ -68,12 +70,12 @@ export default function Profile({ username }) {
         </div>
       </div>
 
-      <div className="w-6/6">
+      <div className="w-full flex flex-col">
         <div id="header-profile">
 
         </div>
-        <div id="follow">
-          <BtnFollow/>
+        <div id="follow" className="self-end p-8">
+          <BtnFollow username={username}/>
         </div>
         <div id="other">
           {

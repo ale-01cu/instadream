@@ -11,11 +11,11 @@ export default async function getFollowingAndFollowersNumber (args, context) {
     if (!user) throw new UserNotFoundError('No existe el usuario: ' + username)
 
     const followers = await Follow.countDocuments({
-      follower: user._id
+      following: user._id
     })
 
     const following = await Follow.countDocuments({
-      following: user._id
+      follower: user._id
     })
 
     return {

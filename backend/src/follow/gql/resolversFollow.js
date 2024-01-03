@@ -7,6 +7,7 @@ import getFollowingAndFollowersNumber from '../controllers/getFollowingAndFollow
 
 const resolvers = {
   Query: {
+    isFollow: (_, args, context) => isFollow(args, context),
     followers: (_, args, context) => getFollowers(args, context),
     following: (_, args, context) => getFollowing(args, context),
     followersNumber: (_, args, context) => getFollowersNumber(args, context),
@@ -16,8 +17,7 @@ const resolvers = {
   },
   Mutation: {
     follow: (_, args, context) => createFollow(args, context),
-    unFollow: (_, args, context) => unFollow(args, context),
-    isFollow: (_, args, context) => isFollow(args, context)
+    unFollow: (_, args, context) => unFollow(args, context)
   }
 }
 

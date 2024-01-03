@@ -20,8 +20,7 @@ export default async function unFollow (args, context) {
       following: user._id
     })
 
-    console.log(deleted)
-    return true
+    return deleted.deleteCount === 1
   } catch (error) {
     console.error(error)
     console.error('Ocurrio un error al eliminar un follow de usuarios.'.red)

@@ -5,6 +5,7 @@ const typeDefs = `
   }
 
   type Query {
+    isFollow(username: String!): Boolean
     followers(username: String!): [User]
     following(username: String): [User]
     followersNumber(username: String!): Int
@@ -15,7 +16,6 @@ const typeDefs = `
   type Mutation {
     follow(username: String!): Boolean
     unFollow(username: String!): Boolean
-    isFollow(username: String!): Boolean
 
   } 
 
