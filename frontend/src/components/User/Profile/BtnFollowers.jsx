@@ -20,7 +20,7 @@ export default function BtnsFollowers ({ username }) {
         underline="hover" 
         className="text-font-gray cursor-pointer"
         >
-          Followers
+          Seguidores
         </Link>
       <FollowersModal 
         isOpen={isOpen} 

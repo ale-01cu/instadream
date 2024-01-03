@@ -97,7 +97,7 @@ export default function Profile({ username }) {
         <div id="header-profile">
 
         </div>
-        <div id="follow" className="self-end p-8">
+        <div id="follow" className="self-end">
           <BtnFollow username={username}/>
         </div>
       </div>

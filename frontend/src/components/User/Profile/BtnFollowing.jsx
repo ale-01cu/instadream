@@ -21,7 +21,7 @@ export default function BtnsFollowing ({ username }) {
         underline="hover" 
         className="text-font-gray cursor-pointer"
         >
-          Following
+          Siguiendo
         </Link>
       <FollowingModal 
         isOpen={isOpen} 
