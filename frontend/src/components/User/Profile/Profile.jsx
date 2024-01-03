@@ -61,12 +61,35 @@ export default function Profile({ username }) {
             <BtnsFollowersAndFollowing username={username}/>
           </div>
 
-          <div className="self-start">
+          <div id="other" className="self-start flex flex-col gap-y-2">
+            <div className="">
+              {
+                data.getUser.webSite
+                  && <a 
+                      href={data.getUser.webSite} 
+                      rel="noreferrer" 
+                      target="_blank"
+                      className="text-font-gray hover:text-primary-400 transition-colors duration-100"
+                    >
+                        {data.getUser.webSite}
+                    </a>
+              }
+            </div>
+            <div>
+              {
+                data.getUser.description
+                  && <p className="text-font-gray">{data.getUser.description}</p>
+              }
+            </div>
+          </div>
+
+          <div className="self-start my-8 w-full">
             {
               username == auth.username
                 && <EditProfile userData={data.getUser}/>
             }
-          </div>  
+          </div>
+
         </div>
       </div>
 
@@ -76,22 +99,6 @@ export default function Profile({ username }) {
         </div>
         <div id="follow" className="self-end p-8">
           <BtnFollow username={username}/>
-        </div>
-        <div id="other">
-          {
-            data.getUser.webSite
-              && <a 
-                  href={data.getUser.webSite} 
-                  rel="noreferrer" 
-                  target="_blank"
-                >
-                    {data.getUser.webSite}
-                </a>
-          }
-          {
-            data.getUser.description
-              && <p>{data.getUser.description}</p>
-          }
         </div>
       </div>
 

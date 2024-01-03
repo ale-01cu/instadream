@@ -13,7 +13,7 @@ export default function EditProfile({ userData }) {
 
   return (
     <>
-      <Button onPress={onOpen} color="default" variant="bordered">
+      <Button onPress={onOpen} color="default" variant="bordered" className="w-full">
         Editar Perfil
       </Button>
       <Modal 
