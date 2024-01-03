@@ -4,7 +4,7 @@ import { FOLLOW, IS_FOLLOW, UN_FOLLOW } from "../../../gql/follow"
 import useAuth from "../../../hooks/useAuth"
 import { useState } from "react"
 import Spinner from '../../Loader'
-import { FOLLOWERS_AND_FOLLOWING_NUMBER } from "../../../gql/follow"
+import { GET_FOLLOWERS_NUMBER } from "../../../gql/follow"
 
 export default function BtnFollow ({ username /* info del usuario que se esata observando */ }) {
   // Info del usuario que esta logueado
@@ -37,19 +37,14 @@ export default function BtnFollow ({ username /* info del usuario que se esata o
         variables: { username },
       })
 
-      const { followersAndFollowingNumber } = client.readQuery({
-        query: FOLLOWERS_AND_FOLLOWING_NUMBER,
-        variables: {
-          username
-        }
+      const { followersNumber } = client.readQuery({
+        query: GET_FOLLOWERS_NUMBER,
+        variables: { username }
       });
 
       client.writeQuery({
-        query: FOLLOWERS_AND_FOLLOWING_NUMBER,
-        data: { followersAndFollowingNumber: {
-          followers: followersAndFollowingNumber.followers + 1,
-          following: followersAndFollowingNumber.following
-        }},
+        query: GET_FOLLOWERS_NUMBER,
+        data: { followersNumber: followersNumber + 1},
         variables: { username },
       });
         
@@ -75,19 +70,14 @@ export default function BtnFollow ({ username /* info del usuario que se esata o
         variables: { username },
       })
 
-      const { followersAndFollowingNumber } = client.readQuery({
-        query: FOLLOWERS_AND_FOLLOWING_NUMBER,
-        variables: {
-          username
-        }
+      const { followersNumber } = client.readQuery({
+        query: GET_FOLLOWERS_NUMBER,
+        variables: { username }
       });
 
       client.writeQuery({
-        query: FOLLOWERS_AND_FOLLOWING_NUMBER,
-        data: { followersAndFollowingNumber: {
-          followers: followersAndFollowingNumber.followers - 1,
-          following: followersAndFollowingNumber.following
-        }},
+        query: GET_FOLLOWERS_NUMBER,
+        data: { followersNumber: followersNumber - 1},
         variables: { username },
       });
       

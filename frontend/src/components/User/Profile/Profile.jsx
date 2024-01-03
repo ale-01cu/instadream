@@ -35,7 +35,7 @@ export default function Profile({ username }) {
     <div className="flex w-full max-w-5xl flex-col sm:flex-row">
       <div className="w-full sm:w-2/6 flex justify-center flex-col items-center">
         <div className="p-2 flex flex-col items-center">
-          <div className="mt-10 relative max-w-max">
+          <div className="mt-10 relative max-w-max self-start">
             <Image 
               className="rounded-full w-48 h-48 object-cover min-w-[12rem]-"
               src={

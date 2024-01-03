@@ -1,11 +1,14 @@
 import { gql } from '@apollo/client'
 
-export const FOLLOWERS_AND_FOLLOWING_NUMBER = gql`
-  query followersAndFollowingNumber($username: String!){
-    followersAndFollowingNumber(username: $username) {
-      followers
-      following
-    }
+export const GET_FOLLOWERS_NUMBER = gql`
+  query followersNumber($username: String!){
+    followersNumber(username: $username)
+  }
+
+`
+export const GET_FOLLOWING_NUMBER = gql`
+  query followingNumber($username: String!){
+    followingNumber(username: $username)
   }
 
 `
@@ -26,5 +29,27 @@ export const FOLLOW = gql`
 export const UN_FOLLOW = gql`
   mutation unFollow($username: String!) {
     unFollow(username: $username)
+  }
+`
+
+export const GET_FOLLOWERS = gql`
+  query followers($username: String!){
+    followers(username: $username) {
+      id
+      username
+      name
+      email
+    }
+  }
+`
+
+export const GET_FOLLOWING = gql`
+  query following($username: String!){
+    following(username: $username) {
+      id
+      username
+      name
+      avatar
+    }
   }
 `
