@@ -11,6 +11,7 @@ import http from 'http'
 import { expressMiddleware } from '@apollo/server/express4'
 import cors from 'cors'
 import userRouter from './src/user/routes/index.js'
+import publicationRouter from './src/publication/routes/index.js'
 import { PORT } from './config/baseConfig.js'
 import morgan from 'morgan'
 
@@ -33,6 +34,7 @@ app.use(cors())
 app.use(morgan('dev'))
 // app.use(graphqlUploadExpress({ maxFileSize: 10000, maxFiles: 1 }))
 app.use('/user', userRouter)
+app.use('/publication', publicationRouter)
 app.use('/graphql',
   cors({ origin: ['https://localhost'] }),
   express.json({ limit: '50mb' }),

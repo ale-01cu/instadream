@@ -9,7 +9,7 @@ import {
 } from '@nextui-org/react'
 import { useQuery } from '@apollo/client'
 import { GET_FOLLOWERS } from '../../../../gql/follow'
-import AvatarIcon from '../../../Header/UserMenu/UserMenu'
+import AvatarIcon from '../../UserMenu'
 import { BASE_URL } from '../../../../utils/constants'
 import { Link } from 'react-router-dom'
 

@@ -1,7 +1,7 @@
 import isTokenExpired from '../utils/isTokenExpired.js'
 import getUser from '../utils/getUser.js'
 
-export default function validateToken (req, res, next) {
+export default function authorizationMiddleware (req, res, next) {
   const token = req.headers.authorization.replace('Bearer ', '')
   if (!token) {
     return res.status(401)

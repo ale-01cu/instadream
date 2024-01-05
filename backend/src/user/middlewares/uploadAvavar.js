@@ -1,3 +1,4 @@
+import fs from 'fs'
 import multer from 'multer'
 import emptyFolder from '../utils/emptyFolder.js'
 import createRootIfNotExist from '../utils/createPathIfNotExist.js'
@@ -7,13 +8,13 @@ const storage = multer.diskStorage({
     const user = req.user
     const path = `./upload/Users/${user.username}/Avatar`
 
-    emptyFolder(path)
-    createRootIfNotExist(path)
+    if (fs.existsSync(path)) emptyFolder(path)
+    else createRootIfNotExist(path)
 
     cb(null, path)
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    const uniqueSuffix = Date.now() + Math.round(Math.random() * 1E9)
     const extensionImage = file.mimetype.split('/')[1]
     cb(null, `${uniqueSuffix}-${req.user.id}.${extensionImage}`)
   }

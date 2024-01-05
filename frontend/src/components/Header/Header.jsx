@@ -8,7 +8,7 @@ import {
 import InstadreamLogo from './InstadreamLogo'
 import DarkModeButton from '../DarkMode'
 import SearchForm from './Search/SearchForm'
-import UserMenu from './UserMenu/UserMenu'
+import UserMenu from '../User/UserMenu'
 
 export default function Header() {
 

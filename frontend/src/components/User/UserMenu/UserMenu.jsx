@@ -6,7 +6,7 @@ import {
   Avatar,
   User
 } from '@nextui-org/react'
-import AvatarIcon from '../AvatarIcon'
+import AvatarIcon from '../../Header/AvatarIcon'
 import useAuth from '../../../hooks/useAuth'
 import { useQuery } from '@apollo/client'
 import { GET_USER } from '../../../gql/user'
