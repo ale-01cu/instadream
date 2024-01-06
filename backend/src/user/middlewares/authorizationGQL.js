@@ -10,6 +10,5 @@ export default function authorizationMiddlewareGQL ({ context, next }) {
   if (!isTokenExpired(token)) {
     throw new TokenExpiredError('Token Invalido.')
   }
-
   next()
 }

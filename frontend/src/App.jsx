@@ -9,6 +9,7 @@ import AuthContext from './contexts/AuthContext'
 import useDarkMode from './hooks/useDarkMode'
 import Navigation from './routes/Navegation';
 import { useNavigate } from 'react-router-dom';
+import useVerifyToken from './hooks/useVerifyToken';
 
 function App() {
   const [ auth, setAuth ] = useState(null)

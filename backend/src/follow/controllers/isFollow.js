@@ -3,11 +3,11 @@ import User from '../../user/models/user.js'
 import UserNotFoundError from '../../user/errors/UserNotFoundError.js'
 import 'colors'
 
-export default async function isFollow (args, context) {
-  const { username } = args
+export default async function isFollow ({ args, context }) {
   const followerUser = context.user
 
   try {
+    const { username } = args
     const followingUser = await User.findOne({ username })
 
     if (!followingUser) throw new UserNotFoundError('No existe el usuario a seguir ' + username)

@@ -2,7 +2,7 @@ import User from '../models/user.js'
 import 'colors'
 import UserNotFoundError from '../errors/UserNotFoundError.js'
 
-export default async function getUser (_, args) {
+export default async function getUser ({ args }) {
   try {
     const { username } = args
     const user = await User.findOne({ username })

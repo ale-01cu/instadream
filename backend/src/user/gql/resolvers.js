@@ -24,7 +24,7 @@ const resolvers = {
 
     login: (_, { user }) => login(user),
 
-    verifyToken: (_, { token }) => verifyToken(token),
+    verifyToken: (_, args) => verifyToken(args),
 
     deleteAvatar: (_, args, context) => middlewaresController(
       args,

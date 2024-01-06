@@ -24,7 +24,7 @@ export const LOGIN = gql`
 
 
 export const GET_USER = gql`
-  query getUser($username: String){
+  query getUser($username: String!){
     getUser(username: $username){
         id
         name
@@ -52,10 +52,8 @@ export const UPDATE_AVATAR = gql`
 `
 
 export const VERIFY_TOKEN = gql`
-  mutation verifyToken($token: TokenInput) {
-    verifyToken(token: $token) {
-        isValid
-    }
+  mutation verifyToken($token: String!) {
+    verifyToken(token: $token)
   }
 `
 

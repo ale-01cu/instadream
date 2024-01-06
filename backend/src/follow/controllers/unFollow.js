@@ -4,11 +4,11 @@ import 'colors'
 import UserNotFoundError from '../../user/errors/UserNotFoundError.js'
 import FollowMySelfError from '../errors/FollowMySelfError.js'
 
-export default async function unFollow (args, context) {
-  const { username } = args
+export default async function unFollow ({ args, context }) {
   const followerUser = context.user
 
   try {
+    const { username } = args
     // Validando que los dos usuarios no sean iguales.
     if (username === followerUser.username) { throw new FollowMySelfError('Error al intentar deseguirse a si mismo un usuario.') }
 

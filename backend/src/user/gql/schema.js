@@ -32,10 +32,6 @@ const typeDefs = `#graphql
     password: String!
   }
 
-  input TokenInput {
-    token: String
-  }
-
   input UserUpdateInput {
     name: String
     username: String
@@ -57,7 +53,7 @@ const typeDefs = `#graphql
   }
 
   type Query {
-    getUser(username: String): User
+    getUser(username: String!): User
     searchUsers(input: InputSearch): SearchUsers
 
   }
@@ -70,7 +66,7 @@ const typeDefs = `#graphql
   type Mutation {
     register(user: UserInput): User
     login(user: LoginInput): Token
-    verifyToken(token: TokenInput): tokenVerify
+    verifyToken(token: String!): Boolean
     deleteAvatar: Boolean
     updateUser(input: UserUpdateInput): User
   }

@@ -3,10 +3,9 @@ import UserNotFoundError from '../../user/errors/UserNotFoundError.js'
 import FollowersError from '../errors/FollowersError.js'
 import User from '../../user/models/user.js'
 
-export default async function getFollowingAndFollowersNumber (args, context) {
-  const { username } = args
-
+export default async function getFollowingAndFollowersNumber ({ args }) {
   try {
+    const { username } = args
     const user = await User.findOne({ username })
     if (!user) throw new UserNotFoundError('No existe el usuario: ' + username)
 
