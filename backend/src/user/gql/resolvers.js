@@ -5,18 +5,40 @@ import verifyToken from '../controllers/verifyToken.js'
 import deleteAvatar from '../controllers/deleteAvatar.js'
 import updateUser from '../controllers/updateUser.js'
 import searchUsers from '../controllers/searchUsers.js'
+import middlewaresController from '../middlewares/middlewaresController.js'
+import authorizationMiddlewareGQL from '../middlewares/authorizationGQL.js'
 
 const resolvers = {
   Query: {
-    getUser: (_, args) => getUser(_, args),
+    getUser: (_, args, context) => middlewaresController(
+      args,
+      context,
+      [authorizationMiddlewareGQL],
+      getUser
+    ),
+
     searchUsers: (_, args, context) => searchUsers(args)
   },
   Mutation: {
     register: (_, { user }) => register(user),
+
     login: (_, { user }) => login(user),
+
     verifyToken: (_, { token }) => verifyToken(token),
-    deleteAvatar: (_, args, context) => deleteAvatar(context),
-    updateUser: (_, args, context) => updateUser(args, context)
+
+    deleteAvatar: (_, args, context) => middlewaresController(
+      args,
+      context,
+      [authorizationMiddlewareGQL],
+      deleteAvatar
+    ),
+
+    updateUser: (_, args, context) => middlewaresController(
+      args,
+      context,
+      [authorizationMiddlewareGQL],
+      updateUser
+    )
   }
 }
 

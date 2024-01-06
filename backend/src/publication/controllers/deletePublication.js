@@ -2,7 +2,7 @@ import Publication from '../models/publication.js'
 import PublicationContent from '../models/publicationContent.js'
 import 'colors'
 
-export default async function deletePublication (args, context) {
+export default async function deletePublication ({ args, context }) {
   const { id } = args
   const user = context.user
 

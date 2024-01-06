@@ -1,7 +1,7 @@
 import User from '../models/user.js'
 import deleteFile from '../utils/deleteFile.js'
 
-export default async function deleteAvatar (context) {
+export default async function deleteAvatar ({ context }) {
   const { id, username } = context.user
 
   try {

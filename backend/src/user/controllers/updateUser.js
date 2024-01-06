@@ -1,7 +1,8 @@
 import User from '../models/user.js'
 import UserUpdateError from '../errors/UserUpdateError.js'
 
-export default async function updateUser ({ input }, context) {
+export default async function updateUser ({ args, context }) {
+  const { input } = args
   const { username, id } = context.user
   try {
     return await User.findByIdAndUpdate(id, input)

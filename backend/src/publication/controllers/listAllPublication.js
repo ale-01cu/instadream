@@ -1,15 +1,20 @@
 import Publication from '../models/publication.js'
+import publicationContent from '../models/publicationContent.js'
 import ListPublicationError from '../errors/ListPublicationError.js'
 import 'colors'
 
-export default async function listAllPublication (args, context) {
+export default async function listAllPublication () {
   try {
     const publications = await Publication
       .find()
       .populate('user')
-      .populate('publicationContent')
 
-    return publications
+    const publicationsWithContent = publications.map(async (p) => {
+      p.content = await publicationContent.find({ publication: p._id })
+      return p
+    })
+
+    return publicationsWithContent
   } catch (error) {
     console.error(error)
     console.error('Ocurrio un error al devolver todas las publicaciones: '.red)
