@@ -24,7 +24,7 @@ export default async function createPublication (req, res) {
     })
 
     return res.status(201).json({
-      newPublication,
+      publication: newPublication,
       files: files.map(file => file.path)
     })
   } catch (error) {

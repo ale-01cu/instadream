@@ -20,8 +20,8 @@ const resolvers = middlewareControllerGlobal({
 
   },
   Mutation: {
-    follow: (_, args, context) => createFollow(args, context),
-    unFollow: (_, args, context) => unFollow(args, context)
+    follow: createFollow,
+    unFollow
   }
 }, [authorizationMiddlewareGQL])
 

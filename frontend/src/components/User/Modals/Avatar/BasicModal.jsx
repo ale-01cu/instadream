@@ -9,13 +9,13 @@ import {
 } from "@nextui-org/react";
 import CameraIcon from './CameraIcon'
 import { useRef, useState } from "react"
-import { BASE_URL } from '../../../../utils/constants'
 import { getToken } from '../../../../utils/token'
 import { GET_USER } from "../../../../gql/user";
 import { useApolloClient } from '@apollo/client'
 import { DELETE_AVATAR } from "../../../../gql/user";
 import { useMutation } from "@apollo/client";
 import { toast } from 'react-toastify'
+import { USER_UPLOAD_AVATAR_URL } from "../../../../utils/constants";
 
 export default function AvatarModal({ auth }) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -29,51 +29,56 @@ export default function AvatarModal({ auth }) {
   };
 
   const handleChangeFile = async (e, onClose) => {
-    const avatarfile = e.target.files[0]
-    event.preventDefault()
-    setIsLoadingInput(true)
-
-    const formData = new FormData();
-    formData.append('avatar', avatarfile);
-
-    const response = await fetch(`${BASE_URL}/user/upload-avatar`, {
-      method: 'post',
-      headers: {
-        Authorization: `Bearer ${getToken()}`
-      },
-      body: formData,
-    })
-    const data = await response.json()
-
-    if(response.status === 500 || response.status > 500) {
+    try {
+      const avatarfile = e.target.files[0]
+      event.preventDefault()
+      setIsLoadingInput(true)
+  
+      const formData = new FormData();
+      formData.append('avatar', avatarfile);
+  
+      const response = await fetch(USER_UPLOAD_AVATAR_URL, {
+        method: 'post',
+        headers: {
+          Authorization: `Bearer ${getToken()}`
+        },
+        body: formData,
+      })
+      const data = await response.json()
+  
+      if(response.status === 500 || response.status > 500) {
+        
+        const errorMsg = data.error
+        console.error(errorMsg);
+        toast.error(errorMsg)
       
-      const errorMsg = data.error
-      console.error(errorMsg);
-      toast.error(errorMsg)
-    
-
-    }else if(response.status >= 400 || response.status < 500) {
-      console.error(data.error);
+  
+      }else if(response.status >= 400 || response.status < 500) {
+        console.error(data.error);
+        
       
-    
-    }else {
-
-      const { avatar } = data
-      // Actualiza la cache del avatar de graphql para que se visualize el nuevo avatar al cambio
-      const { getUser } = client.readQuery({
-        query: GET_USER,
-        variables: { username: auth.username }
-      });
-      client.writeQuery({
-        query: GET_USER,
-        data: { getUser: { ...getUser, avatar } },
-        variables: { username: auth.username },
-      });
-
+      }else {
+  
+        const { avatar } = data
+        // Actualiza la cache del avatar de graphql para que se visualize el nuevo avatar al cambio
+        const { getUser } = client.readQuery({
+          query: GET_USER,
+          variables: { username: auth.username }
+        });
+        client.writeQuery({
+          query: GET_USER,
+          data: { getUser: { ...getUser, avatar } },
+          variables: { username: auth.username },
+        });
+  
+      }
+  
+      setIsLoadingInput(false)
+      onClose()
+      
+    } catch (error) {
+      console.error(error);
     }
-
-    setIsLoadingInput(false)
-    onClose()
 
   }
 

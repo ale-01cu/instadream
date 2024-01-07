@@ -6,7 +6,8 @@ import FollowingModal from "../Modals/FollowingUsers/FollowingModal";
 export default function BtnsFollowing ({ username }) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const { data, loading, error } = useQuery(GET_FOLLOWING_NUMBER, {
-    variables: { username }
+    variables: { username },
+    fetchPolicy: 'network-only'
   })
 
   if(error) return null

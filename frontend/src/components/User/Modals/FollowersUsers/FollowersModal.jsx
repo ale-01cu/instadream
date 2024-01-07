@@ -15,7 +15,8 @@ import { Link } from 'react-router-dom'
 
 export default function FollowersModal({ isOpen, onOpenChange, username }) {
   const { data, loading, error } = useQuery(GET_FOLLOWERS, {
-    variables: { username }
+    variables: { username },
+    fetchPolicy: 'network-only'
   })
 
   if(loading) return null

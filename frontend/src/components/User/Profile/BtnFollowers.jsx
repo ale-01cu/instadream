@@ -6,7 +6,8 @@ import FollowersModal from '../Modals/FollowersUsers/FollowersModal'
 export default function BtnsFollowers ({ username }) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const { data, loading, error } = useQuery(GET_FOLLOWERS_NUMBER, {
-    variables: { username }
+    variables: { username },
+    fetchPolicy: 'network-only'
   })
 
   if(error) return null

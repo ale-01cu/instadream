@@ -9,6 +9,7 @@ import InstadreamLogo from './InstadreamLogo'
 import DarkModeButton from '../DarkMode'
 import SearchForm from './Search/SearchForm'
 import UserMenu from '../User/UserMenu'
+import BtnAddPublication from './BtnAddPublication/BtnAddPublication';
 
 export default function Header() {
 
@@ -43,6 +44,7 @@ export default function Header() {
       <NavbarContent as="div" className="" justify="end">
         
         <DarkModeButton classname={'duration-200'}/>
+        <BtnAddPublication/>
         <SearchForm/>
         <UserMenu/>
         
