@@ -14,7 +14,8 @@ export default function useSearchUsers({search = '', fetchDelay = 1500}) {
   const addItems = (newItems) => {
     setItems(prevArray => [
       ...prevArray,
-      ...newItems.filter(nuevo => !prevArray.some(prev => prev.id === nuevo.id))
+      ...newItems.filter(
+        nuevo => !prevArray.some(prev => prev.id === nuevo.id))
     ]);
   };
 

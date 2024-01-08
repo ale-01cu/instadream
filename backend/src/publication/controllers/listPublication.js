@@ -16,7 +16,7 @@ export default async function listPublication ({ context }) {
       return p
     })
 
-    return publicationsWithContent
+    return publicationsWithContent.reverse()
   } catch (error) {
     console.error(error)
     console.error('Ocurrio un error al devolver todas las publicaciones del usuario: '.red + user.username)

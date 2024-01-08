@@ -16,26 +16,29 @@ export default function AddPublicationForm({ images = [], onClose, setIsLoading 
         .max(250)
     }),
     onSubmit: async (data) => {
-      setIsLoading(true)
-      const formData = new FormData()
-      formData.append('description', data.description)
-      images.forEach(image => formData.append('content', image))
-
       try {
-        const res = await fetch(PUBLICATION_URL, {
-          method: 'post',
-          headers: {
-            Authorization: `Bearer ${getToken()}`
-          },
-          body: formData
-        })
+        if(formik.values.description || images.length > 0) {
+          setIsLoading(true)
+          const formData = new FormData()
+          formData.append('description', data.description)
+          images.forEach(image => formData.append('content', image))
 
-        await res.json()
-        
-        setIsLoading(false)
-        if(res.status > 299) toast.error('Upss, lo sentimos, no se pudo crear la publicación. :(')
-        else {
-          onClose()
+          const res = await fetch(PUBLICATION_URL, {
+            method: 'post',
+            headers: {
+              Authorization: `Bearer ${getToken()}`
+            },
+            body: formData
+          })
+  
+          await res.json()
+          
+          setIsLoading(false)
+          if(res.status > 299) toast.error('Upss, lo sentimos, no se pudo crear la publicación. :(')
+          else {
+            onClose()
+          }
+
         }
       
       } catch (error) {
@@ -64,8 +67,8 @@ export default function AddPublicationForm({ images = [], onClose, setIsLoading 
             input: "resize-y min-h-[40px] bg-[transparent]",
           }}
         />
-      </div>
       <div className={`grid ${images.length === 1 || images.length === 2 ? 'grid-cols-1' : 'grid-cols-2'}`}>
+      </div>
         {
           images.map((image, index) => (
             <div 

@@ -2,7 +2,6 @@ import fs from 'fs'
 import multer from 'multer'
 import createPathIfNotExist from '../../user/utils/createPathIfNotExist.js'
 import emptyFolder from '../../user/utils/emptyFolder.js'
-let cont = 0
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -12,8 +11,7 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + Math.round(Math.random() * 1E9)
     const extensionImage = file.mimetype.split('/')[1]
-    const filename = `${cont}${uniqueSuffix}-${req.user.id}.${extensionImage}`
-    cont++
+    const filename = `${uniqueSuffix}.${extensionImage}`
     cb(null, filename)
   }
 })
@@ -33,7 +31,7 @@ const fileFilter = (req, file, cb) => {
 // Esta funcion es para guardar todos los ficheros de la publicacion
 // en la misma carpeta que representa la publicacion
 export default function (req, res, next) {
-  const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+  const uniqueSuffix = Date.now() + Math.round(Math.random() * 1E9)
   const user = req.user
   const path = `./upload/Users/${user.username}/Publications/${uniqueSuffix}`
 

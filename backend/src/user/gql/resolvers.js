@@ -17,7 +17,12 @@ const resolvers = {
       getUser
     ),
 
-    searchUsers: (_, args, context) => searchUsers(args)
+    searchUsers: (_, args, context) => middlewaresController(
+      args,
+      context,
+      [authorizationMiddlewareGQL],
+      searchUsers
+    )
   },
   Mutation: {
     register: (_, { user }) => register(user),

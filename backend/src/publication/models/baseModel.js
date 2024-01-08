@@ -1,8 +1,7 @@
 const BasePublication = {
   description: {
     type: String,
-    trim: true,
-    maxLength: 160
+    trim: true
   },
 
   status: {

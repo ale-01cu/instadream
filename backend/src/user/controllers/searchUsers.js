@@ -2,9 +2,11 @@ import User from '../models/user.js'
 import 'colors'
 import SearchError from '../errors/SearchError.js'
 
-export default async function searchUsers ({ input }, context) {
+export default async function searchUsers ({ args, context }) {
   try {
+    const { input } = args
     const { search, offset, limit } = input
+    const { username } = context.user
 
     const count = await User.countDocuments({
       $or: [
@@ -14,9 +16,14 @@ export default async function searchUsers ({ input }, context) {
     })
 
     const users = await User.find({
-      $or: [
-        { name: { $regex: search, $options: 'i' } },
-        { username: { $regex: search, $options: 'i' } }
+      $and: [
+        { username: { $ne: username } },
+        {
+          $or: [
+            { name: { $regex: search, $options: 'i' } },
+            { username: { $regex: search, $options: 'i' } }
+          ]
+        }
       ]
     })
       .skip(offset)

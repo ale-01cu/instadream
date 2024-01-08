@@ -8,7 +8,7 @@ export default function BtnAddPublication() {
 
   return (
     <>
-      <Button onPress={onOpen} isIconOnly aria-label="add-publication" color='warning'>
+      <Button onPress={onOpen} isIconOnly aria-label="add-publication" className='bg-transparent'>
         <AddIcon />
       </Button>
       <AddPublicationModal isOpen={isOpen} onOpenChange={onOpenChange}/>

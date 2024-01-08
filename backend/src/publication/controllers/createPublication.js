@@ -1,10 +1,16 @@
 import Publication from '../models/publication.js'
 import PublicationContent from '../models/publicationContent.js'
+import { UPLOAD_ROOT } from '../../../config/baseConfig.js'
 
 export default async function createPublication (req, res) {
   const { id } = req.user
   const { description } = req.body
-  const files = req.files
+  const files = req.files.map(file => {
+    return {
+      ...file,
+      path: file.path.split(UPLOAD_ROOT)[1]
+    }
+  })
 
   try {
     // Crea una nueva publication
