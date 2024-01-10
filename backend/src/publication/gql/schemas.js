@@ -14,8 +14,13 @@ type Publication {
   createAt: String
 }
 
+type ListPublication {
+  next: Boolean
+  data: [Publication]
+}
+
 type Query {
-  listAllPublication: [Publication]
+  listAllPublication(lastId: ID): ListPublication
   listPublication: [Publication]
 }
 

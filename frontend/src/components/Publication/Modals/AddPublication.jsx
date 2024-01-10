@@ -32,6 +32,7 @@ export default function AddPublication({ isOpen, onOpenChange }) {
                   images={images} 
                   onClose={onClose} 
                   setIsLoading={setIsLoading}
+                  setImages={setImages}
                 />
               </ModalBody>
               <ModalFooter className="flex justify-between">

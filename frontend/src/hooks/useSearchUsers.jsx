@@ -3,7 +3,7 @@ import { SEARCH_USERS } from "../gql/user";
 import { useEffect, useRef, useState } from "react";
 
 export default function useSearchUsers({search = '', fetchDelay = 1500}) {
-  const [searchUsers, _] = useLazyQuery(SEARCH_USERS);
+  const [searchUsers] = useLazyQuery(SEARCH_USERS);
   const [items, setItems] = useState([])
   const [hasMore, setHasMore] = useState(true)
   const [isLoading, setIsLoading] = useState(false)

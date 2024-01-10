@@ -1,23 +1,26 @@
 import { gql } from '@apollo/client'
 
 export const LIST_ALL_PUBLICATIONS = gql`
-  query listAllPublication {
-    listAllPublication {
-      id
-      description
-      user {
+  query listAllPublication($lastId: ID) {
+    listAllPublication(lastId: $lastId) {
+      next
+      data {
         id
-        name
-        username
-        avatar
+        description
+        user {
+          id
+          name
+          username
+          avatar
       
+        }
+        content {
+          id
+          path
+        }
+        createAt
       }
-      content {
-        id
-        path
-      }
-      createAt
-    
+        
     }
 
   }

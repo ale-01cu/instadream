@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import { Textarea } from "@nextui-org/react";
 import { toast } from "react-toastify";
 
-export default function AddPublicationForm({ images = [], onClose, setIsLoading }){
+export default function AddPublicationForm({ images = [], setImages, onClose, setIsLoading }){
   const formik = useFormik({
     initialValues: {
       description: ''
@@ -36,6 +36,7 @@ export default function AddPublicationForm({ images = [], onClose, setIsLoading 
           setIsLoading(false)
           if(res.status > 299) toast.error('Upss, lo sentimos, no se pudo crear la publicación. :(')
           else {
+            setImages([])
             onClose()
           }
 

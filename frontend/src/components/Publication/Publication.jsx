@@ -17,24 +17,25 @@ export default function Publication({ publicationData }) {
 
   useEffect(() => {
     // Convierte el timestamp a un objeto Date
-    let fechaPasada = new Date(Number(createAt));
-
+    let createAtPublication = new Date(Number(createAt));
     // Obtén la fecha y hora actuales
-    let ahora = new Date();
-
+    let now = new Date();
     // Calcula la diferencia en milisegundos
-    let diferencia = ahora - fechaPasada;
+    let diference = now - createAtPublication;
     // Convierte la diferencia a segundos, minutos, horas, días, etc. según lo necesites
-    let segundos = Math.floor(diferencia / 1000);
-    let minutos = Math.floor(segundos / 60);
-    let horas = Math.floor(minutos / 60);
-    let dias = Math.floor(horas / 24);
+    let seconds = Math.floor(diference / 1000);
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
+    let days = Math.floor(hours / 24);
 
-    if(dias > 31) setSince(fechaPasada.toLocaleString('es-ES', { month: 'long' }));
-    else if(dias) setSince(dias + ' d');
-    else if(horas) setSince(horas + ' h');
-    else if(minutos) setSince(minutos + ' m');
-    else setSince(segundos + ' s');
+    if(days > 31) setSince(createAtPublication.toLocaleString(
+      'es-ES', 
+      { month: 'long' 
+    }));
+    else if(days) setSince(days + ' d');
+    else if(hours) setSince(hours + ' h');
+    else if(minutes) setSince(minutes + ' m');
+    else setSince(seconds + ' s');
   }, [createAt])
 
   return (
