@@ -1,25 +1,28 @@
-import { useLazyQuery } from "@apollo/client";
-import { LIST_ALL_PUBLICATIONS } from "../gql/publication";
 import { useState, useEffect } from "react";
 
-export default function useInfinityScroll(refViewFinder) {
-  const [offset, setOffset] = useState(1)
-  const [isViewFinder, setIsViewFinder] = useState(false)
-  const [ data, setData ] = useState([])
-  const [ listAllPublication ] = useLazyQuery(LIST_ALL_PUBLICATIONS)
-
+export default function useInfinityScroll(data, fetchMore, refViewFinder) {
+  const [ isLoadingFetchMore, setIsLoadingFetchMore ] = useState(false)
 
   useEffect(() => {
     let observer = null
     const target = refViewFinder.current
 
-    const onLoadMore = (entries) => {
-      console.log('observando: cargando mas data...');
+    const onLoadMore = async (entries) => {
+      const element = entries[0]
+      if(element.isIntersecting) {
+        setIsLoadingFetchMore(true)
+        const dataSize = data.data.length
+        const lastItem = data.data[ dataSize - 1 ]
+        const lastId = lastItem.id
+
+        fetchMore({variables: { lastId }})
+        .then(() => setIsLoadingFetchMore(false))
+      }
     }
     
-    if (!isViewFinder) {
+    if (data?.next) {
         observer = new IntersectionObserver(onLoadMore, {
-          rootMargin: '50px',
+          rootMargin: '200px',
         })
 
         if (target) observer.observe(target)
@@ -31,8 +34,8 @@ export default function useInfinityScroll(refViewFinder) {
       }
     }
 
-  }, [isViewFinder, refViewFinder, listAllPublication, offset])
+  }, [data, fetchMore, refViewFinder])
 
+  return isLoadingFetchMore
 
-  return [data]
 }
