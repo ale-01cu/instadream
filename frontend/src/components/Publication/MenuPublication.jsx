@@ -21,7 +21,7 @@ export default function MenuPublication({ idPublication, refetchPublications }) 
       const data = await deletePublication({
         variables: { id: idPublication }
       })
-      const isDeleted = data.deletePublication
+      const isDeleted = data.data.deletePublication
       if(isDeleted) await client.refetchQueries({
         include: [LIST_PUBLICATION]
       })

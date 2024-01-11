@@ -46,7 +46,7 @@ export default function Publication({ publicationData, BtnDelete, refetchPublica
 
   return (
     <Card 
-      className="w-full sm:w-[440px] max-w-[440px] max-h-[600px] p-5"
+      className="w-full sm:w-[440px] max-w-[440px] p-5"
       classNames={{
         base: 'bg-transparent hover:bg-default-50 cursor-pointer'
       }}  
@@ -86,9 +86,11 @@ export default function Publication({ publicationData, BtnDelete, refetchPublica
               >
                 <Image
                   alt="Card background"
-                  className="object-cover rounded-xl"
+                  className={`object-cover ${content.length === 3 ? 'h-full w-full' : ''} rounded-xl`}
                   src={BASE_URL + '/' + c.path}
-                  width={270}
+                  classNames={{
+                    wrapper: `${content.length === 3 ? 'h-full w-full' : ''}`
+                  }}
                 />
               </div>
             ))

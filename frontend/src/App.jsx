@@ -1,6 +1,4 @@
-import { ApolloProvider } from '@apollo/client'
 import { useState, useEffect, useMemo } from 'react'
-import client from './config/apollo'
 import Auth from './pages/Auth'
 import {NextUIProvider} from "@nextui-org/react";
 import {ToastContainer} from 'react-toastify'
@@ -12,16 +10,16 @@ import { useNavigate } from 'react-router-dom';
 import useVerifyToken from './hooks/useVerifyToken';
 
 function App() {
+  const [ isValid, token ] = useVerifyToken()
   const [ auth, setAuth ] = useState(null)
   const [ isDarkMode, setIsDarkMode ] = useDarkMode()
   const navegate = useNavigate()
   
   useEffect(() => {
-    const token = getToken()
     if(token) setAuth(decodeToken(token))
     else setAuth(null)
     
-  }, [ setAuth ])
+  }, [ token ])
 
   
   const setUser = user => {
@@ -39,29 +37,27 @@ function App() {
   if(getToken() && auth === null) return null
 
   return (
-    <ApolloProvider client={client}>
-        <AuthContext.Provider value={authData}>
-          <NextUIProvider navigate={navegate}>
-            {
-              !auth
-                ? <Auth/>
-                : <Navigation/>
-            }
-          </NextUIProvider>
-          <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={true}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme={isDarkMode ? "dark" : "light"}
-          />
-      </AuthContext.Provider>
-    </ApolloProvider>
+    <AuthContext.Provider value={authData}>
+      <NextUIProvider navigate={navegate}>
+        {
+          !auth && !isValid
+            ? <Auth/>
+            : <Navigation/>
+        }
+      </NextUIProvider>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={isDarkMode ? "dark" : "light"}
+      />
+  </AuthContext.Provider>
   )
 }
 

@@ -1,16 +1,16 @@
 import { TOKEN } from './constants'
 import { jwtDecode } from 'jwt-decode'
 
-export function setToken(token) {
+export function setToken(token, isSessionStorage) {
 
-  window.localStorage.setItem(TOKEN, token);
-
+  window.sessionStorage.setItem(TOKEN, token)
+  if(!isSessionStorage) window.localStorage.setItem(TOKEN, token);
 }
 
 
 export function getToken() {
 
-  return window.localStorage.getItem(TOKEN);
+  return window.sessionStorage.getItem(TOKEN);
 
 }
 
