@@ -21,7 +21,7 @@ type ListPublication {
 
 type Query {
   listAllPublication(lastId: ID): ListPublication
-  listPublication: [Publication]
+  listPublication(lastId: ID, username: String!): ListPublication
 }
 
 type Mutation {

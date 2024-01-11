@@ -1,34 +1,46 @@
-import { LIST_ALL_PUBLICATIONS } from "../../gql/publication"
 import { useQuery } from "@apollo/client"
 import Publication from './Publication'
-import { useRef, useEffect, useCallback, useState } from "react"
+import { useEffect, useRef } from "react"
 import { Spinner } from "@nextui-org/react"
 import useInfinityScroll from "../../hooks/useInfinityScroll"
 
-export default function ListPublication () {
+export default function ListPublication (props) {
+  const { 
+    queryGQLName = '', 
+    queryGQL, 
+    BtnDelete, 
+    username } = props
   const refViewFinder = useRef()
-  const { data, loading, error, fetchMore } = useQuery(
-    LIST_ALL_PUBLICATIONS, {
-    variables: {}
+  const { data, loading, error, fetchMore, refetch } = useQuery(
+    queryGQL, {
+    variables: { username }
   })
   const isLoadingFetchMore = useInfinityScroll(
-    data?.listAllPublication, 
+    data && data[queryGQLName], 
     fetchMore, 
-    refViewFinder
+    refViewFinder,
+    username
   )
+
+  useEffect(() => {
+    refetch()
+  }, [username, refetch])
 
   if(loading) return null
   if(error) return null
 
-
   return (
     <div className="flex flex-col items-center">
       {
-        data.listAllPublication.data.map( publication => (
-          <Publication key={publication.id} publicationData={publication}/>
+        data[queryGQLName].data.map( publication => (
+          <Publication 
+            key={publication.id} 
+            publicationData={publication} 
+            BtnDelete={BtnDelete}
+            refetchPublications={refetch}
+          />
         ))
       }
-      <div id='viewfinder' className="" ref={refViewFinder}></div>
       {
         isLoadingFetchMore
           ? <div className="p-6">
@@ -36,7 +48,7 @@ export default function ListPublication () {
             </div>
           : null
       }
-
+      <div id='viewfinder' className="" ref={refViewFinder}></div>
     </div>
   )
 }

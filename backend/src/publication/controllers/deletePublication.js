@@ -7,13 +7,14 @@ export default async function deletePublication ({ args, context }) {
   const user = context.user
 
   try {
-    const deletedPublication = await Publication.findOneAndDelete({
-      user: user._id, id
+    await Publication.findOneAndDelete({
+      user: user.id,
+      _id: id
     })
 
-    await PublicationContent.findAndDelete({
-      user: user._id,
-      publication: deletedPublication._id
+    await PublicationContent.deleteMany({
+      user: user.id,
+      publication: id
     })
 
     return true

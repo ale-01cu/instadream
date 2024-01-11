@@ -2,7 +2,6 @@ import {
   Card,
   Button,
   CardHeader,
-  CardBody,
   CardFooter,
   Avatar,
   Image
@@ -10,10 +9,17 @@ import {
  import { BASE_URL } from '../../utils/constants'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import useAuth from '../../hooks/useAuth'
 
-export default function Publication({ publicationData }) {
-  const { user, description, content, createAt } = publicationData
+export default function Publication({ publicationData, BtnDelete, refetchPublications }) {
+  const {
+    id, 
+    user, 
+    description, 
+    content, 
+    createAt } = publicationData
   const [ since, setSince ] = useState(null)
+  const { auth } = useAuth()
 
   useEffect(() => {
     // Convierte el timestamp a un objeto Date
@@ -40,7 +46,7 @@ export default function Publication({ publicationData }) {
 
   return (
     <Card 
-      className="w-[440px] max-w-[440px] max-h-[600px] p-5"
+      className="w-full sm:w-[440px] max-w-[440px] max-h-[600px] p-5"
       classNames={{
         base: 'bg-transparent hover:bg-default-50 cursor-pointer'
       }}  
@@ -60,9 +66,13 @@ export default function Publication({ publicationData }) {
             </div>
           </div>
         </Link>
+        {
+          (BtnDelete && auth.username === user.username ) &&
+            <BtnDelete idPublication={id} refetchPublications={refetchPublications}/>
+        }
       </CardHeader>
       <div className="px-3 py-0 text-small text-default-400">
-        <p>
+        <p className='text-lg'>
           {description}
         </p>
         <div className={`py-5 grid ${content.length === 1 || content.length === 2 ? 'grid-cols-1' : 'grid-cols-2'}`}>
@@ -93,18 +103,17 @@ export default function Publication({ publicationData }) {
       </div>
       <CardFooter className="gap-3">
         <div className="flex gap-1">
-          <p className="font-semibold text-default-400 text-small">4</p>
-          <p className=" text-default-400 text-small">Reacciones</p>
+          <p className="font-semibold text-default-400 text-lg">4</p>
+          <p className=" text-default-400 text-lg">Reacciones</p>
         </div>
         <div className="flex gap-1">
-          <p className="font-semibold text-default-400 text-small">97.1K</p>
-          <p className="text-default-400 text-small">Reposts</p>
+          <p className="font-semibold text-default-400 text-lg">97.1K</p>
+          <p className="text-default-400 text-lg">Reposts</p>
         </div>
         <div className="flex gap-1">
-          <p className="font-semibold text-default-400 text-small">97.1K</p>
-          <p className="text-default-400 text-small">Comentarios</p>
+          <p className="font-semibold text-default-400 text-lg">97.1K</p>
+          <p className="text-default-400 text-lg">Comentarios</p>
         </div>
-        
       </CardFooter>
     </Card>
   )

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function useInfinityScroll(data, fetchMore, refViewFinder) {
+export default function useInfinityScroll(data, fetchMore, refViewFinder, username) {
   const [ isLoadingFetchMore, setIsLoadingFetchMore ] = useState(false)
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function useInfinityScroll(data, fetchMore, refViewFinder) {
         const lastItem = data.data[ dataSize - 1 ]
         const lastId = lastItem.id
 
-        fetchMore({variables: { lastId }})
+        fetchMore({variables: { lastId, username }})
         .then(() => setIsLoadingFetchMore(false))
       }
     }
@@ -34,7 +34,7 @@ export default function useInfinityScroll(data, fetchMore, refViewFinder) {
       }
     }
 
-  }, [data, fetchMore, refViewFinder])
+  }, [data, fetchMore, refViewFinder, username])
 
   return isLoadingFetchMore
 

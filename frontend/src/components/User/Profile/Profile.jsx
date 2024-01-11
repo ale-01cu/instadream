@@ -10,6 +10,9 @@ import EditProfile from "../Modals/EditProfile/EditProfile"
 import { Image } from "@nextui-org/react"
 import BtnsFollowersAndFollowing from './BtnsFollowersAndFollowing'
 import BtnFollow from './BtnFollow'
+import ListPublication from "../../Publication/ListPublication"
+import { LIST_PUBLICATION } from "../../../gql/publication"
+import MenuPublication from "../../Publication/MenuPublication"
 
 export default function Profile({ username }) {
   const { data, loading, error } = useQuery(GET_USER, {
@@ -32,8 +35,8 @@ export default function Profile({ username }) {
   const date = new Date(Number(data.getUser.createAt));
 
   return (
-    <div className="flex w-full max-w-5xl flex-col sm:flex-row">
-      <div className="w-full sm:w-2/6 flex justify-center flex-col items-center">
+    <div className="flex w-full max-w-5xl flex-col sm:flex-row px-8">
+      <div className="w-full sm:w-2/6 flex flex-col">
         <div className="p-2 flex flex-col items-center">
           <div className="mt-10 relative max-w-max self-start">
             <Image 
@@ -93,11 +96,16 @@ export default function Profile({ username }) {
         </div>
       </div>
 
-      <div className="w-full flex flex-col">
-        <div id="header-profile">
-
+      <div className="w-full flex flex-col-reverse self-start">
+        <div className="" id="publications-profile">
+          <ListPublication 
+            queryGQLName='listPublication' 
+            queryGQL={LIST_PUBLICATION}
+            username={username}
+            BtnDelete={MenuPublication}
+          />
         </div>
-        <div id="follow" className="self-end">
+        <div id="follow" className="self-end py-5">
           <BtnFollow username={username}/>
         </div>
       </div>
