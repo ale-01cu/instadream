@@ -25,6 +25,7 @@ export function decodeToken(token) {
 export function deleteToken() {
 
   window.localStorage.removeItem(TOKEN)
+  window.sessionStorage.removeItem(TOKEN)
   const token = getToken()
   if(token) return false
   return true
