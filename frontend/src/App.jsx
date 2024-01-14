@@ -8,6 +8,7 @@ import useDarkMode from './hooks/useDarkMode'
 import Navigation from './routes/Navegation';
 import { useNavigate } from 'react-router-dom';
 import useVerifyToken from './hooks/useVerifyToken';
+import connectWithIndexDB from './config/indexDB';
 
 function App() {
   const [ isValid, token ] = useVerifyToken()
@@ -15,6 +16,10 @@ function App() {
   const [ isDarkMode, setIsDarkMode ] = useDarkMode()
   const navegate = useNavigate()
   
+  useEffect(() => {
+    connectWithIndexDB()
+  }, [])
+
   useEffect(() => {
     if(token) setAuth(decodeToken(token))
     else setAuth(null)

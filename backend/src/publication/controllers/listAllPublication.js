@@ -2,8 +2,7 @@ import Publication from '../models/publication.js'
 import publicationContent from '../models/publicationContent.js'
 import ListPublicationError from '../errors/ListPublicationError.js'
 import 'colors'
-
-const limit = 5
+import { PAGINATION_LIMIT } from '../../../config/baseConfig.js'
 
 export default async function listAllPublication ({ args }) {
   try {
@@ -19,11 +18,11 @@ export default async function listAllPublication ({ args }) {
       .find(query)
       .populate('user')
       .sort({ _id: 1 })
-      .limit(limit + 1)
+      .limit(PAGINATION_LIMIT + 1)
 
     let next = false
 
-    if (publications.length > limit) {
+    if (publications.length > PAGINATION_LIMIT) {
       next = true
       publications.pop() // Eliminamos el último elemento que solo se usó para verificar si hay un siguiente
     }

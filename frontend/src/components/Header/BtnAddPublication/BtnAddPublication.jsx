@@ -12,7 +12,7 @@ export default function BtnAddPublication() {
         isIconOnly 
         aria-label="add-publication" 
         className='' 
-        color='warning'
+        color='success'
       >
         <AddIcon />
       </Button>

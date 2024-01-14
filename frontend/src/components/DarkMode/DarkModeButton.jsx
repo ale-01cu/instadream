@@ -11,7 +11,7 @@ export default function DarkMode ({classname}) {
     <Button 
       onClick={() => setIsDarkMode(!isDarkMode)} 
       className={classname}
-      color='warning'
+      color='primary'
     >
       {
         isDarkMode

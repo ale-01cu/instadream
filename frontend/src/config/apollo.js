@@ -36,12 +36,17 @@ const client = new ApolloClient({
             },
           },
           listPublication: {
-            // Don't cache separate results based on
-            // any of this field's arguments.
+            keyArgs: false,
+            merge(existing = {}, incoming) {
+              const newData = {...incoming};
+              if(existing.data) newData.data = [...existing.data, ...incoming.data]
+              else  newData.data = [...incoming.data]
+              return newData;
+            },
+          },
+          searchUsers: {
             keyArgs: false,
 
-            // Concatenate the incoming list items with
-            // the existing list items.
             merge(existing = {}, incoming) {
               const newData = {...incoming};
               if(existing.data) newData.data = [...existing.data, ...incoming.data]

@@ -1,43 +1,50 @@
 import User from '../models/user.js'
 import 'colors'
-import SearchError from '../errors/SearchError.js'
+import { PAGINATION_LIMIT } from '../../../config/baseConfig.js'
 
-export default async function searchUsers ({ args, context }) {
+export default async function searchUsers (req, res) {
   try {
-    const { input } = args
-    const { search, offset, limit } = input
-    const { username } = context.user
+    const { s, lastId } = req.query
+    const { username } = req.user
 
-    const count = await User.countDocuments({
-      $or: [
-        { name: { $regex: search, $options: 'i' } },
-        { username: { $regex: search, $options: 'i' } }
-      ]
-    })
+    let query = {}
+    if (lastId) {
+      query = { _id: { $gt: lastId } }
+    }
 
     const users = await User.find({
       $and: [
-        { username: { $ne: username } },
+        {
+          username: { $ne: username }
+        },
+        query,
         {
           $or: [
-            { name: { $regex: search, $options: 'i' } },
-            { username: { $regex: search, $options: 'i' } }
+            { name: { $regex: s, $options: 'i' } },
+            { username: { $regex: s, $options: 'i' } }
           ]
         }
       ]
     })
-      .skip(offset)
-      .limit(limit)
+      .skip({ _id: 1 })
+      .limit(PAGINATION_LIMIT + 1)
 
-    return {
-      count,
-      previous: offset === 0 ? null : offset - 1,
-      next: count - (offset + limit) > 0 ? offset + limit : null,
-      data: users
+    let next = false
+
+    if (users.length > PAGINATION_LIMIT) {
+      next = true
+      users.pop()
     }
+
+    return res.json({
+      data: users,
+      next
+    })
   } catch (error) {
     console.error(error)
     console.error('Error al realizar una busqueda de usuarios.'.red)
-    throw new SearchError('La busqueda fallo.')
+    return res
+      .status(500)
+      .json({ message: 'La busqueda fallo.' })
   }
 }

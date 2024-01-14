@@ -4,7 +4,6 @@ import getUser from '../controllers/getUser.js'
 import verifyToken from '../controllers/verifyToken.js'
 import deleteAvatar from '../controllers/deleteAvatar.js'
 import updateUser from '../controllers/updateUser.js'
-import searchUsers from '../controllers/searchUsers.js'
 import middlewaresController from '../middlewares/middlewaresController.js'
 import authorizationMiddlewareGQL from '../middlewares/authorizationGQL.js'
 
@@ -15,13 +14,6 @@ const resolvers = {
       context,
       [authorizationMiddlewareGQL],
       getUser
-    ),
-
-    searchUsers: (_, args, context) => middlewaresController(
-      args,
-      context,
-      [authorizationMiddlewareGQL],
-      searchUsers
     )
   },
   Mutation: {

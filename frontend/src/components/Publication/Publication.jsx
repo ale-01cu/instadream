@@ -1,6 +1,5 @@
 import { 
   Card,
-  Button,
   CardHeader,
   CardFooter,
   Avatar,
@@ -11,7 +10,7 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import useAuth from '../../hooks/useAuth'
 
-export default function Publication({ publicationData, BtnDelete, refetchPublications }) {
+export default function Publication({ publicationData, MenuPublication }) {
   const {
     id, 
     user, 
@@ -67,8 +66,8 @@ export default function Publication({ publicationData, BtnDelete, refetchPublica
           </div>
         </Link>
         {
-          (BtnDelete && auth.username === user.username ) &&
-            <BtnDelete idPublication={id} refetchPublications={refetchPublications}/>
+          (MenuPublication && auth.username === user.username ) &&
+            <MenuPublication idPublication={id}/>
         }
       </CardHeader>
       <div className="px-3 py-0 text-small text-default-400">

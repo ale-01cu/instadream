@@ -1,15 +1,11 @@
-import { useLazyQuery } from "@apollo/client";
-import { SEARCH_USERS } from "../gql/user";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { getToken } from '../utils/token'
 
 export default function useSearchUsers({search = '', fetchDelay = 1500}) {
-  const [searchUsers] = useLazyQuery(SEARCH_USERS);
   const [items, setItems] = useState([])
   const [hasMore, setHasMore] = useState(true)
+  const [lastId, setLastId] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [offset, setOffset] = useState(0);
-  const limit = 6;
-  let isOnLoadMore = useRef(false)
 
   const addItems = (newItems) => {
     setItems(prevArray => [
@@ -23,42 +19,48 @@ export default function useSearchUsers({search = '', fetchDelay = 1500}) {
     setIsLoading(true)
     const getData = setTimeout(async () => {
       try {
-
-        const {data, error } = await searchUsers({
-          variables: { inputSearch: { 
-            search,
-            offset,
-            limit
-          }},
+        const url = `http://localhost:4000/user/search?s=${search}&lastId=`
+        const res = await fetch(url, {
+          headers: {
+            Authorization: getToken()
+          }
         })
+        const data = await res.json()
 
-        if (error) {
-          throw new Error(error);
-        }
-
-
-
-        if(isOnLoadMore.current) addItems(data.searchUsers.data)
-        else setItems(data.searchUsers.data)
-        setHasMore(data.searchUsers.next !== null)
+        console.log(data);
+        console.log(data.data[data.data.length - 1]._id);
+        setItems(data.data)
+        setHasMore(data.next ? true : false)
+        setLastId(data.data[data.data.length - 1]._id)
 
       } catch (error) {
           console.error("There was an error with the fetch operation:", error);
         
       } finally {
           setIsLoading(false)
-          isOnLoadMore.current = false
-
       } 
 
     }, fetchDelay)
     return () => clearTimeout(getData)
-  }, [search, searchUsers, fetchDelay, offset])
+  }, [search, fetchDelay])
 
 
   const onLoadMore = async () => {
-    isOnLoadMore.current = true
-    setOffset(offset+limit)
+    try {
+      const url = `http://localhost:4000/user/search?s=${search}&lastId=${lastId}`
+      const res = await fetch(url, {
+        headers: {
+          Authorization: getToken()
+        }
+      })
+      const data = await res.json()
+
+      addItems(data.data)
+      setHasMore(data.next ? true : false)
+      setLastId(data.data[data.data.length - 1].id)
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   

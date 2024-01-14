@@ -4,11 +4,13 @@ import {
   Autocomplete, 
   AutocompleteItem, 
   Avatar, 
-  Button 
+  AutocompleteSection,
+  autocomplete,
 } from "@nextui-org/react";
 import { BASE_URL } from "../../../utils/constants";
 import useSearchUsers from "../../../hooks/useSearchUsers";
 import {useInfiniteScroll} from "@nextui-org/use-infinite-scroll";
+import { Spinner } from "@nextui-org/react";
 
 export default function SearchForm() {
   const autcompleteRef = useRef(null)
@@ -32,12 +34,9 @@ export default function SearchForm() {
 
   return (
     <Autocomplete
-      // selectorIcon={null}
-      // selectorButtonProps={
-      //   {
-      //     className: "hidden"
-      //   }
-      // }
+      id="autocomplete"
+      selectorIcon={null}
+      selectorButtonProps={{ className: "hidden" }}
       isLoading={isLoading}
       ref={autcompleteRef}
       onInputChange={handleChange}
@@ -49,6 +48,7 @@ export default function SearchForm() {
       classNames={{
         base: "max-w-full sm:max-w-[15rem] rounded-3xl min-w-[210px]",
         mainWrapper: "h-full",
+        listbox: 'bg-primary-800'
       }}
       defaultItems={items ? items : []}
       inputProps={{
@@ -57,6 +57,7 @@ export default function SearchForm() {
           inputWrapper: "h-[48px] py-[0.2rem] border-0 h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
         },
       }}
+      
       listboxProps={{
         hideSelectedIcon: true,
         itemClasses: {
@@ -78,37 +79,67 @@ export default function SearchForm() {
       popoverProps={{
         offset: 10,
         classNames: {
-          base: "rounded-large",
+          base: "rounded-large fixed",
           content: "p-1 border-small border-default-100 bg-background",
         },
       }}
       startContent={
-        <SearchIcon className="text-default-600 w-6 h-6" strokeWidth={2.5} size={20} />
+        <SearchIcon 
+          className="text-default-600 w-6 h-6" 
+          strokeWidth={2.5} 
+          size={20} 
+        />
       }
       variant="bordered"
       radius="lg"
     >
-      {(item) => (
-        <AutocompleteItem key={item.id} textValue={item.name} href={'/' + item.username}>
-          <div className="flex justify-between items-center">
-            <div className="flex gap-2 items-center">
-              <Avatar alt={item.name} className="flex-shrink-0" size="sm" src={item.avatar && `${BASE_URL}/${item.avatar}`} />
-              <div className="flex flex-col max-w-[100px]">
-                <span className="text-small truncate ">{item.name}</span>
-                <span className="text-tiny text-default-400">{item.username}</span>
-              </div>
-            </div>
-            <Button
-              className="border-small mr-0.5 font-medium shadow-small"
-              radius="full"
-              size="sm"
-              variant="bordered"
-            >
-              Add
-            </Button>
-          </div>
-        </AutocompleteItem>
-        )
+      {
+        isLoading &&
+          <AutocompleteSection>
+            <AutocompleteItem key='spinner'>
+              <Spinner className="flex justify-center"/>
+            </AutocompleteItem>
+          </AutocompleteSection>
+
+      }
+      {
+        !search 
+          ?
+            <AutocompleteSection>
+              <AutocompleteItem>
+                Reciente
+              </AutocompleteItem>
+              <AutocompleteItem>
+                almejo 1
+              </AutocompleteItem>
+              <AutocompleteItem>
+                almejo 2
+              </AutocompleteItem>
+              <AutocompleteItem>
+                almejo 3
+              </AutocompleteItem>
+            </AutocompleteSection>
+          :
+            <AutocompleteSection>
+              {
+                items?.map(item => (
+                  <AutocompleteItem key={item._id} textValue={item.name} href={'/' + item.username}>
+                    <div className="flex gap-2 items-center">
+                      <Avatar 
+                        alt={item.name} 
+                        className="flex-shrink-0" 
+                        size="sm" 
+                        src={item.avatar && `${BASE_URL}/${item.avatar}`} 
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-small truncate ">{item.name}</span>
+                        <span className="text-tiny text-default-400">@{item.username}</span>
+                      </div>
+                    </div>
+                  </AutocompleteItem>
+                ))
+              }
+            </AutocompleteSection>
       }
     </Autocomplete>
 

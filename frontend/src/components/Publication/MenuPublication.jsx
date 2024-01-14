@@ -12,7 +12,7 @@ import { useApolloClient } from "@apollo/client";
 import { LIST_PUBLICATION } from "../../gql/publication";
 
 
-export default function MenuPublication({ idPublication, refetchPublications }) {
+export default function MenuPublication({ idPublication }) {
   const [deletePublication] = useMutation(DELETE_PUBLICATION)
   const client = useApolloClient()
 

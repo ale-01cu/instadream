@@ -8,7 +8,7 @@ export default function ListPublication (props) {
   const { 
     queryGQLName = '', 
     queryGQL, 
-    BtnDelete, 
+    MenuPublication, 
     username } = props
   const refViewFinder = useRef()
   const { data, loading, error, fetchMore, refetch } = useQuery(
@@ -36,8 +36,7 @@ export default function ListPublication (props) {
           <Publication 
             key={publication.id} 
             publicationData={publication} 
-            BtnDelete={BtnDelete}
-            refetchPublications={refetch}
+            MenuPublication={MenuPublication}
           />
         ))
       }

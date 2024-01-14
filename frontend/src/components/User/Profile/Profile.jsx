@@ -35,7 +35,7 @@ export default function Profile({ username }) {
             queryGQLName='listPublication' 
             queryGQL={LIST_PUBLICATION}
             username={username}
-            BtnDelete={MenuPublication}
+            MenuPublication={MenuPublication}
           />
         </div>
       </div>

@@ -13,7 +13,6 @@ export default function BtnsFollowing ({ username }) {
   if(error) return null
   if(loading) return null
 
-  console.log(data);
   return (
     <div className="flex gap-x-1">
       <span className="font-semibold">{data.followingNumber}</span>
