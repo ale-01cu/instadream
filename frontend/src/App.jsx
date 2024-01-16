@@ -35,7 +35,7 @@ function App() {
     auth,
     setUser,
     isDarkMode,
-    setIsDarkMode
+    setIsDarkMode,
   }),[ auth, isDarkMode, setIsDarkMode ])
 
     

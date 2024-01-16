@@ -1,12 +1,11 @@
 import {Spinner} from "@nextui-org/spinner";
 
-export default function Loader(){
+export default function Loader(props){
 
   return (
-    <div className="flex gap-4">
+    <div>
       <Spinner 
-        size="lg" 
-        color="primary"
+        {...props}
       />
     </div> 
 

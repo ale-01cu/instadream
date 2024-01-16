@@ -9,6 +9,7 @@ import DarkModeButton from '../DarkMode'
 import SearchForm from './Search/SearchForm'
 import UserMenu from '../User/UserMenu'
 import BtnAddPublication from './BtnAddPublication/BtnAddPublication';
+import SearchModalMovil from './Search/SearchModalMovil';
 
 export default function Header() {
 
@@ -27,7 +28,8 @@ export default function Header() {
         
         <BtnAddPublication/>
         <DarkModeButton classname={'duration-200 px-0 min-w-unit-10'}/>
-        <SearchForm/>
+        <SearchModalMovil/>
+        <SearchForm className={"hidden sm:block"}/>
         <UserMenu/>
         
       </NavbarContent>

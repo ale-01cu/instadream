@@ -27,11 +27,9 @@ export default function useSearchUsers({search = '', fetchDelay = 1500}) {
         })
         const data = await res.json()
 
-        console.log(data);
-        console.log(data.data[data.data.length - 1]._id);
         setItems(data.data)
         setHasMore(data.next ? true : false)
-        setLastId(data.data[data.data.length - 1]._id)
+        setLastId(data.data[data.data.length - 1]?._id)
 
       } catch (error) {
           console.error("There was an error with the fetch operation:", error);
