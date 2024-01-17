@@ -18,13 +18,15 @@ export default function MenuPublication({ idPublication }) {
 
   const handleDelete = async () => {
     try {
+
       const data = await deletePublication({
         variables: { id: idPublication }
       })
-      const isDeleted = data.data.deletePublication
+      const isDeleted = data?.data?.deletePublication
       if(isDeleted) await client.refetchQueries({
         include: [LIST_PUBLICATION]
       })
+      
     } catch (error) {
       console.error(error);
     }

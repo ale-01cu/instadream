@@ -1,4 +1,3 @@
-
 export default function AvatarIcon(props) {
   return (
     <svg 

@@ -52,9 +52,7 @@ export default function RegisterForm ( props ) {
         const newUser = formData
         delete newUser.repeatPassword
         await register({
-          variables: {
-            user: newUser
-          }
+          variables: { user: newUser }
         })
         toast.success("Se ha registrado correctamente.")
         setShowLogin(true)

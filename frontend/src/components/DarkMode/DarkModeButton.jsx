@@ -3,7 +3,7 @@ import SunIconLight from './SunIcon'
 import useAuth from '../../hooks/useAuth'
 import { Button } from '@nextui-org/react'
 
-export default function DarkMode ({classname}) {
+export default function DarkMode ({ classname }) {
   const { isDarkMode, setIsDarkMode } = useAuth()
 
 

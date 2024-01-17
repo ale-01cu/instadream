@@ -13,7 +13,12 @@ export default function EditProfile({ userData }) {
 
   return (
     <>
-      <Button onPress={onOpen} color="default" variant="bordered" className="w-full">
+      <Button 
+        onPress={onOpen} 
+        color="default" 
+        variant="bordered" 
+        className="w-full"
+      >
         Editar Perfil
       </Button>
       <Modal 
@@ -29,7 +34,10 @@ export default function EditProfile({ userData }) {
                 Editar Perfil
               </ModalHeader>
               <ModalBody className="p-10">
-                <EditProfileForm userData={userData} onClose={onClose}/>
+                <EditProfileForm 
+                  userData={userData} 
+                  onClose={onClose}
+                />
               </ModalBody>
             </>
           )}

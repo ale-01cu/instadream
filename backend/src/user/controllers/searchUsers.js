@@ -26,6 +26,7 @@ export default async function searchUsers (req, res) {
         }
       ]
     })
+      .select('-password -createAt -status')
       .skip({ _id: 1 })
       .limit(PAGINATION_LIMIT + 1)
 

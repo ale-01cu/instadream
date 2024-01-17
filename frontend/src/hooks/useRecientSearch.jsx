@@ -2,17 +2,29 @@ import { useEffect, useState } from 'react'
 import { add, getAll } from '../config/indexDB'
 
 export default function useRecientSearch() {
-  const [ searches, setSearches ] = useState([])
-  const [ users, setUsers ] = useState([])
+  const [ dataRecient, setDataRecient ] = useState({
+    searches: [],
+    users: []
+  })
   const [ count, setCount ] = useState(0) 
 
   useEffect(() => {
-    setSearches(getAll('searches'))
-  }, [count])
+    getAll('searches')
+      .then(searches => setDataRecient({
+        ...dataRecient,
+        searches
+      }))
+      .catch(err => console.error(err))
+  }, [dataRecient])
 
   useEffect(() => {
-    setUsers(getAll('users'))
-  }, [count])
+    getAll('users')
+      .then(users => setDataRecient({
+        ...dataRecient,
+        users
+      }))
+      .catch(err => console.error(err))
+  }, [dataRecient])
 
 
   const refresh = () => {
@@ -24,5 +36,5 @@ export default function useRecientSearch() {
     refresh()
   }
 
-  return [searches, users, addNew]
+  return [dataRecient, addNew]
 }

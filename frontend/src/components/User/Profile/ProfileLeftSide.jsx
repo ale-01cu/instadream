@@ -33,40 +33,51 @@ export default function ProfileLeftSide({ username, data }) {
         <div className="pt-7">
           <h1 className="font-bold text-2xl">{data.getUser.name}</h1>
           <p className="text-font-gray">@{data.getUser.username}</p>
-          <p className="text-font-gray mt-5">Se unio en {date.toLocaleString('es-ES', { year: 'numeric', month: 'long'})}</p>
+          <p className="text-font-gray mt-5">
+            Se unio en {
+              date.toLocaleString('es-ES', { 
+                year: 'numeric', month: 'long'})
+            }
+          </p>
         </div>
 
         <div className="">
-          <BtnsFollowersAndFollowing username={username}/>
+          <BtnsFollowersAndFollowing 
+            username={username}
+          />
         </div>
 
         <div id="other" className="flex flex-col gap-y-2">
           <div className="">
             {
-              data.getUser.webSite
-                && <a 
-                    href={data.getUser.webSite} 
-                    rel="noreferrer" 
-                    target="_blank"
-                    className="text-font-gray hover:text-primary-400 transition-colors duration-100"
-                  >
-                      {data.getUser.webSite}
-                  </a>
+              data.getUser.webSite && 
+                <a 
+                  href={data.getUser.webSite} 
+                  rel="noreferrer" 
+                  target="_blank"
+                  className="text-font-gray hover:text-primary-400 transition-colors duration-100"
+                >
+                  {data.getUser.webSite}
+                </a>
             }
           </div>
           <div>
             {
-              data.getUser.description
-                && <p className="text-font-gray">{data.getUser.description}</p>
+              data.getUser.description && 
+                <p className="text-font-gray">
+                  {data.getUser.description}
+                </p>
             }
           </div>
         </div>
         
         {
-          username == auth.username
-            && <div className="my-8 w-full">
-                <EditProfile userData={data.getUser}/>
-              </div>
+          username == auth.username && 
+            <div className="my-8 w-full">
+              <EditProfile 
+                userData={data.getUser}
+              />
+            </div>
         }
         
         <div id="follow" className="py-5">

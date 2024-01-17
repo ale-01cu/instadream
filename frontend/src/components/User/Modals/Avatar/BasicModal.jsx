@@ -112,9 +112,19 @@ export default function AvatarModal({ auth }) {
 
   return (
     <>
-      <button onClick={onOpen} className="z-10 bg-primary p-3 rounded-full absolute right-2 top-[138px] hover:bg-primary-300 transition-colors">
+      <Button 
+        onClick={onOpen} 
+        className={`
+          z-10 bg-primary px-3 py-4 
+          rounded-full absolute 
+          right-2 top-[138px] 
+          hover:bg-primary-300 
+          transition-colors
+          min-w-unit-0`
+        }
+      >
         <CameraIcon/>
-      </button>
+      </Button>
       <Modal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange}
@@ -124,35 +134,37 @@ export default function AvatarModal({ auth }) {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Subir Avatar</ModalHeader>
-                <ModalBody>
-                  <div action="" className="flex flex-col gap-y-7 px-10 sm:px-24">
-                    <input 
-                      type="file" 
-                      name="avatar"
-                      hidden 
-                      ref={inputFileRef} 
-                      accept="image/jpeg, image/png"
-                      onChange={(e) => handleChangeFile(e, onClose)}
-                    />
-                    <Button 
-                      onClick={handleButtonClick} 
-                      color="secondary" 
-                      size="sm"
-                      isLoading={isLoadingInput}
-                    >
-                      Cargar una Foto
-                    </Button>
-                    <Button 
-                      color="danger" 
-                      size="sm" 
-                      onClick={() => handleDeleteAvatar(onClose)} 
-                      isLoading={loading}
-                    >
-                      Eliminar foto actual
-                    </Button>
-                  </div>
-                </ModalBody>
+              <ModalHeader className="flex flex-col gap-1">
+                Subir Avatar
+              </ModalHeader>
+              <ModalBody>
+                <div action="" className="flex flex-col gap-y-7 px-10 sm:px-24">
+                  <input 
+                    type="file" 
+                    name="avatar"
+                    hidden 
+                    ref={inputFileRef} 
+                    accept="image/jpeg, image/png"
+                    onChange={(e) => handleChangeFile(e, onClose)}
+                  />
+                  <Button 
+                    onClick={handleButtonClick} 
+                    color="secondary" 
+                    size="sm"
+                    isLoading={isLoadingInput}
+                  >
+                    Cargar una Foto
+                  </Button>
+                  <Button 
+                    color="danger" 
+                    size="sm" 
+                    onClick={() => handleDeleteAvatar(onClose)} 
+                    isLoading={loading}
+                  >
+                    Eliminar foto actual
+                  </Button>
+                </div>
+              </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Cerrar

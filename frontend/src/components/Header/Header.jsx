@@ -12,7 +12,6 @@ import BtnAddPublication from './BtnAddPublication/BtnAddPublication';
 import SearchModalMovil from './Search/SearchModalMovil';
 
 export default function Header() {
-
   return (
     <Navbar>
       <NavbarContent justify="start">

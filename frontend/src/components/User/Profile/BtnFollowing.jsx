@@ -15,14 +15,16 @@ export default function BtnsFollowing ({ username }) {
 
   return (
     <div className="flex gap-x-1">
-      <span className="font-semibold">{data.followingNumber}</span>
+      <span className="font-semibold">
+        {data.followingNumber}
+      </span>
       <Link 
         onPress={onOpen} 
         underline="hover" 
         className="text-font-gray cursor-pointer"
-        >
-          Siguiendo
-        </Link>
+      >
+        Siguiendo
+      </Link>
       <FollowingModal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange} 

@@ -1,4 +1,3 @@
-import { useQuery } from "@apollo/client";
 import BtnsFollowers from "./BtnFollowers";
 import BtnsFollowing from "./BtnFollowing";
 

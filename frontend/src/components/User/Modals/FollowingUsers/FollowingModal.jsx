@@ -50,10 +50,12 @@ export default function FollowingModal({ isOpen, onOpenChange, username }) {
                           description={f.username}
                           avatarProps={{
                             src: f.avatar ? BASE_URL + '/' + f.avatar : undefined,
-                            fallback: !f.avatar && <AvatarIcon 
-                                                    className="animate-pulse w-6 h-6 text-default-500" 
-                                                    fill="currentColor" 
-                                                    size={20} />
+                            fallback: !f.avatar && 
+                              <AvatarIcon 
+                                className="animate-pulse w-6 h-6 text-default-500" 
+                                fill="currentColor" 
+                                size={20} 
+                              />
                           }}
                         />
                       </Link>
@@ -63,7 +65,11 @@ export default function FollowingModal({ isOpen, onOpenChange, username }) {
               </ModalBody>
               
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button 
+                  color="danger" 
+                  variant="flat" 
+                  onPress={onClose}
+                >
                   Cerrar
                 </Button>
               </ModalFooter>

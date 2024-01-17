@@ -1,6 +1,4 @@
-
 export default function CameraIcon(){
-
   return (
     <svg 
       className="w-6 h-6 text-gray-800 dark:text-white" 

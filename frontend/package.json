@@ -17,7 +17,6 @@
     "graphql": "^16.8.1",
     "intersection-observer": "^0.12.2",
     "jwt-decode": "^4.0.0",
-    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.0",

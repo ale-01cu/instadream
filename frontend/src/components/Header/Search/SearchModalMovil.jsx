@@ -14,6 +14,7 @@ import { useState } from "react";
 import { BASE_URL } from "../../../utils/constants";
 import { Link } from "react-router-dom";
 import Loader from '../../Loader'
+import useRecientSearch from "../../../hooks/useRecientSearch";
 
 export default function SearchModalMovil() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -22,6 +23,9 @@ export default function SearchModalMovil() {
     search,
     fetchDelay: 500
   }) 
+
+  // const [ dataRecient, addNew ] = useRecientSearch()
+  // console.log(dataRecient);
 
   const handleChange = (e) => {
     const text = e.target.value
@@ -55,25 +59,76 @@ export default function SearchModalMovil() {
                     isLoading
                       ? <Loader className='flex justify-center'/>
                       :
-                        search && items?.map(item => (
-                          <div key={item._id} className="mb-3 hover:bg-default-200 p-2 rounded-md transition">
-                            <Link to={'/' + item.username}>
-                              <div className="flex gap-2 items-center">
-                                <Avatar 
-                                  alt={item.name} 
-                                  className="flex-shrink-0" 
-                                  size="sm" 
-                                  src={item.avatar && `${BASE_URL}/${item.avatar}`} 
-                                />
-                                <div className="flex flex-col">
-                                  <span className="text-small truncate ">{item.name}</span>
-                                  <span className="text-tiny text-default-400">@{item.username}</span>
-                                </div>
-                              </div>
-                            </Link>
+                        search 
+                          ? 
+                            items?.map(item => (
+                              <div key={item._id} className="mb-3 hover:bg-default-200 p-2 rounded-md transition">
+                                <Link to={'/' + item.username}>
+                                  <div className="flex gap-2 items-center">
+                                    <Avatar 
+                                      alt={item.name} 
+                                      className="flex-shrink-0" 
+                                      size="sm" 
+                                      src={item.avatar && `${BASE_URL}/${item.avatar}`} 
+                                    />
+                                    <div className="flex flex-col">
+                                      <span className="text-small truncate ">{item.name}</span>
+                                      <span className="text-tiny text-default-400">@{item.username}</span>
+                                    </div>
+                                  </div>
+                                </Link>
 
-                          </div>
-                        ))
+                              </div>
+                            ))
+                            : 
+                              <div>
+                                <h1>Actividad Reciente</h1>
+                                {/* <ul>
+                                  {
+                                    dataRecient.searches.map(s => (
+                                      <li key={s.id}>
+                                        <Link to={'/' + item.username}>
+                                          <div className="flex gap-2 items-center">
+                                            <Avatar 
+                                              alt={item.name} 
+                                              className="flex-shrink-0" 
+                                              size="sm" 
+                                              src={item.avatar && `${BASE_URL}/${item.avatar}`} 
+                                            />
+                                            <div className="flex flex-col">
+                                              <span className="text-small truncate ">{item.name}</span>
+                                              <span className="text-tiny text-default-400">@{item.username}</span>
+                                            </div>
+                                          </div>
+                                        </Link>
+                                      </li>
+                                    ))
+                                  }
+                                </ul> */}
+                                {/* <ul>
+                                  {
+                                    dataRecient.searches.map(item => (
+                                      <li key={item.id}>
+                                        <Link to={'/' + item.username}>
+                                          <div className="flex gap-2 items-center">
+                                            <Avatar 
+                                              alt={item.name} 
+                                              className="flex-shrink-0" 
+                                              size="sm" 
+                                              src={item.avatar && `${BASE_URL}/${item.avatar}`} 
+                                            />
+                                            <div className="flex flex-col">
+                                              <span className="text-small truncate ">{item.name}</span>
+                                              <span className="text-tiny text-default-400">@{item.username}</span>
+                                            </div>
+                                          </div>
+                                        </Link>
+                                      </li>
+                                    ))
+                                  }
+                                </ul> */}
+                              </div>
+                            
                   }
                 </div>
               </ModalBody>

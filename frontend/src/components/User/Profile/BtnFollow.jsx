@@ -92,18 +92,20 @@ export default function BtnFollow ({ username /* info del usuario que se esata o
     <>
       {
         isFollow
-          ? <Button 
+          ? 
+          <Button 
             onPress={handleUnFollow} 
             color="danger" 
             isLoading={isLoading}
-            >
+          >
             Dejar de seguir
           </Button>
-          : <Button 
+          : 
+          <Button 
             onPress={handleFollow} 
             color="secondary" 
             isLoading={isLoading}
-            >
+          >
             Seguir
           </Button>
       }

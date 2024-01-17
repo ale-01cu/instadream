@@ -88,7 +88,11 @@ export default function EditProfileForm({ userData, onClose }) {
 
 
   return (
-    <form id='update-avatar-form' onSubmit={formik.handleSubmit} className='flex gap-y-5 flex-col'>
+    <form 
+      id='update-avatar-form' 
+      onSubmit={formik.handleSubmit} 
+      className='flex gap-y-5 flex-col'
+    >
       <Input
         isClearable
         type="text"

@@ -15,14 +15,16 @@ export default function BtnsFollowers ({ username }) {
 
   return (
     <div className="flex gap-x-1">
-      <span className="font-semibold">{data.followersNumber}</span>
+      <span className="font-semibold">
+        {data.followersNumber}
+      </span>
       <Link
-         onPress={onOpen} 
+        onPress={onOpen} 
         underline="hover" 
         className="text-font-gray cursor-pointer"
-        >
-          Seguidores
-        </Link>
+      >
+        Seguidores
+      </Link>
       <FollowersModal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange} 

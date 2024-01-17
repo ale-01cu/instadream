@@ -7,17 +7,6 @@ export default function useDarkMode() {
       ? true 
       : false
   )
-  
-  // useEffect(() => {
-    
-  //   const darkModeLocalStorage = getDarkMode()
-  //   if(darkModeLocalStorage && darkModeLocalStorage === '1') {
-      
-  //     setIsDarkMode(true)
-      
-  //   }
-    
-  // }, [])
 
   useEffect(() => {
     

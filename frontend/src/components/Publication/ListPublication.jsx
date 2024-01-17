@@ -9,7 +9,8 @@ export default function ListPublication (props) {
     queryGQLName = '', 
     queryGQL, 
     MenuPublication, 
-    username } = props
+    username 
+  } = props
   const refViewFinder = useRef()
   const { data, loading, error, fetchMore, refetch } = useQuery(
     queryGQL, {
@@ -32,7 +33,7 @@ export default function ListPublication (props) {
   return (
     <div className="flex flex-col items-center">
       {
-        data[queryGQLName].data.map( publication => (
+        data[queryGQLName]?.data?.map( publication => (
           <Publication 
             key={publication.id} 
             publicationData={publication} 
@@ -47,7 +48,12 @@ export default function ListPublication (props) {
             </div>
           : null
       }
-      <div id='viewfinder' className="" ref={refViewFinder}></div>
+      <div 
+        id='viewfinder' 
+        ref={refViewFinder}>
+      </div>
+
+      
     </div>
   )
 }

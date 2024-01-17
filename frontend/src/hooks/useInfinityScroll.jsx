@@ -11,12 +11,12 @@ export default function useInfinityScroll(data, fetchMore, refViewFinder, userna
       const element = entries[0]
       if(element.isIntersecting) {
         setIsLoadingFetchMore(true)
-        const dataSize = data.data.length
-        const lastItem = data.data[ dataSize - 1 ]
+        const dataSize = data?.data?.length
+        const lastItem = data?.data[ dataSize - 1 ]
         const lastId = lastItem.id
 
         fetchMore({variables: { lastId, username }})
-        .then(() => setIsLoadingFetchMore(false))
+          .then(() => setIsLoadingFetchMore(false))
       }
     }
     

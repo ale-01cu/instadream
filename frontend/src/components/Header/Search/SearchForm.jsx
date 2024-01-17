@@ -29,7 +29,7 @@ export default function SearchForm({ className }) {
     onLoadMore,
   });
 
-  const [ searches, users, addNew ] = useRecientSearch()
+  const [ dataRecient, addNew ] = useRecientSearch()
 
   const handleChange = ( text ) => {
     setSearch(text)
@@ -129,14 +129,14 @@ export default function SearchForm({ className }) {
                 heading: 'text-xl text-white'
               }}>
                 {
-                  searches.map(s => (
+                  dataRecient.searches.map(s => (
                     <AutocompleteItem key={s.id}>
                       search {s.id}
                     </AutocompleteItem>
                   ))
                 }
                 {
-                  users.map(u => (
+                  dataRecient.users.map(u => (
                     <AutocompleteItem 
                       key={u.id} 
                       textValue={u.name} 

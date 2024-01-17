@@ -68,20 +68,32 @@ export default function AddPublicationForm({ images = [], setImages, onClose, se
             input: "resize-y min-h-[40px] bg-[transparent]",
           }}
         />
-      <div className={`grid ${images.length === 1 || images.length === 2 ? 'grid-cols-1' : 'grid-cols-2'}`}>
       </div>
+      <div className={`
+        grid 
+        ${images.length === 1 || images.length === 2 
+          ? 'grid-cols-1' 
+          : 'grid-cols-2'
+        }
+      `}>
         {
           images.map((image, index) => (
             <div 
               key={index} 
-              className={
-                `${images.length === 3 && index === 2 ? 'col-span-2' : ''}`
+              className={`${
+                images.length === 3 && index === 2 
+                  ? 'col-span-2' 
+                  : ''
+                }`
               }
             >
               <img 
                 className={
                   `block mx-auto h-full 
-                  ${images.length === 3 && index === 2 ? 'object-contain' : 'object-cover'} 
+                  ${images.length === 3 && index === 2 
+                      ? 'object-contain' 
+                      : 'object-cover'
+                  } 
                   object-center`
                 } 
                 src={URL.createObjectURL(image)} 

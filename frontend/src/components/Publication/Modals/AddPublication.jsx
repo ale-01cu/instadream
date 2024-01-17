@@ -21,12 +21,13 @@ export default function AddPublication({ isOpen, onOpenChange }) {
         onOpenChange={onOpenChange} 
         scrollBehavior='inside'
         placement="center"
-        
-        >
+      >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Nueva Publicación</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">
+                Nueva Publicación
+              </ModalHeader>
               <ModalBody className="p-8">
                 <AddPublicationForm 
                   images={images} 
@@ -38,7 +39,11 @@ export default function AddPublication({ isOpen, onOpenChange }) {
               <ModalFooter className="flex justify-between">
                 <BtnAddFiles setImages={setImages}/>
                 <div className="flex gap-x-2">
-                  <Button color="danger" variant="light" onPress={onClose}>
+                  <Button 
+                    color="danger" 
+                    variant="light" 
+                    onPress={onClose}
+                  >
                     Cancelar
                   </Button>
                   <Button 

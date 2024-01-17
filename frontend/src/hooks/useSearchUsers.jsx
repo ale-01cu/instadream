@@ -27,9 +27,9 @@ export default function useSearchUsers({search = '', fetchDelay = 1500}) {
         })
         const data = await res.json()
 
-        setItems(data.data)
-        setHasMore(data.next ? true : false)
-        setLastId(data.data[data.data.length - 1]?._id)
+        setItems(data?.data)
+        setHasMore(data?.next ? true : false)
+        setLastId(data?.data[data?.data?.length - 1]?._id)
 
       } catch (error) {
           console.error("There was an error with the fetch operation:", error);
@@ -47,15 +47,13 @@ export default function useSearchUsers({search = '', fetchDelay = 1500}) {
     try {
       const url = `http://localhost:4000/user/search?s=${search}&lastId=${lastId}`
       const res = await fetch(url, {
-        headers: {
-          Authorization: getToken()
-        }
+        headers: { Authorization: getToken() }
       })
       const data = await res.json()
 
-      addItems(data.data)
-      setHasMore(data.next ? true : false)
-      setLastId(data.data[data.data.length - 1].id)
+      addItems(data?.data)
+      setHasMore(data?.next ? true : false)
+      setLastId(data?.data[data?.data?.length - 1].id)
     } catch (error) {
       console.log(error);
     }

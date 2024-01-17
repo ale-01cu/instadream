@@ -35,16 +35,14 @@ export default function Login () {
     onSubmit: async (formData) => {
       try {
         const { data } = await login({
-          variables: {
-            user: formData
-          }
+          variables: { user: formData }
         })
         const { token } = data.login
         setToken(token, isRemember)
         setUser(decodeToken(token))
       } catch (error) {
         toast.error(error.message)
-        console.log(error);
+        console.error(error);
       }
     }
   })
@@ -55,7 +53,9 @@ export default function Login () {
       <form id="form-login" className="space-y-3" onSubmit={formik.handleSubmit}>
         <Input
           endContent={
-            <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+            <MailIcon 
+              className="text-2xl text-default-400 pointer-events-none flex-shrink-0" 
+            />
           }
           classNames={{
             input: [
@@ -74,7 +74,9 @@ export default function Login () {
         />
         <Input
           endContent={
-            <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+            <LockIcon 
+              className="text-2xl text-default-400 pointer-events-none flex-shrink-0" 
+            />
           }
           label="Password"
           name="password"
