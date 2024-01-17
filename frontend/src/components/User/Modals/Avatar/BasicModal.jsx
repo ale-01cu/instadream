@@ -9,7 +9,7 @@ import {
 } from "@nextui-org/react";
 import CameraIcon from './CameraIcon'
 import { useRef, useState } from "react"
-import { getToken } from '../../../../utils/token'
+import { getSessionStorageToken } from '../../../../utils/token'
 import { GET_USER } from "../../../../gql/user";
 import { useApolloClient } from '@apollo/client'
 import { DELETE_AVATAR } from "../../../../gql/user";
@@ -40,7 +40,7 @@ export default function AvatarModal({ auth }) {
       const response = await fetch(USER_UPLOAD_AVATAR_URL, {
         method: 'post',
         headers: {
-          Authorization: `Bearer ${getToken()}`
+          Authorization: `Bearer ${getSessionStorageToken()}`
         },
         body: formData,
       })

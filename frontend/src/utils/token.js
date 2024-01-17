@@ -4,11 +4,18 @@ import { jwtDecode } from 'jwt-decode'
 export function setToken(token, isSessionStorage) {
 
   window.sessionStorage.setItem(TOKEN, token)
-  if(!isSessionStorage) window.localStorage.setItem(TOKEN, token);
+  if(isSessionStorage) window.localStorage.setItem(TOKEN, token);
+
+}
+
+export function getLocalStorageToken () {
+
+  return window.localStorage.getItem(TOKEN);
+
 }
 
 
-export function getToken() {
+export function getSessionStorageToken() {
 
   return window.sessionStorage.getItem(TOKEN);
 
@@ -26,7 +33,7 @@ export function deleteToken() {
 
   window.localStorage.removeItem(TOKEN)
   window.sessionStorage.removeItem(TOKEN)
-  const token = getToken()
+  const token = getLocalStorageToken() && getSessionStorageToken()
   if(token) return false
   return true
 

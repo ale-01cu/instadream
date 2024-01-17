@@ -1,25 +1,28 @@
 import { useEffect, useState } from "react"
 import { VERIFY_TOKEN } from '../gql/user'
 import { useMutation } from "@apollo/client"
-import { getToken } from "../utils/token"
+import { getLocalStorageToken, setToken } from "../utils/token"
 
 export default function useVerifyToken() {
   const [verifyToken] = useMutation(VERIFY_TOKEN)
-  const [ token, setToken ] = useState()
+  const [ tokenInMemory, setTokenInMemory ] = useState()
   const [ isValid, setIsValid ] = useState(false)
 
   useEffect(() => {
-    setToken(getToken())
+    const token = getLocalStorageToken()
+    setTokenInMemory(token)
+    setToken(token, false)
 
     const fetchData = async () => {
       const result = await verifyToken({
-          variables: { token }
+          variables: { token: tokenInMemory }
       })
       setIsValid(result.data.verifyToken)
+
     }
-    if(token) fetchData()
+    if(tokenInMemory) fetchData()
 
- }, [token, verifyToken])
+ }, [tokenInMemory, verifyToken])
 
-  return [ isValid, token ]
+  return [ isValid, tokenInMemory ]
 }

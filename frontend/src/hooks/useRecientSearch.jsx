@@ -15,7 +15,7 @@ export default function useRecientSearch() {
         searches
       }))
       .catch(err => console.error(err))
-  }, [dataRecient])
+  }, [count])
 
   useEffect(() => {
     getAll('users')
@@ -24,7 +24,7 @@ export default function useRecientSearch() {
         users
       }))
       .catch(err => console.error(err))
-  }, [dataRecient])
+  }, [count])
 
 
   const refresh = () => {

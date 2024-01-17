@@ -18,7 +18,7 @@ export default function Header() {
         <NavbarBrand className="mr-4">
           <Link to={'/'} className='flex gap-x-3 justify-center items-center'>
             <InstadreamLogo/>
-            <p className="hidden sm:block font-bold text-lg">Solaris</p>
+            <p className="hidden sm:block font-bold text-lg">Instadream</p>
           </Link>
         </NavbarBrand>
       </NavbarContent>

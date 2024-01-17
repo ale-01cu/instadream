@@ -5,14 +5,14 @@ import {
 } from '@apollo/client'
 import { GRAPHQL_URL } from '../utils/constants'
 import { setContext } from '@apollo/client/link/context';
-import { getToken } from '../utils/token'
+import { getSessionStorageToken } from '../utils/token'
 
 const httpLink = createHttpLink({
   uri: GRAPHQL_URL,
 });
 
 const authLink = setContext(() => ({
-  headers: {authorization: getToken()}
+  headers: { authorization: getSessionStorageToken() }
 }))
 
 const client = new ApolloClient({
@@ -30,7 +30,10 @@ const client = new ApolloClient({
             // the existing list items.
             merge(existing = {}, incoming) {
               const newData = {...incoming};
-              if(existing.data) newData.data = [...existing.data, ...incoming.data]
+              if(existing.data) newData.data = [
+                  ...existing.data, 
+                  ...incoming.data
+                ]
               else  newData.data = [...incoming.data]
               return newData;
             },
@@ -39,7 +42,10 @@ const client = new ApolloClient({
             keyArgs: false,
             merge(existing = {}, incoming) {
               const newData = {...incoming};
-              if(existing.data) newData.data = [...existing.data, ...incoming.data]
+              if(existing.data) newData.data = [
+                  ...existing.data, 
+                  ...incoming.data
+                ]
               else  newData.data = [...incoming.data]
               return newData;
             },
@@ -49,7 +55,10 @@ const client = new ApolloClient({
 
             merge(existing = {}, incoming) {
               const newData = {...incoming};
-              if(existing.data) newData.data = [...existing.data, ...incoming.data]
+              if(existing.data) newData.data = [
+                  ...existing.data, 
+                  ...incoming.data
+                ]
               else  newData.data = [...incoming.data]
               return newData;
             },

@@ -3,17 +3,15 @@ import {
   ModalContent,
   ModalHeader, 
   ModalBody, 
-  Button, 
   useDisclosure,
-  Avatar
 } from "@nextui-org/react";
 import BtnShowSearcher from "./BtnShowSearcher";
 import CustomInputSearch from "./CustomInputSearch";
 import useSearchUsers from "../../../hooks/useSearchUsers";
 import { useState } from "react";
-import { BASE_URL } from "../../../utils/constants";
-import { Link } from "react-router-dom";
 import Loader from '../../Loader'
+import UserItem from "./UserItem";
+import RecientSearch from "./RecientSearch";
 import useRecientSearch from "../../../hooks/useRecientSearch";
 
 export default function SearchModalMovil() {
@@ -24,13 +22,19 @@ export default function SearchModalMovil() {
     fetchDelay: 500
   }) 
 
-  // const [ dataRecient, addNew ] = useRecientSearch()
-  // console.log(dataRecient);
+  const [ dataRecient, addNew ] = useRecientSearch()
 
-  const handleChange = (e) => {
-    const text = e.target.value
-    setSearch(text)
-  }
+
+   const handleClick = (item) => {
+      const newItem = {
+         ...item,
+         id: item._id
+      }
+      delete newItem._id
+      addNew('users', newItem)
+   }
+
+
 
   return (
     <>
@@ -53,84 +57,30 @@ export default function SearchModalMovil() {
               <ModalHeader className="flex flex-col gap-1">
               </ModalHeader>
               <ModalBody className="p-10">
-                <CustomInputSearch handleChange={handleChange}/>
-                <div>
-                  {
-                    isLoading
+                <CustomInputSearch 
+                  setSearch={setSearch}
+                  search={search}
+                />
+                {
+                  isLoading
                       ? <Loader className='flex justify-center'/>
                       :
-                        search 
-                          ? 
-                            items?.map(item => (
-                              <div key={item._id} className="mb-3 hover:bg-default-200 p-2 rounded-md transition">
-                                <Link to={'/' + item.username}>
-                                  <div className="flex gap-2 items-center">
-                                    <Avatar 
-                                      alt={item.name} 
-                                      className="flex-shrink-0" 
-                                      size="sm" 
-                                      src={item.avatar && `${BASE_URL}/${item.avatar}`} 
-                                    />
-                                    <div className="flex flex-col">
-                                      <span className="text-small truncate ">{item.name}</span>
-                                      <span className="text-tiny text-default-400">@{item.username}</span>
-                                    </div>
-                                  </div>
-                                </Link>
-
-                              </div>
-                            ))
-                            : 
-                              <div>
-                                <h1>Actividad Reciente</h1>
-                                {/* <ul>
-                                  {
-                                    dataRecient.searches.map(s => (
-                                      <li key={s.id}>
-                                        <Link to={'/' + item.username}>
-                                          <div className="flex gap-2 items-center">
-                                            <Avatar 
-                                              alt={item.name} 
-                                              className="flex-shrink-0" 
-                                              size="sm" 
-                                              src={item.avatar && `${BASE_URL}/${item.avatar}`} 
-                                            />
-                                            <div className="flex flex-col">
-                                              <span className="text-small truncate ">{item.name}</span>
-                                              <span className="text-tiny text-default-400">@{item.username}</span>
-                                            </div>
-                                          </div>
-                                        </Link>
-                                      </li>
-                                    ))
-                                  }
-                                </ul> */}
-                                {/* <ul>
-                                  {
-                                    dataRecient.searches.map(item => (
-                                      <li key={item.id}>
-                                        <Link to={'/' + item.username}>
-                                          <div className="flex gap-2 items-center">
-                                            <Avatar 
-                                              alt={item.name} 
-                                              className="flex-shrink-0" 
-                                              size="sm" 
-                                              src={item.avatar && `${BASE_URL}/${item.avatar}`} 
-                                            />
-                                            <div className="flex flex-col">
-                                              <span className="text-small truncate ">{item.name}</span>
-                                              <span className="text-tiny text-default-400">@{item.username}</span>
-                                            </div>
-                                          </div>
-                                        </Link>
-                                      </li>
-                                    ))
-                                  }
-                                </ul> */}
-                              </div>
-                            
-                  }
-                </div>
+                        <div>
+                          {
+                            search 
+                              ? 
+                                items?.map(item => (
+                                  <UserItem 
+                                    key={item._id} 
+                                    item={item}
+                                    onClick={handleClick}
+                                  />
+                                ))
+                              : 
+                                <RecientSearch dataRecient={dataRecient}/>
+                          }
+                        </div>
+                }
               </ModalBody>
             </>
           )}

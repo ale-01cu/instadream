@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import Auth from './pages/Auth'
 import {NextUIProvider} from "@nextui-org/react";
 import {ToastContainer} from 'react-toastify'
-import { getToken, decodeToken } from './utils/token'
+import { decodeToken } from './utils/token'
 import AuthContext from './contexts/AuthContext'
 import useDarkMode from './hooks/useDarkMode'
 import Navigation from './routes/Navegation';
@@ -39,7 +39,7 @@ function App() {
   }),[ auth, isDarkMode, setIsDarkMode ])
 
     
-  if(getToken() && auth === null) return null
+  if(token && auth === null) return null
 
   return (
     <AuthContext.Provider value={authData}>

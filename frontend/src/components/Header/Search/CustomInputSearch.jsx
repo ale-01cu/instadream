@@ -1,11 +1,23 @@
 import { Input } from "@nextui-org/react"
 import SearchIcon from "./SearchIcon"
 
-export default function CustomInputSearch({ handleChange }) {
+export default function CustomInputSearch({ search, setSearch }) {
+  
+  const handleChange = (e) => {
+    const text = e.target.value
+    setSearch(text)
+  }
+
+  const handleClear = () => {
+    setSearch('')
+  }
+  
   return (
     <Input
       onChange={handleChange}
       isClearable
+      onClear={handleClear}
+      value={search}
       radius="lg"
       classNames={{
         label: "",

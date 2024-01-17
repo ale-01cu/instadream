@@ -96,10 +96,10 @@ export default function Login () {
             value={isRemember}
             onChange={() => setIsRemember(!isRemember)}
           >
-            Remember me
+            Recordarme
           </Checkbox>
           <Link color="primary" href="#" size="sm">
-            Forgot password?
+            ¿Olvidó la Contraseña?
           </Link>
         </div>
         <Button 

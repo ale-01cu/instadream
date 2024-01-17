@@ -1,4 +1,4 @@
-import { getToken } from "../../../utils/token";
+import { getSessionStorageToken } from "../../../utils/token";
 import { PUBLICATION_URL } from '../../../utils/constants'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -26,7 +26,7 @@ export default function AddPublicationForm({ images = [], setImages, onClose, se
           const res = await fetch(PUBLICATION_URL, {
             method: 'post',
             headers: {
-              Authorization: `Bearer ${getToken()}`
+              Authorization: `Bearer ${getSessionStorageToken()}`
             },
             body: formData
           })

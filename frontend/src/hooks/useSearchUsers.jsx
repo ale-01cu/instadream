@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getToken } from '../utils/token'
+import { getSessionStorageToken } from '../utils/token'
 
 export default function useSearchUsers({search = '', fetchDelay = 1500}) {
   const [items, setItems] = useState([])
@@ -21,9 +21,7 @@ export default function useSearchUsers({search = '', fetchDelay = 1500}) {
       try {
         const url = `http://localhost:4000/user/search?s=${search}&lastId=`
         const res = await fetch(url, {
-          headers: {
-            Authorization: getToken()
-          }
+          headers: { Authorization: getSessionStorageToken() }
         })
         const data = await res.json()
 
@@ -47,7 +45,7 @@ export default function useSearchUsers({search = '', fetchDelay = 1500}) {
     try {
       const url = `http://localhost:4000/user/search?s=${search}&lastId=${lastId}`
       const res = await fetch(url, {
-        headers: { Authorization: getToken() }
+        headers: { Authorization: getSessionStorageToken() }
       })
       const data = await res.json()
 
