@@ -1,2 +1,2 @@
 # instadream
-Instagram Clone with React, GraphQL, Apollo, MongoDB and AWS
+Instagram Clone with React, Node js, GraphQL, Apollo, MongoDB
