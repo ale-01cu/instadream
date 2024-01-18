@@ -44,8 +44,8 @@ app.use('/graphql',
   // an Apollo Server instance and optional configuration options
   expressMiddleware(apolloServer, {
     context: async ({ req }) => ({
-      user: getUser(req.headers.authorization),
-      token: req.headers.authorization
+      user: getUser(req.headers.authorization?.replace('Bearer ', '')),
+      token: req.headers.authorization?.replace('Bearer ', '')
     })
   })
 )

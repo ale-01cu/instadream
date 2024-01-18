@@ -1,5 +1,5 @@
+// Icono de la lipa para el buscador
 export default function SearchIcon(props) {
-
   return (
     <svg 
       aria-hidden="true" 

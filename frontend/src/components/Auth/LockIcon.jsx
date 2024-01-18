@@ -1,3 +1,4 @@
+// Icono candado del input password
 export const LockIcon = (props) => (
   <svg
     aria-hidden="true"

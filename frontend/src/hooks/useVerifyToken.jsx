@@ -24,5 +24,5 @@ export default function useVerifyToken() {
 
  }, [tokenInMemory, verifyToken])
 
-  return [ isValid, tokenInMemory ]
+  return [ isValid, tokenInMemory, getLocalStorageToken() ]
 }

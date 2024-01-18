@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getSessionStorageToken } from '../utils/token'
+import searchUsers from "../services/searchUsers";
+import { useCallback } from "react";
 
 export default function useSearchUsers({search = '', fetchDelay = 1500}) {
   const [items, setItems] = useState([])
@@ -7,34 +8,24 @@ export default function useSearchUsers({search = '', fetchDelay = 1500}) {
   const [lastId, setLastId] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const addItems = (newItems) => {
+  const addItems = useCallback((newItems) => {
     setItems(prevArray => [
       ...prevArray,
       ...newItems.filter(
         nuevo => !prevArray.some(prev => prev.id === nuevo.id))
     ]);
-  };
+  }, [])
 
   useEffect(() => {
     setIsLoading(true)
     const getData = setTimeout(async () => {
-      try {
-        const url = `http://localhost:4000/user/search?s=${search}&lastId=`
-        const res = await fetch(url, {
-          headers: { Authorization: getSessionStorageToken() }
-        })
-        const data = await res.json()
 
-        setItems(data?.data)
-        setHasMore(data?.next ? true : false)
-        setLastId(data?.data[data?.data?.length - 1]?._id)
+      const data = await searchUsers(search)
+      setItems(data?.data)
+      setHasMore(data?.next ? true : false)
+      setLastId(data?.data[data?.data?.length - 1]?._id)
 
-      } catch (error) {
-          console.error("There was an error with the fetch operation:", error);
-        
-      } finally {
-          setIsLoading(false)
-      } 
+      setIsLoading(false)
 
     }, fetchDelay)
     return () => clearTimeout(getData)
@@ -42,19 +33,10 @@ export default function useSearchUsers({search = '', fetchDelay = 1500}) {
 
 
   const onLoadMore = async () => {
-    try {
-      const url = `http://localhost:4000/user/search?s=${search}&lastId=${lastId}`
-      const res = await fetch(url, {
-        headers: { Authorization: getSessionStorageToken() }
-      })
-      const data = await res.json()
-
+      const data = await searchUsers(search, lastId)
       addItems(data?.data)
       setHasMore(data?.next ? true : false)
-      setLastId(data?.data[data?.data?.length - 1].id)
-    } catch (error) {
-      console.log(error);
-    }
+      setLastId(data?.data[data?.data?.length - 1]?.id)
   }
 
   

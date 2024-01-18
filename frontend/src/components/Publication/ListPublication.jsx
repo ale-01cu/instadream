@@ -4,6 +4,9 @@ import { useEffect, useRef } from "react"
 import { Spinner } from "@nextui-org/react"
 import useInfinityScroll from "../../hooks/useInfinityScroll"
 
+// Este componente se encarga de listar todas las publicaciones 
+// que se reciven del servidor y tambien tiene la paginacion
+// con infinite scroll
 export default function ListPublication (props) {
   const { 
     queryGQLName = '', 
@@ -44,7 +47,10 @@ export default function ListPublication (props) {
       {
         isLoadingFetchMore
           ? <div className="p-6">
-              <Spinner color="primary" size="lg"/>
+              <Spinner
+                color="primary" 
+                size="lg"
+              />
             </div>
           : null
       }

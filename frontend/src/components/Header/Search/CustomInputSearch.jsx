@@ -1,10 +1,12 @@
 import { Input } from "@nextui-org/react"
 import SearchIcon from "./SearchIcon"
 
+// Input para buscar un poco mas personalizable
+// que de momento se utiliza para la vista movil
 export default function CustomInputSearch({ search, setSearch }) {
   
   const handleChange = (e) => {
-    const text = e.target.value
+    const text = e?.target?.value
     setSearch(text)
   }
 
@@ -20,10 +22,7 @@ export default function CustomInputSearch({ search, setSearch }) {
       value={search}
       radius="lg"
       classNames={{
-        label: "",
-        input: '',
         innerWrapper: "bg-transparent",
-        inputWrapper: '',
       }}
       placeholder="Type to search..."
       startContent={

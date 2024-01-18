@@ -10,7 +10,7 @@ export default function Auth () {
   return (
     <div className='flex justify-center items-center'>
       <div className='fixed top-0 right-0 m-10'>
-        <DarkModeButton classname={'hover:bg-primary rounded-2xl p-2 duration-200'}/>
+        <DarkModeButton classname='hover:bg-primary rounded-2xl p-2 duration-200'/>
       </div>
 
       <div className='w-96 h-screen flex justify-center items-center py-10 flex-col'>

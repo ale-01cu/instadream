@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 export const LIST_ALL_PUBLICATIONS = gql`
-  query listAllPublication($lastId: ID) {
-    listAllPublication(lastId: $lastId) {
+  query listAllPublication($lastCreateAt: String) {
+    listAllPublication(lastCreateAt: $lastCreateAt) {
       next
       data {
         id
@@ -28,8 +28,8 @@ export const LIST_ALL_PUBLICATIONS = gql`
 `
 
 export const LIST_PUBLICATION = gql`
-query listPublication($lastId: ID, $username: String!) {
-  listPublication(lastId: $lastId, username: $username) {
+query listPublication($lastCreateAt: String, $username: String!) {
+  listPublication(lastCreateAt: $lastCreateAt, username: $username) {
     next
     data {
       id

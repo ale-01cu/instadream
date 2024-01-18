@@ -8,6 +8,8 @@ import {
   useDisclosure
 } from "@nextui-org/react";
 
+// Modal para editar la info del
+// perfil del usuario
 export default function EditProfile({ userData }) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 

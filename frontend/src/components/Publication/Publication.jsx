@@ -9,6 +9,7 @@ import PublicationHeader from './PublicationHeader'
 import PublicationBody from './PublicationBody'
 import PublicationFooter from './PublicationFooter'
 
+// Este componente es la publicaction
 export default function Publication({ publicationData, MenuPublication }) {
   const {
     id, 
@@ -22,15 +23,16 @@ export default function Publication({ publicationData, MenuPublication }) {
 
   useEffect(() => {
 
-    let createAtPublication = new Date(Number(createAt));
-    let now = new Date();
-    let diference = now - createAtPublication;
-    let seconds = Math.floor(diference / 1000);
-    let minutes = Math.floor(seconds / 60);
-    let hours = Math.floor(minutes / 60);
-    let days = Math.floor(hours / 24);
+    const createAtPublication = new Date(Number(createAt));
+    const now = new Date();
+    const diference = now - createAtPublication;
+    const seconds = Math.floor(diference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
 
-    if(days > 31) setSince(createAtPublication.toLocaleString('es-ES', { month: 'long' }));
+    if(days > 31) setSince(createAtPublication
+      .toLocaleString('es-ES', { month: 'long' }));
     else if(days) setSince(days + ' d');
     else if(hours) setSince(hours + ' h');
     else if(minutes) setSince(minutes + ' m');

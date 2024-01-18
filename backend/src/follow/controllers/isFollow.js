@@ -4,9 +4,8 @@ import UserNotFoundError from '../../user/errors/UserNotFoundError.js'
 import 'colors'
 
 export default async function isFollow ({ args, context }) {
-  const followerUser = context.user
-
   try {
+    const followerUser = context.user
     const { username } = args
     const followingUser = await User.findOne({ username })
 

@@ -5,25 +5,25 @@ import 'colors'
 import User from '../../user/models/user.js'
 import { PAGINATION_LIMIT } from '../../../config/baseConfig.js'
 
-export default async function listPublication ({ args, context }) {
-  const { lastId, username } = args
+export default async function listPublication ({ args }) {
+  const { lastCreateAt, username } = args
   try {
     const user = await User.findOne({ username })
 
     let query = {
       user: user._id
     }
-    if (lastId) {
+    if (lastCreateAt) {
       query = {
         ...query,
-        _id: { $gt: lastId }
+        createAt: { $lt: lastCreateAt }
       }
     }
 
     const publications = await Publication
       .find(query)
+      .sort({ createAt: -1 })
       .populate('user')
-      .sort({ _id: 1 })
       .limit(PAGINATION_LIMIT + 1)
 
     let next = false
@@ -34,7 +34,8 @@ export default async function listPublication ({ args, context }) {
     }
 
     const publicationsWithContent = publications.map(async (p) => {
-      p.content = await publicationContent.find({ publication: p._id })
+      p.content = await publicationContent
+        .find({ publication: p._id })
       return p
     })
 

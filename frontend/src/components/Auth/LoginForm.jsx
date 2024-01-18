@@ -1,11 +1,11 @@
-import {Checkbox, Input, Link} from "@nextui-org/react";
-import {MailIcon} from './MailIcon.jsx';
-import {LockIcon} from './LockIcon.jsx';
-import {Button} from "@nextui-org/react";
+import { Checkbox, Input, Link } from "@nextui-org/react";
+import { MailIcon } from './MailIcon.jsx';
+import { LockIcon } from './LockIcon.jsx';
+import { Button } from "@nextui-org/react";
 import PhraseForm from "./PhraseForm.jsx";
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import {LOGIN} from '../../gql/user.js'
+import { LOGIN } from '../../gql/user.js'
 import { useMutation } from "@apollo/client";
 import { toast } from 'react-toastify'
 import { decodeToken, setToken } from '../../utils/token.js'
@@ -37,8 +37,14 @@ export default function Login () {
         const { data } = await login({
           variables: { user: formData }
         })
+
+        // Obtiene el token de la respuesta y lo guarda
+        // en la SessionStorage y en la LocalStorage.
         const { token } = data.login
         setToken(token, isRemember)
+
+        // Guarda la info del token en un estado
+        // osea en la memoria.
         setUser(decodeToken(token))
       } catch (error) {
         toast.error(error.message)
@@ -49,19 +55,27 @@ export default function Login () {
 
   return (
     <div>
-      <PhraseForm text={'Entra para ver fotos y videos de tus amigos.'}/>
-      <form id="form-login" className="space-y-3" onSubmit={formik.handleSubmit}>
+      <PhraseForm text='Entra para ver fotos y videos de tus amigos.'/>
+      <form 
+        id="form-login" 
+        className="space-y-3" 
+        onSubmit={formik.handleSubmit}
+      >
         <Input
           endContent={
             <MailIcon 
-              className="text-2xl text-default-400 pointer-events-none flex-shrink-0" 
+              className={`
+                text-2xl text-default-400 
+                pointer-events-none flex-shrink-0
+              `} 
             />
           }
           classNames={{
             input: [
               "bg-transparent",
               "text-black/90 dark:text-white/90",
-              "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+              "placeholder:text-default-700/50", 
+              "dark:placeholder:text-white/60",
             ]
           }}
           label="Email"
@@ -75,7 +89,10 @@ export default function Login () {
         <Input
           endContent={
             <LockIcon 
-              className="text-2xl text-default-400 pointer-events-none flex-shrink-0" 
+              className={`
+                text-2xl text-default-400
+                 pointer-events-none flex-shrink-0
+              `} 
             />
           }
           label="Password"

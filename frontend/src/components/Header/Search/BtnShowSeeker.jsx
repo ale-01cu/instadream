@@ -1,7 +1,10 @@
 import SearchIcon from "./SearchIcon"
 import { Button } from "@nextui-org/react"
 
-export default function BtnShowSearcher({ onOpen }) {
+// Button para vista movil que permite
+// mostrar el modal donde se encuentra
+// el buscador
+export default function BtnShowSeeker({ onOpen }) {
   return (
     <Button 
       className="sm:hidden px-0 min-w-unit-10" 

@@ -1,3 +1,4 @@
+// Icono del boton para modificar el avatar
 export default function CameraIcon(){
   return (
     <svg 

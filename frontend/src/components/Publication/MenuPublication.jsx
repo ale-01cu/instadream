@@ -12,6 +12,8 @@ import { useApolloClient } from "@apollo/client";
 import { LIST_PUBLICATION } from "../../gql/publication";
 
 
+// Un boton que despliega un menu para diferentes opciones
+// en cada una de las publications
 export default function MenuPublication({ idPublication }) {
   const [deletePublication] = useMutation(DELETE_PUBLICATION)
   const client = useApolloClient()
@@ -42,7 +44,10 @@ export default function MenuPublication({ idPublication }) {
           <MenuPublicationIcon/>
         </Button>
       </DropdownTrigger>
-      <DropdownMenu variant="faded" aria-label="Dropdown menu with icons">
+      <DropdownMenu 
+        variant="faded" 
+        aria-label="Dropdown menu with icons"
+      >
         <DropdownItem
           key="delete"
           className="text-danger"

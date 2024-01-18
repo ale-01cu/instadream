@@ -1,3 +1,5 @@
+// Icono para el boton de agregar ficheros 
+// a la publicacion
 export default function BtnAddFilesIcon(props) {
   return (
     <svg 

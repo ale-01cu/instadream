@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/client'
 import { useApolloClient } from '@apollo/client'
 import { toast } from 'react-toastify'
 
+// Formulario con los datos del perfil
 export default function EditProfileForm({ userData, onClose }) {
   const { 
     name, 

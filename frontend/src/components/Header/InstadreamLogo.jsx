@@ -1,8 +1,8 @@
 import InstadreamLogoImg from '../../assets/img/_980c5c17-82b7-4017-9194-b1aae4fcc78a.jfif'
 import { Image } from '@nextui-org/react'
 
+// Logo de la App
 export default function InstadreamLogo() {
-
   return (
     <Image 
       width={35} 

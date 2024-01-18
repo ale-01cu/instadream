@@ -88,6 +88,7 @@ export default function BtnFollow ({ username /* info del usuario que se esata o
     }
   }
 
+  console.log(isFollow);
   return (
     <>
       {

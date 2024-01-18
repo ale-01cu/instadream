@@ -1,3 +1,5 @@
+// Icono de un avatar para el usuario que 
+// no tiene foto de perfil
 export default function AvatarIcon(props) {
   return (
     <svg 

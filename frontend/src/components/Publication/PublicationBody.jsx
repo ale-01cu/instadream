@@ -1,6 +1,7 @@
 import { Image } from "@nextui-org/react"
 import { BASE_URL } from "../../utils/constants"
 
+// El cuerpo de la publication
 export default function PublicationBody({ description, content }) {
   return (
     <div className="px-3 py-0 text-small text-default-400">

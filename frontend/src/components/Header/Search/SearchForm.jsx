@@ -12,16 +12,21 @@ import {useInfiniteScroll} from "@nextui-org/use-infinite-scroll";
 import Loader from '../../Loader'
 import { Link } from 'react-router-dom'
 import useRecientSearch from "../../../hooks/useRecientSearch";
+import UserItem from "./UserItem";
 
+// Buscador para la vista de pantallas grandes
 export default function SearchForm({ className }) {
   const autcompleteRef = useRef(null)
   const [ search, setSearch ] = useState('')
   const [isOpen, setIsOpen] = useState(false);
+  // Este hook es el encargado de conectarse con el servidor para
+  // realizar la busqueda
   const [items, hasMore, isLoading, onLoadMore] = useSearchUsers({
     search, 
     fetchDelay: 500, 
   })
 
+  // Hook de nextUI para realizar la paginacion por infinite Scroll
   const [, scrollerRef] = useInfiniteScroll({
     hasMore,
     isEnabled: isOpen,
@@ -29,6 +34,8 @@ export default function SearchForm({ className }) {
     onLoadMore,
   });
 
+  // Es hook se encarga de manejar los datos 
+  // de la actividad reciente
   const [ dataRecient, addNew ] = useRecientSearch()
 
   const handleChange = ( text ) => {
@@ -74,7 +81,10 @@ export default function SearchForm({ className }) {
         inputProps={{
           classNames: {
             input: "ml-1 text-md text-background-light",
-            inputWrapper: "h-[48px] py-[0.2rem] border-0 h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+            inputWrapper: `
+              h-[48px] py-[0.2rem] border-0
+              h-full font-normal text-default-500 
+              bg-default-400/20 dark:bg-default-500/20`,
           },
         }}
         
@@ -117,7 +127,10 @@ export default function SearchForm({ className }) {
           isLoading &&
             <AutocompleteSection>
               <AutocompleteItem key='spinner' textValue="loading">
-                  <Loader className='flex justify-center' color='warning'/>
+                  <Loader 
+                    className='flex justify-center' 
+                    color='warning'
+                  />
               </AutocompleteItem>
             </AutocompleteSection>
 
@@ -141,20 +154,7 @@ export default function SearchForm({ className }) {
                       key={u.id} 
                       textValue={u.name} 
                     >
-                      <Link to={'/' + u.username}>
-                        <div className="flex gap-2 items-center">
-                          <Avatar 
-                            alt={u.name} 
-                            className="flex-shrink-0" 
-                            size="sm" 
-                            src={u.avatar && `${BASE_URL}/${u.avatar}`} 
-                          />
-                          <div className="flex flex-col">
-                            <span className="text-small truncate ">{u.name}</span>
-                            <span className="text-tiny text-default-400">@{u.username}</span>
-                          </div>
-                        </div>
-                      </Link>
+                      <UserItem item={u}/>
                     </AutocompleteItem>
                   ))
                 }
@@ -168,20 +168,9 @@ export default function SearchForm({ className }) {
                       textValue={item.name} 
                       onClick={() => handleClick(item)}
                     >
-                      <Link to={'/' + item.username}>
-                        <div className="flex gap-2 items-center">
-                          <Avatar 
-                            alt={item.name} 
-                            className="flex-shrink-0" 
-                            size="sm" 
-                            src={item.avatar && `${BASE_URL}/${item.avatar}`} 
-                          />
-                          <div className="flex flex-col">
-                            <span className="text-small truncate ">{item.name}</span>
-                            <span className="text-tiny text-default-400">@{item.username}</span>
-                          </div>
-                        </div>
-                      </Link>
+                      <UserItem 
+                        item={item}
+                      />
                     </AutocompleteItem>
                   ))
                 }

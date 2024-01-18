@@ -1,3 +1,5 @@
+// Icono del boton que despliega
+// el menu de las publications
 export default function MenuPublicationIcon() {
   return (
     <svg 

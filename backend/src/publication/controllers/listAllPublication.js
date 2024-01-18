@@ -6,18 +6,18 @@ import { PAGINATION_LIMIT } from '../../../config/baseConfig.js'
 
 export default async function listAllPublication ({ args }) {
   try {
-    const { lastId } = args
+    const { lastCreateAt } = args
 
     let query = {}
-    if (lastId) {
-      query = { _id: { $gt: lastId } }
+    if (lastCreateAt) {
+      query = { createAt: { $lt: lastCreateAt } }
     }
 
     // const numberOfPublications = await Publication.countDocuments()
     const publications = await Publication
       .find(query)
+      .sort({ createAt: -1 })
       .populate('user')
-      .sort({ _id: 1 })
       .limit(PAGINATION_LIMIT + 1)
 
     let next = false
@@ -28,7 +28,8 @@ export default async function listAllPublication ({ args }) {
     }
 
     const publicationsWithContent = publications.map(async (p) => {
-      p.content = await publicationContent.find({ publication: p._id })
+      p.content = await publicationContent
+        .find({ publication: p._id })
       return p
     })
 

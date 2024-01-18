@@ -1,10 +1,10 @@
-import { getSessionStorageToken } from "../../../utils/token";
-import { PUBLICATION_URL } from '../../../utils/constants'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { Textarea } from "@nextui-org/react";
 import { toast } from "react-toastify";
+import createPublication from '../../../services/createPublication';
 
+// Folumario para crear las publicaciones
 export default function AddPublicationForm({ images = [], setImages, onClose, setIsLoading }){
   const formik = useFormik({
     initialValues: {
@@ -12,34 +12,26 @@ export default function AddPublicationForm({ images = [], setImages, onClose, se
     },
     validationSchema: Yup.object({
       description: Yup
-        .string()
+        .string('La description debe de ser un string.')
         .max(250)
     }),
-    onSubmit: async (data) => {
+    onSubmit: async (d) => {
       try {
         if(formik.values.description || images.length > 0) {
           setIsLoading(true)
           const formData = new FormData()
-          formData.append('description', data.description)
+          formData.append('description', d.description)
           images.forEach(image => formData.append('content', image))
 
-          const res = await fetch(PUBLICATION_URL, {
-            method: 'post',
-            headers: {
-              Authorization: `Bearer ${getSessionStorageToken()}`
-            },
-            body: formData
-          })
-  
-          await res.json()
+          const { res } = await createPublication(formData)
           
           setIsLoading(false)
-          if(res.status > 299) toast.error('Upss, lo sentimos, no se pudo crear la publicación. :(')
+          if(res.status > 299) toast
+            .error('Upss, lo sentimos, no se pudo crear la publicación. :(')
           else {
             setImages([])
             onClose()
           }
-
         }
       
       } catch (error) {

@@ -11,6 +11,7 @@ import UserMenu from '../User/UserMenu'
 import BtnAddPublication from './BtnAddPublication/BtnAddPublication';
 import SearchModalMovil from './Search/SearchModalMovil';
 
+// Encabezado del la app
 export default function Header() {
   return (
     <Navbar>
@@ -18,7 +19,9 @@ export default function Header() {
         <NavbarBrand className="mr-4">
           <Link to={'/'} className='flex gap-x-3 justify-center items-center'>
             <InstadreamLogo/>
-            <p className="hidden sm:block font-bold text-lg">Instadream</p>
+            <p className="hidden sm:block font-bold text-lg">
+              Instadream
+            </p>
           </Link>
         </NavbarBrand>
       </NavbarContent>
@@ -26,9 +29,9 @@ export default function Header() {
       <NavbarContent as="div" className="" justify="end">
         
         <BtnAddPublication/>
-        <DarkModeButton classname={'duration-200 px-0 min-w-unit-10'}/>
+        <DarkModeButton classname='duration-200 px-0 min-w-unit-10'/>
         <SearchModalMovil/>
-        <SearchForm className={"hidden sm:block"}/>
+        <SearchForm className="hidden sm:block"/>
         <UserMenu/>
         
       </NavbarContent>

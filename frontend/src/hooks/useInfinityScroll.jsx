@@ -13,9 +13,9 @@ export default function useInfinityScroll(data, fetchMore, refViewFinder, userna
         setIsLoadingFetchMore(true)
         const dataSize = data?.data?.length
         const lastItem = data?.data[ dataSize - 1 ]
-        const lastId = lastItem.id
+        const lastCreateAt = lastItem.createAt
 
-        fetchMore({variables: { lastId, username }})
+        fetchMore({variables: { lastCreateAt, username }})
           .then(() => setIsLoadingFetchMore(false))
       }
     }

@@ -11,7 +11,11 @@ import useVerifyToken from './hooks/useVerifyToken';
 import connectWithIndexDB from './config/indexDB';
 
 function App() {
-  const [ isValid, token ] = useVerifyToken()
+  const [ 
+    isValid, 
+    tokenInMemory, 
+    tokenInLocalStorage 
+  ] = useVerifyToken()
   const [ auth, setAuth ] = useState(null)
   const [ isDarkMode, setIsDarkMode ] = useDarkMode()
   const navegate = useNavigate()
@@ -21,10 +25,10 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if(token) setAuth(decodeToken(token))
+    if(tokenInMemory) setAuth(decodeToken(tokenInMemory))
     else setAuth(null)
     
-  }, [ token ])
+  }, [ tokenInMemory ])
 
   
   const setUser = user => {
@@ -39,7 +43,7 @@ function App() {
   }),[ auth, isDarkMode, setIsDarkMode ])
 
     
-  if(token && auth === null) return null
+  if(tokenInLocalStorage && auth === null) return null
 
   return (
     <AuthContext.Provider value={authData}>

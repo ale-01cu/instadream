@@ -1,6 +1,6 @@
-import {Input, Button} from "@nextui-org/react";
-import {MailIcon} from './MailIcon.jsx';
-import {LockIcon} from './LockIcon.jsx';
+import { Input, Button } from "@nextui-org/react";
+import { MailIcon } from './MailIcon.jsx';
+import { LockIcon } from './LockIcon.jsx';
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useMutation } from "@apollo/client";
@@ -55,6 +55,8 @@ export default function RegisterForm ( props ) {
           variables: { user: newUser }
         })
         toast.success("Se ha registrado correctamente.")
+
+        // Cambial del registro al login
         setShowLogin(true)
 
       } catch (error) {
@@ -67,7 +69,11 @@ export default function RegisterForm ( props ) {
   return (
     <div>
       <PhraseForm text={'Registrate para ver fotos y videos de tus amigos.'}/>
-      <form id="form-register" className="space-y-3" onSubmit={formik.handleSubmit}>
+      <form 
+        id="form-register" 
+        className="space-y-3"
+        onSubmit={formik.handleSubmit}
+      >
         <Input
           label="Nombre"
           placeholder="Escriba su nombre y apellidos"

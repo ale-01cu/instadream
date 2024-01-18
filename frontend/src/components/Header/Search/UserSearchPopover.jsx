@@ -6,6 +6,7 @@ import {
 } from "@nextui-org/react";
 import UserItem from "./UserItem";
 
+// Componente de Prueba
 export default function UserSearchPopover({ items }) {
   return (
     <Popover placement="right">

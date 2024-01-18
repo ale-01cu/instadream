@@ -9,19 +9,20 @@ import {
 } from "@nextui-org/react";
 import CameraIcon from './CameraIcon'
 import { useRef, useState } from "react"
-import { getSessionStorageToken } from '../../../../utils/token'
 import { GET_USER } from "../../../../gql/user";
 import { useApolloClient } from '@apollo/client'
 import { DELETE_AVATAR } from "../../../../gql/user";
 import { useMutation } from "@apollo/client";
 import { toast } from 'react-toastify'
-import { USER_UPLOAD_AVATAR_URL } from "../../../../utils/constants";
+import updateAvatar from "../../../../services/updateAvatar";
 
+// Modal para cambiar el Avatar del usuario 
 export default function AvatarModal({ auth }) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const inputFileRef = useRef(null);
   const [ isLoadingInput, setIsLoadingInput ] = useState(false)
   const client = useApolloClient()
+  const [deleteAvatar, { loading }] = useMutation(DELETE_AVATAR)
 
   const handleButtonClick = () => {
     // activa el click del input file
@@ -37,23 +38,16 @@ export default function AvatarModal({ auth }) {
       const formData = new FormData();
       formData.append('avatar', avatarfile);
   
-      const response = await fetch(USER_UPLOAD_AVATAR_URL, {
-        method: 'post',
-        headers: {
-          Authorization: `Bearer ${getSessionStorageToken()}`
-        },
-        body: formData,
-      })
-      const data = await response.json()
+      const { res, data } = await updateAvatar(formData)
   
-      if(response.status === 500 || response.status > 500) {
+      if(res.status === 500 || res.status > 500) {
         
         const errorMsg = data.error
         console.error(errorMsg);
         toast.error(errorMsg)
       
   
-      }else if(response.status >= 400 || response.status < 500) {
+      }else if(res.status >= 400 || res.status < 500) {
         console.error(data.error);
         
       
@@ -82,12 +76,12 @@ export default function AvatarModal({ auth }) {
 
   }
 
-  const [deleteAvatar, { loading }] = useMutation(DELETE_AVATAR)
 
   const handleDeleteAvatar = async (onClose) => {
     try {
       const { data } = await deleteAvatar()
-      if(!data.deleteAvatar) toast.warning('No se pudo eliminar el avatar.')
+      if(!data.deleteAvatar) toast
+        .warning('No se pudo eliminar el avatar.')
       else {
         onClose()
 
@@ -166,7 +160,11 @@ export default function AvatarModal({ auth }) {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button 
+                  color="danger" 
+                  variant="flat" 
+                  onPress={onClose}
+                >
                   Cerrar
                 </Button>
               </ModalFooter>

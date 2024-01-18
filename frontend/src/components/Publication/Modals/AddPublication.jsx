@@ -10,6 +10,9 @@ import BtnAddFiles from "./BtnAddFiles";
 import { useState } from "react";
 import AddPublicationForm from "./AddPublicationForm";
 
+
+// Modal con el formulario necesario para 
+// crear una nueva publicacion
 export default function AddPublication({ isOpen, onOpenChange }) {
   const [ images, setImages ] = useState([])
   const [ isLoading, setIsLoading ] = useState(false)
@@ -46,6 +49,7 @@ export default function AddPublication({ isOpen, onOpenChange }) {
                   >
                     Cancelar
                   </Button>
+                  
                   <Button 
                     color="primary" 
                     type="submit" 

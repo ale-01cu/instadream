@@ -1,3 +1,4 @@
+// Icono SVG del sol.
 export default function SunIcon () {
   return (
     <svg 

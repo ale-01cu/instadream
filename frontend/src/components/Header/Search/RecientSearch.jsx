@@ -1,17 +1,18 @@
-import useRecientSearch from '../../../hooks/useRecientSearch'
-import { Avatar } from '@nextui-org/react'
-import { Link } from 'react-router-dom'
-import { BASE_URL } from '../../../utils/constants'
+import UserItem from './UserItem'
 
+// Lista los ultimos usuarios presionados en el buscador
+// y las ultimas busquedas realizadas
 export default function RecientSearch({ dataRecient }) {
   return (
     <div>
-      <h1 className="p-5 text-xl">Actividad Reciente</h1> 
+      <h1 className="p-5 text-xl">
+         Actividad Reciente
+      </h1> 
       <ul>
          {
-            dataRecient.searches.map(s => (
+            dataRecient?.searches?.map(s => (
             <li key={s.id}>
-               <p> {s} </p>
+               <p>{s}</p>
             </li>
             ))
          }
@@ -19,22 +20,12 @@ export default function RecientSearch({ dataRecient }) {
       
       <ul>
          {
-            dataRecient.searches.map(item => (
+            dataRecient?.users?.map(item => (
             <li key={item.id}>
-               <Link to={'/' + item.username}>
-                  <div className="flex gap-2 items-center">
-                  <Avatar 
-                     alt={item.name} 
-                     className="flex-shrink-0" 
-                     size="sm" 
-                     src={item.avatar && `${BASE_URL}/${item.avatar}`} 
-                  />
-                  <div className="flex flex-col">
-                     <span className="text-small truncate ">{item.name}</span>
-                     <span className="text-tiny text-default-400">@{item.username}</span>
-                  </div>
-                  </div>
-               </Link>
+              <UserItem 
+               item={item}
+               className='mb-2 hover:bg-default-200 p-2 rounded-md transition'
+            />
             </li>
             ))
          }

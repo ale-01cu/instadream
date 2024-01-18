@@ -1,3 +1,4 @@
+// El pie de la publication
 export default function PublicationFooter() {
   return (
     <div className="flex gap-3">

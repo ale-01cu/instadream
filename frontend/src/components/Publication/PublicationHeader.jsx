@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { Avatar } from "@nextui-org/react"
 import { BASE_URL } from "../../utils/constants"
 
+// El encabezado de la publication
 export default function PublicationHeader({ id, user, since, MenuPublication, auth }) {
   return (
     <div className="flex justify-between">

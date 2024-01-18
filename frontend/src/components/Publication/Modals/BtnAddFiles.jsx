@@ -3,6 +3,7 @@ import BtnAddFilesIcon from "./BtnAddFilesIcon";
 import { Button } from "@nextui-org/react";
 import { toast } from 'react-toastify'
 
+// Btn para agregar ficheros a la publicacion
 export default function BtnAddFiles({ setImages }) {
   const inputFileRef = useRef(null)
 
@@ -13,7 +14,8 @@ export default function BtnAddFiles({ setImages }) {
 
   const handleChange = (e) => {
     const imagesArray = [...e.target.files]
-    if(imagesArray.length > 4) toast.warning('Solo puede enviar como maximo 4 archivos.')
+    if(imagesArray.length > 4) toast
+      .warning('Solo puede enviar como maximo 4 archivos.')
     setImages(imagesArray.slice(0, 4))
   }
 

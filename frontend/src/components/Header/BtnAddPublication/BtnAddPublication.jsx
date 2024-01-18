@@ -3,6 +3,9 @@ import { Button } from '@nextui-org/react'
 import { useDisclosure } from '@nextui-org/react'
 import AddPublicationModal from '../../Publication/Modals/AddPublication';
 
+// Boton encargado de mostrar el modal
+// que contiene el formulario para agregar
+// publicaciones
 export default function BtnAddPublication() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
@@ -16,7 +19,11 @@ export default function BtnAddPublication() {
       >
         <AddIcon />
       </Button>
-      <AddPublicationModal isOpen={isOpen} onOpenChange={onOpenChange}/>
+      
+      <AddPublicationModal 
+        isOpen={isOpen} 
+        onOpenChange={onOpenChange}
+      />
     </>
 
   )

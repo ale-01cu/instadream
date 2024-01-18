@@ -12,7 +12,7 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext(() => ({
-  headers: { authorization: getSessionStorageToken() }
+  headers: { authorization: `Bearer ${getSessionStorageToken()}` }
 }))
 
 const client = new ApolloClient({
