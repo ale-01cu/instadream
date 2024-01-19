@@ -2,6 +2,7 @@ import {Link, useDisclosure} from "@nextui-org/react";
 import { useQuery } from "@apollo/client";
 import { GET_FOLLOWERS_NUMBER } from "../../../gql/follow";
 import FollowersModal from '../Modals/FollowersUsers/FollowersModal'
+import { GET_FOLLOWERS } from "../../../gql/follow";
 
 export default function BtnsFollowers ({ username }) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -29,6 +30,9 @@ export default function BtnsFollowers ({ username }) {
         isOpen={isOpen} 
         onOpenChange={onOpenChange} 
         username={username}
+        queryGQL={GET_FOLLOWERS}
+        queryName='followers'
+        headerText='Seguidores'
       />
     </div>
   )

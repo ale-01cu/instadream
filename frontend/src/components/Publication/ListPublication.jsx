@@ -11,7 +11,7 @@ export default function ListPublication (props) {
   const { 
     queryGQLName = '', 
     queryGQL, 
-    MenuPublication, 
+    PublicationMenu, 
     username 
   } = props
   const refViewFinder = useRef()
@@ -40,7 +40,7 @@ export default function ListPublication (props) {
           <Publication 
             key={publication.id} 
             publicationData={publication} 
-            MenuPublication={MenuPublication}
+            PublicationMenu={PublicationMenu}
           />
         ))
       }

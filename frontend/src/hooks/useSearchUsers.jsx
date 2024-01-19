@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import searchUsers from "../services/searchUsers";
 import { useCallback } from "react";
 
+// Para es el hook que tiene la logica del buscador
 export default function useSearchUsers({search = '', fetchDelay = 1500}) {
   const [items, setItems] = useState([])
   const [hasMore, setHasMore] = useState(true)

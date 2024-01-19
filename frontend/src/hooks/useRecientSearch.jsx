@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { add, getAll } from '../config/indexDB'
 
+// Para manejar las busquedas recientes
 export default function useRecientSearch() {
   const [ dataRecient, setDataRecient ] = useState({
     searches: [],

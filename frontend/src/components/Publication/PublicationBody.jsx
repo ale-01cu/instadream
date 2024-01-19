@@ -9,7 +9,7 @@ export default function PublicationBody({ description, content }) {
         {description}
       </p>
       <div className={`
-        py-5 grid 
+        py-5 grid gap-1
         ${content.length === 1 || content.length === 2 
           ? 'grid-cols-1' 
           : 'grid-cols-2'
@@ -28,12 +28,11 @@ export default function PublicationBody({ description, content }) {
               <Image
                 alt="Card background"
                 className={`
-                  object-cover 
+                  object-cover max-h-[500px]
                   ${content.length === 3 
                       ? 'h-full w-full' 
                       : ''
                   } 
-                  rounded-xl
                 `}
                 src={BASE_URL + '/' + c.path}
                 classNames={{

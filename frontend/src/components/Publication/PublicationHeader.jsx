@@ -3,9 +3,9 @@ import { Avatar } from "@nextui-org/react"
 import { BASE_URL } from "../../utils/constants"
 
 // El encabezado de la publication
-export default function PublicationHeader({ id, user, since, MenuPublication, auth }) {
+export default function PublicationHeader({ id, user, since, PublicationMenu, auth }) {
   return (
-    <div className="flex justify-between">
+    <div className="w-full flex justify-between">
       <Link to={'/' + user.username}>
         <div className="flex gap-5">
           <Avatar 
@@ -28,8 +28,8 @@ export default function PublicationHeader({ id, user, since, MenuPublication, au
         </div>
       </Link>
       {
-        (MenuPublication && auth.username === user.username ) &&
-          <MenuPublication idPublication={id}/>
+        (PublicationMenu && auth.username === user.username ) &&
+          <PublicationMenu idPublication={id}/>
       }
     </div>
   )

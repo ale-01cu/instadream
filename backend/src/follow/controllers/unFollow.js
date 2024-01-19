@@ -10,7 +10,9 @@ export default async function unFollow ({ args, context }) {
   try {
     const { username } = args
     // Validando que los dos usuarios no sean iguales.
-    if (username === followerUser.username) { throw new FollowMySelfError('Error al intentar deseguirse a si mismo un usuario.') }
+    if (username === followerUser.username) {
+      throw new FollowMySelfError('Error al intentar deseguirse a si mismo un usuario.')
+    }
 
     const user = await User.findOne({ username })
     if (!user) throw new UserNotFoundError('No existe el usuario: ' + username)

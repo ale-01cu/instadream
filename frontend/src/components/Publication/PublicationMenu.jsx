@@ -14,7 +14,7 @@ import { LIST_PUBLICATION } from "../../gql/publication";
 
 // Un boton que despliega un menu para diferentes opciones
 // en cada una de las publications
-export default function MenuPublication({ idPublication }) {
+export default function PublicationMenu({ idPublication }) {
   const [deletePublication] = useMutation(DELETE_PUBLICATION)
   const client = useApolloClient()
 

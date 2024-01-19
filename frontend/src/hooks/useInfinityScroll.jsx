@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+// Permite paginar con infinite scroll
 export default function useInfinityScroll(data, fetchMore, refViewFinder, username) {
   const [ isLoadingFetchMore, setIsLoadingFetchMore ] = useState(false)
 

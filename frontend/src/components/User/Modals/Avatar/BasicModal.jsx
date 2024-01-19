@@ -40,15 +40,11 @@ export default function AvatarModal({ auth }) {
   
       const { res, data } = await updateAvatar(formData)
   
-      if(res.status === 500 || res.status > 500) {
-        
+
+      if(res.status >= 400 && res.status <= 500) {
         const errorMsg = data.error
         console.error(errorMsg);
         toast.error(errorMsg)
-      
-  
-      }else if(res.status >= 400 || res.status < 500) {
-        console.error(data.error);
         
       
       }else {

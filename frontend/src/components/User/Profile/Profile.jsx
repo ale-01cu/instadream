@@ -4,7 +4,7 @@ import Loader from '../../Loader'
 import UserNotFound from "../UserNotFound"
 import ListPublication from "../../Publication/ListPublication"
 import { LIST_PUBLICATION } from "../../../gql/publication"
-import MenuPublication from "../../Publication/MenuPublication"
+import PublicationMenu from "../../Publication/PublicationMenu"
 import ProfileLeftSide from "./ProfileLeftSide"
 
 export default function Profile({ username }) {
@@ -24,10 +24,13 @@ export default function Profile({ username }) {
     <UserNotFound/>
   )
 
-
+  
   return (
     <div className="flex w-full max-w-5xl flex-col md:flex-row lg:px-8 items-center md:items-start">
-      <ProfileLeftSide username={username} data={data}/>
+      <ProfileLeftSide 
+        username={username} 
+        data={data}
+      />
 
       <div className="w-full flex flex-col-reverse self-start">
         <div className="" id="publications-profile">
@@ -35,7 +38,7 @@ export default function Profile({ username }) {
             queryGQLName='listPublication' 
             queryGQL={LIST_PUBLICATION}
             username={username}
-            MenuPublication={MenuPublication}
+            PublicationMenu={PublicationMenu}
           />
         </div>
       </div>

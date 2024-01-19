@@ -64,17 +64,7 @@ const UserSchema = mongoose.Schema({
   birthDate: {
     type: Date,
     min: new Date(1900, 0, 1).getTime(),
-    max: Date.now(),
-    validate: {
-      validator: function (v) {
-        // La fecha debe ser mayor o igual al 1 de enero de 1900
-        // y menor o igual a la fecha actual
-        const minDate = new Date(1900, 0, 1).getTime()
-        const maxDate = Date.now()
-        return v && v.getTime() >= minDate && v.getTime() <= maxDate
-      },
-      message: props => `${props.value} no es una fecha valida.`
-    }
+    max: Date.now()
   },
 
   createAt: {

@@ -6,6 +6,7 @@ import { useState } from "react"
 import Spinner from '../../Loader'
 import { GET_FOLLOWERS_NUMBER } from "../../../gql/follow"
 
+// Boton que permite seguir o dejar de seguir a alguien
 export default function BtnFollow ({ username /* info del usuario que se esata observando */ }) {
   // Info del usuario que esta logueado
   const { auth } = useAuth()

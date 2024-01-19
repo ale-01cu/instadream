@@ -10,7 +10,7 @@ import PublicationBody from './PublicationBody'
 import PublicationFooter from './PublicationFooter'
 
 // Este componente es la publicaction
-export default function Publication({ publicationData, MenuPublication }) {
+export default function Publication({ publicationData, PublicationMenu }) {
   const {
     id, 
     user, 
@@ -52,7 +52,7 @@ export default function Publication({ publicationData, MenuPublication }) {
           id={id} 
           user={user}
           since={since}
-          MenuPublication={MenuPublication}
+          PublicationMenu={PublicationMenu}
           auth={auth}  
         />
       </CardHeader>

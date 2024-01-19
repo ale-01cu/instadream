@@ -8,9 +8,8 @@ import LoginEmailOrPassError from '../errors/LoginEmailOrPassError.js'
 import 'colors'
 
 export default async function login (user) {
-  const { email, password } = user
-
   try {
+    const { email, password } = user
     const userFound = await User.findOne({ email: email.toLowerCase() })
     if (!userFound) throw new LoginEmailOrPassError()
 

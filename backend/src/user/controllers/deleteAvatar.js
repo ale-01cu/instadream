@@ -7,6 +7,7 @@ export default async function deleteAvatar ({ context }) {
   try {
     const user = await User.findById(id)
     const isDelete = deleteFile(user.avatar)
+
     if (isDelete) {
       user.avatar = ''
       await user.save()

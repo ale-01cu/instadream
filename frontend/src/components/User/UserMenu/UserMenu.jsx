@@ -86,26 +86,21 @@ export default function UserMenu() {
       <DropdownMenu aria-label="Profile Actions" variant="flat">
 
         <DropdownItem key="profile" className="h-14 gap-2">
-          {
-            !data.getUser.avatar
-              ? <User   
-                  name={data.getUser.email}
-                  description={data.getUser.username}
-                  avatarProps={{
-                    fallback: <AvatarIcon 
-                              className="animate-pulse w-6 h-6 text-default-500" 
-                              fill="currentColor" 
-                              size={20} />
-                  }}
+          <User
+            name={data.getUser.email}
+            description={data.getUser.username}
+            avatarProps={{
+              src: data.getUser.avatar
+                ? BASE_URL + '/' + data.getUser.avatar
+                : undefined,
+              fallback: !data.getUser.avatar && 
+                <AvatarIcon 
+                  className="animate-pulse w-6 h-6 text-default-500" 
+                  fill="currentColor" 
+                  size={20} 
                 />
-              : <User   
-                  name={data.getUser.email}
-                  description={data.getUser.username}
-                  avatarProps={{
-                    src: BASE_URL + '/' + data.getUser.avatar
-                  }}
-                />
-          }
+            }}
+          />
           
         </DropdownItem>
 

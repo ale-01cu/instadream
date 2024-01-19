@@ -9,9 +9,9 @@ export default async function register (user) {
   const newUser = user
   newUser.email = user.email.toLowerCase()
   newUser.username = user.username.toLowerCase()
-  const { email, username, password } = newUser
 
   try {
+    const { email, username, password } = newUser
     // Revisar si el email esta en uso
     const foundEmail = await User.findOne({ email })
     if (foundEmail) throw new FieldIsUsedError('El Email ya esta en uso.')
