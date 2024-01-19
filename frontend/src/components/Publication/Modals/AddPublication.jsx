@@ -7,7 +7,7 @@ import {
   Button,
 } from "@nextui-org/react";
 import BtnAddFiles from "./BtnAddFiles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddPublicationForm from "./AddPublicationForm";
 
 

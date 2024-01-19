@@ -85,7 +85,7 @@ export default function UserMenu() {
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
 
-        <DropdownItem key="profile" className="h-14 gap-2">
+        <DropdownItem key="profile" className="h-14 gap-2" textValue='user-item'>
           <User
             name={data.getUser.email}
             description={data.getUser.username}

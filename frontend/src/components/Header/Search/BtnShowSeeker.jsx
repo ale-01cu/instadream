@@ -9,7 +9,7 @@ export default function BtnShowSeeker({ onOpen }) {
     <Button 
       className="sm:hidden px-0 min-w-unit-10" 
       color="warning"
-      variant="solid"
+      variant="light"
       onPress={onOpen}
     >
       <SearchIcon className='w-6 h-6'/>

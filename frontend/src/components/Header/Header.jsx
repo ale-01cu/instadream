@@ -29,7 +29,7 @@ export default function Header() {
       <NavbarContent as="div" className="" justify="end">
         
         <BtnAddPublication/>
-        <DarkModeButton classname='duration-200 px-0 min-w-unit-10'/>
+        <DarkModeButton classname='duration-200 px-0 min-w-unit-10 hover:scale-110'/>
         <SearchModalMovil/>
         <SearchForm className="hidden sm:block"/>
         <UserMenu/>

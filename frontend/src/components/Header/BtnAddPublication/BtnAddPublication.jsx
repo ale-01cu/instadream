@@ -14,8 +14,9 @@ export default function BtnAddPublication() {
       <Button onPress={onOpen} 
         isIconOnly 
         aria-label="add-publication" 
-        className='' 
-        color='success'
+        className='hover:scale-110' 
+        color='warning'
+        variant='light'
       >
         <AddIcon />
       </Button>
